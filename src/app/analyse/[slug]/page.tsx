@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { TeamLogo } from '@/components/TeamLogo';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { AnalysisUnlock } from '@/components/AnalysisUnlock';
