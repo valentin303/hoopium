@@ -66,7 +66,7 @@ async function apiNbaFetch<T>(
 const LEAGUE_CONFIG: Record<League, { id: number; season: string }> = {
   nba: { id: 12, season: '2025-2026' },
   wnba: { id: 13, season: '2026' },
-  euroleague: { id: 120, season: '2025-2026' },
+  euroleague: { id: 120, season: '2025' },
   ncaa: { id: 116, season: '2025-2026' },
 };
 
