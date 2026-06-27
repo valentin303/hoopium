@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+/*
+  Design system HOOPIUM — repris à l'identique du prototype HTML
+  pour garantir une continuité visuelle pendant la migration.
+*/
+:root {
+  --night: #0a0a0a;
+  --night-soft: #121212;
+  --surface: #161616;
+  --surface-line: #232323;
+  --orange: #FF6B1A;
+  --orange-dim: #FF6B1A33;
+  --orange-glow: #FF6B1A1A;
+  --bone: #EDEAE3;
+  --bone-dim: #6b6b68;
+  --court: #1a1410;
+  --green: #3ddc84;
+  --red: #ff5c5c;
+
+  --background: var(--night);
+  --foreground: var(--bone);
+}
+
+@theme inline {
+  --color-night: var(--night);
+  --color-night-soft: var(--night-soft);
+  --color-surface: var(--surface);
+  --color-surface-line: var(--surface-line);
+  --color-orange: var(--orange);
+  --color-bone: var(--bone);
+  --color-bone-dim: var(--bone-dim);
+  --color-court: var(--court);
+  --color-green: var(--green);
+  --color-red: var(--red);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: 'Space Grotesk', sans-serif;
+  --font-display: 'Oswald', sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+}
