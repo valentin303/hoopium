@@ -73,7 +73,7 @@ export default async function AnalysePage({ params }: { params: Promise<{ slug: 
 
       <div className="flex flex-wrap items-center justify-center gap-10 border-b border-surface-line px-6 py-8 md:px-12">
         <div className="flex flex-col items-center gap-2 text-center">
-          <TeamBadge team={match.homeTeam} />
+          <TeamLogo team={match.homeTeam} size={56} shape="circle" />
           <span className="text-xl font-bold tracking-tight">{match.homeTeam.name}</span>
           <span className="font-display text-xs text-bone-dim">{match.homeTeam.record}</span>
           <FormDots form={match.homeTeam.form} />
@@ -94,7 +94,7 @@ export default async function AnalysePage({ params }: { params: Promise<{ slug: 
         </div>
 
         <div className="flex flex-col items-center gap-2 text-center">
-          <TeamBadge team={match.awayTeam} />
+          <TeamLogo team={match.awayTeam} size={56} shape="circle" />
           <span className="text-xl font-bold tracking-tight">{match.awayTeam.name}</span>
           <span className="font-display text-xs text-bone-dim">{match.awayTeam.record}</span>
           <FormDots form={match.awayTeam.form} />

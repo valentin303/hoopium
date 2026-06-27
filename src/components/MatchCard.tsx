@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { TeamLogo } from './TeamLogo';
 import type { Match } from '@/types';
 
 const LEAGUE_LABELS: Record<Match['league'], string> = {
@@ -48,9 +49,9 @@ export function MatchCard({ match }: { match: Match }) {
         <div className="h-9 w-px flex-shrink-0 bg-surface-line" />
 
         <div className="flex flex-1 items-center gap-4 min-w-0">
-          <TeamBlock name={match.homeTeam.name} abbr={match.homeTeam.abbreviation} form={match.homeTeam.form} />
+          <TeamBlock team={match.homeTeam} />
           <span className="flex-shrink-0 font-display text-[10px] text-bone-dim/50">@</span>
-          <TeamBlock name={match.awayTeam.name} abbr={match.awayTeam.abbreviation} form={match.awayTeam.form} align="right" />
+          <TeamBlock team={match.awayTeam} align="right" />
         </div>
 
         <div className="flex flex-shrink-0 flex-col items-end gap-0.5">
@@ -72,24 +73,18 @@ export function MatchCard({ match }: { match: Match }) {
 }
 
 function TeamBlock({
-  name,
-  abbr,
-  form,
+  team,
   align = 'left',
 }: {
-  name: string;
-  abbr: string;
-  form: Match['homeTeam']['form'];
+  team: Match['homeTeam'];
   align?: 'left' | 'right';
 }) {
   return (
     <div className={`flex min-w-0 flex-1 items-center gap-3 ${align === 'right' ? 'flex-row-reverse' : ''}`}>
-      <span className="flex h-9 w-11 flex-shrink-0 items-center justify-center rounded-md bg-court font-display text-[11px] font-bold text-orange">
-        {abbr}
-      </span>
+      <TeamLogo team={team} size={40} />
       <div className={`flex min-w-0 flex-col gap-1 ${align === 'right' ? 'items-end' : ''}`}>
-        <span className="truncate text-[15px] font-bold leading-none">{name}</span>
-        <FormDots form={form} />
+        <span className="truncate text-[15px] font-bold leading-none">{team.name}</span>
+        <FormDots form={team.form} />
       </div>
     </div>
   );

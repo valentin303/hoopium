@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { TeamLogo } from './TeamLogo';
 import type { Match } from '@/types';
 
 type ResultFilter = 'all' | 'correct' | 'wrong';
@@ -100,9 +101,9 @@ function FinishedMatchRow({ match }: { match: Match }) {
         <div className="h-9 w-px flex-shrink-0 bg-surface-line" />
 
         <div className="flex flex-1 items-center gap-4">
-          <ScoreBlock name={match.homeTeam.name} abbr={match.homeTeam.abbreviation} score={match.finalScore.home} winner={homeWon} />
+          <ScoreBlock team={match.homeTeam} score={match.finalScore.home} winner={homeWon} />
           <span className="flex-shrink-0 font-display text-[10px] text-bone-dim/50">F</span>
-          <ScoreBlock name={match.awayTeam.name} abbr={match.awayTeam.abbreviation} score={match.finalScore.away} winner={!homeWon} align="right" />
+          <ScoreBlock team={match.awayTeam} score={match.finalScore.away} winner={!homeWon} align="right" />
         </div>
 
         <div className="flex flex-shrink-0 flex-col items-end gap-0.5">
@@ -119,25 +120,21 @@ function FinishedMatchRow({ match }: { match: Match }) {
 }
 
 function ScoreBlock({
-  name,
-  abbr,
+  team,
   score,
   winner,
   align = 'left',
 }: {
-  name: string;
-  abbr: string;
+  team: Match['homeTeam'];
   score: number;
   winner: boolean;
   align?: 'left' | 'right';
 }) {
   return (
     <div className={`flex min-w-0 flex-1 items-center gap-3 ${align === 'right' ? 'flex-row-reverse' : ''}`}>
-      <span className="flex h-9 w-11 flex-shrink-0 items-center justify-center rounded-md bg-court font-display text-[11px] font-bold text-orange">
-        {abbr}
-      </span>
+      <TeamLogo team={team} size={40} />
       <div className={`flex min-w-0 items-baseline gap-2.5 ${align === 'right' ? 'flex-row-reverse' : ''}`}>
-        <span className={`truncate text-[14px] font-bold ${winner ? 'text-bone' : 'text-bone-dim'}`}>{name}</span>
+        <span className={`truncate text-[14px] font-bold ${winner ? 'text-bone' : 'text-bone-dim'}`}>{team.name}</span>
         <span className={`font-display text-2xl font-bold leading-none ${winner ? 'text-bone' : 'text-bone-dim'}`}>
           {score}
         </span>

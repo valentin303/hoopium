@@ -1,3 +1,4 @@
+import { TeamLogo } from './TeamLogo';
 import type { Match } from '@/types';
 
 interface VerifiedMatchCardProps {
@@ -40,14 +41,14 @@ export function VerifiedMatchCard({
       </span>
 
       <div className="flex items-center justify-center gap-6 py-6">
-        <TeamBadge abbreviation={match.homeTeam.abbreviation} name={match.homeTeam.name} />
+        <TeamBadge team={match.homeTeam} />
         <div className="flex flex-col items-center gap-1 font-display text-xs text-bone-dim">
           <span className="text-[32px] font-bold tracking-tight text-orange">
             {match.finalScore.home} - {match.finalScore.away}
           </span>
           <span>FINAL</span>
         </div>
-        <TeamBadge abbreviation={match.awayTeam.abbreviation} name={match.awayTeam.name} align="right" />
+        <TeamBadge team={match.awayTeam} align="right" />
       </div>
 
       <div className="flex flex-col gap-3.5 border-t border-surface-line pt-4">
@@ -80,20 +81,16 @@ export function VerifiedMatchCard({
 }
 
 function TeamBadge({
-  abbreviation,
-  name,
+  team,
   align = 'left',
 }: {
-  abbreviation: string;
-  name: string;
+  team: Match['homeTeam'];
   align?: 'left' | 'right';
 }) {
   return (
     <div className={`flex flex-col items-center gap-2.5 ${align === 'right' ? 'order-3' : ''}`}>
-      <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-surface-line bg-night font-display text-base font-bold text-orange">
-        {abbreviation}
-      </div>
-      <span className="text-sm font-semibold text-bone">{name}</span>
+      <TeamLogo team={team} size={56} />
+      <span className="text-sm font-semibold text-bone">{team.name}</span>
     </div>
   );
 }
