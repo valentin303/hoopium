@@ -253,12 +253,15 @@ export async function buildTeamSnapshotFromApi(
   const allGames = await fetchAllSeasonGames(league, seasonOverride);
   const recentGames = extractRecentGamesForTeam(allGames, teamId, referenceDate, maxGames);
 
-  const withStats: GameForTeam[] = await Promise.all(
+  const withStatsOrNull: (GameForTeam | null)[] = await Promise.all(
     recentGames.map(async (rg) => {
       const statsResponse = await apiNbaFetch<RawGameTeamStats>('/games/statistics/teams', { id: rg.gameId });
       const ownStats = statsResponse.response.find((s) => String(s.team.id) === teamId);
       if (!ownStats) {
-        throw new Error(`Stats introuvables pour l'équipe ${teamId} dans le match ${rg.gameId}`);
+        // Match sans box-score détaillé disponible (rare mais arrive) — on
+        // l'ignore plutôt que de faire échouer tout le profil de l'équipe.
+        console.warn(`[nba-provider] Stats absentes pour l'équipe ${teamId} dans le match ${rg.gameId} — ignoré.`);
+        return null;
       }
       return {
         date: rg.date,
@@ -269,6 +272,8 @@ export async function buildTeamSnapshotFromApi(
       };
     })
   );
+
+  const withStats: GameForTeam[] = withStatsOrNull.filter((g): g is GameForTeam => g !== null);
 
   return buildTeamSnapshot(withStats);
 }
