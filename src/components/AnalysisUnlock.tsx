@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   BarChart, Bar, LineChart, Line, RadarChart, Radar, PolarGrid, PolarAngleAxis,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
@@ -25,65 +25,9 @@ const STRENGTH_LABELS = {
   uncertain: 'Incertain',
 } as const;
 
-const PROCESSING_MS = 1100;
-const CELEBRATION_MS = 1700;
+const PROCESSING_MS = 900;
 
-type Phase = 'locked' | 'processing' | 'celebrating' | 'done';
-
-const CONFETTI_COLORS = ['var(--orange)', 'var(--green)', 'var(--bone)', 'var(--red)'];
-
-function ConfettiCurtain() {
-  const [pieces] = useState(() =>
-    Array.from({ length: 28 }, (_, i) => {
-      const side: 'left' | 'right' = i % 2 === 0 ? 'left' : 'right';
-      const travelX = side === 'left' ? 60 + Math.random() * 220 : -(60 + Math.random() * 220);
-      return {
-        id: i,
-        side,
-        top: Math.random() * 35,
-        delay: Math.random() * 250,
-        duration: 900 + Math.random() * 700,
-        color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
-        travelX,
-        rotated: Math.random() > 0.5,
-      };
-    })
-  );
-
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {pieces.map((p) => (
-        <span
-          key={p.id}
-          className={p.rotated ? 'absolute h-1.5 w-3 rounded-sm' : 'absolute h-3 w-1.5 rounded-sm'}
-          style={{
-            left: p.side === 'left' ? '-2%' : '102%',
-            top: `${p.top}%`,
-            backgroundColor: p.color,
-            animation: `hoopium-confetti-fall ${p.duration}ms ease-in ${p.delay}ms forwards`,
-            ['--confetti-x' as string]: `${p.travelX}px`,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
-function BouncingCrown() {
-  return (
-    <div
-      className="pointer-events-none absolute left-1/2 top-1/2 -ml-7 -mt-7"
-      style={{ animation: `hoopium-crown-bounce ${CELEBRATION_MS}ms ease-in-out forwards` }}
-    >
-      <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" strokeWidth={1.5}>
-        <path
-          d="M3 18h18l-1.5-9-4 3-2.5-5-2.5 5-4-3L3 18z"
-          fill="var(--orange-glow)"
-        />
-      </svg>
-    </div>
-  );
-}
+type Phase = 'locked' | 'processing' | 'done';
 
 function FormDots({ form }: { form: Match['homeTeam']['form'] }) {
   return (
@@ -106,12 +50,9 @@ function FormDots({ form }: { form: Match['homeTeam']['form'] }) {
 
 export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
   const [phase, setPhase] = useState<Phase>('locked');
-  const [displayHome, setDisplayHome] = useState(0);
-  const [displayAway, setDisplayAway] = useState(0);
 
   const { match } = analysis;
   const unlocking = phase === 'processing';
-  const celebrating = phase === 'celebrating';
   const unlocked = phase === 'done';
 
   // Score prédit par équipe, dérivé du total + écart — c'est précisément ce
@@ -124,34 +65,8 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
     setPhase('processing');
     // Le vrai déblocage (vérification d'abonnement ou paiement Stripe) sera
     // branché ici. Pour l'instant, on simule le temps de traitement.
-    setTimeout(() => setPhase('celebrating'), PROCESSING_MS);
+    setTimeout(() => setPhase('done'), PROCESSING_MS);
   }
-
-  useEffect(() => {
-    if (phase !== 'celebrating') return;
-
-    // Le score (pas la confiance, déjà publique) compte de 0 jusqu'à la
-    // prédiction réelle pendant la célébration — c'est la valeur qu'on débloque.
-    const start = performance.now();
-    let frame: number;
-
-    function tick(now: number) {
-      const elapsed = now - start;
-      const progress = Math.min(1, elapsed / (CELEBRATION_MS * 0.7));
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setDisplayHome(Math.round(eased * predictedHome));
-      setDisplayAway(Math.round(eased * predictedAway));
-      if (progress < 1) frame = requestAnimationFrame(tick);
-    }
-    frame = requestAnimationFrame(tick);
-
-    const doneTimer = setTimeout(() => setPhase('done'), CELEBRATION_MS);
-
-    return () => {
-      cancelAnimationFrame(frame);
-      clearTimeout(doneTimer);
-    };
-  }, [phase, predictedHome, predictedAway]);
 
   const trendData = analysis.scoringTrend.labels.map((label, i) => ({
     label,
@@ -248,21 +163,6 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
               >
                 {unlocking ? 'Analyse en cours...' : 'Débloquer'}
               </button>
-            </div>
-          </div>
-        )}
-
-        {celebrating && (
-          <div className="absolute inset-0 z-20 flex items-center justify-center overflow-hidden rounded-2xl bg-night/90">
-            <ConfettiCurtain />
-            <BouncingCrown />
-            <div className="text-center">
-              <span className="font-display text-[56px] font-bold leading-none tracking-tight text-orange">
-                {displayHome} - {displayAway}
-              </span>
-              <p className="mt-2 font-display text-xs uppercase tracking-widest text-bone-dim">
-                Score prédit débloqué
-              </p>
             </div>
           </div>
         )}
