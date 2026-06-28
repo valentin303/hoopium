@@ -1,0 +1,3682 @@
+{
+  "16": {
+    "name": "Monaco",
+    "league": "euroleague",
+    "logo": "/images/teams/16.png"
+  },
+  "26": {
+    "name": "Lyon-Villeurbanne",
+    "league": "euroleague",
+    "logo": "/images/teams/26.png"
+  },
+  "108": {
+    "name": "Paris",
+    "league": "euroleague",
+    "logo": "/images/teams/108.png"
+  },
+  "132": {
+    "name": "Atlanta Hawks",
+    "league": "nba",
+    "logo": "/images/teams/132.png"
+  },
+  "133": {
+    "name": "Boston Celtics",
+    "league": "nba",
+    "logo": "/images/teams/133.png"
+  },
+  "134": {
+    "name": "Brooklyn Nets",
+    "league": "nba",
+    "logo": "/images/teams/134.png"
+  },
+  "135": {
+    "name": "Charlotte Hornets",
+    "league": "nba",
+    "logo": "/images/teams/135.png"
+  },
+  "136": {
+    "name": "Chicago Bulls",
+    "league": "nba",
+    "logo": "/images/teams/136.png"
+  },
+  "137": {
+    "name": "Cleveland Cavaliers",
+    "league": "nba",
+    "logo": "/images/teams/137.png"
+  },
+  "138": {
+    "name": "Dallas Mavericks",
+    "league": "nba",
+    "logo": "/images/teams/138.png"
+  },
+  "139": {
+    "name": "Denver Nuggets",
+    "league": "nba",
+    "logo": "/images/teams/139.png"
+  },
+  "140": {
+    "name": "Detroit Pistons",
+    "league": "nba",
+    "logo": "/images/teams/140.png"
+  },
+  "141": {
+    "name": "Golden State Warriors",
+    "league": "nba",
+    "logo": "/images/teams/141.png"
+  },
+  "142": {
+    "name": "Houston Rockets",
+    "league": "nba",
+    "logo": "/images/teams/142.png"
+  },
+  "143": {
+    "name": "Indiana Pacers",
+    "league": "nba",
+    "logo": "/images/teams/143.png"
+  },
+  "144": {
+    "name": "Los Angeles Clippers",
+    "league": "nba",
+    "logo": "/images/teams/144.png"
+  },
+  "145": {
+    "name": "Los Angeles Lakers",
+    "league": "nba",
+    "logo": "/images/teams/145.png"
+  },
+  "146": {
+    "name": "Memphis Grizzlies",
+    "league": "nba",
+    "logo": "/images/teams/146.png"
+  },
+  "147": {
+    "name": "Miami Heat",
+    "league": "nba",
+    "logo": "/images/teams/147.png"
+  },
+  "148": {
+    "name": "Milwaukee Bucks",
+    "league": "nba",
+    "logo": "/images/teams/148.png"
+  },
+  "149": {
+    "name": "Minnesota Timberwolves",
+    "league": "nba",
+    "logo": "/images/teams/149.png"
+  },
+  "150": {
+    "name": "New Orleans Pelicans",
+    "league": "nba",
+    "logo": "/images/teams/150.png"
+  },
+  "151": {
+    "name": "New York Knicks",
+    "league": "nba",
+    "logo": "/images/teams/151.png"
+  },
+  "152": {
+    "name": "Oklahoma City Thunder",
+    "league": "nba",
+    "logo": "/images/teams/152.png"
+  },
+  "153": {
+    "name": "Orlando Magic",
+    "league": "nba",
+    "logo": "/images/teams/153.png"
+  },
+  "154": {
+    "name": "Philadelphia 76ers",
+    "league": "nba",
+    "logo": "/images/teams/154.png"
+  },
+  "155": {
+    "name": "Phoenix Suns",
+    "league": "nba",
+    "logo": "/images/teams/155.png"
+  },
+  "156": {
+    "name": "Portland Trail Blazers",
+    "league": "nba",
+    "logo": "/images/teams/156.png"
+  },
+  "157": {
+    "name": "Sacramento Kings",
+    "league": "nba",
+    "logo": "/images/teams/157.png"
+  },
+  "158": {
+    "name": "San Antonio Spurs",
+    "league": "nba",
+    "logo": "/images/teams/158.png"
+  },
+  "159": {
+    "name": "Toronto Raptors",
+    "league": "nba",
+    "logo": "/images/teams/159.png"
+  },
+  "160": {
+    "name": "Utah Jazz",
+    "league": "nba",
+    "logo": "/images/teams/160.png"
+  },
+  "161": {
+    "name": "Washington Wizards",
+    "league": "nba",
+    "logo": "/images/teams/161.png"
+  },
+  "162": {
+    "name": "Atlanta Dream W",
+    "league": "wnba",
+    "logo": "/images/teams/162.png"
+  },
+  "163": {
+    "name": "Chicago Sky W",
+    "league": "wnba",
+    "logo": "/images/teams/163.png"
+  },
+  "164": {
+    "name": "Connecticut Sun W",
+    "league": "wnba",
+    "logo": "/images/teams/164.png"
+  },
+  "165": {
+    "name": "Dallas Wings W",
+    "league": "wnba",
+    "logo": "/images/teams/165.png"
+  },
+  "166": {
+    "name": "Indiana Fever W",
+    "league": "wnba",
+    "logo": "/images/teams/166.png"
+  },
+  "167": {
+    "name": "Las Vegas Aces W",
+    "league": "wnba",
+    "logo": "/images/teams/167.png"
+  },
+  "168": {
+    "name": "Los Angeles Sparks W",
+    "league": "wnba",
+    "logo": "/images/teams/168.png"
+  },
+  "169": {
+    "name": "Minnesota Lynx W",
+    "league": "wnba",
+    "logo": "/images/teams/169.png"
+  },
+  "170": {
+    "name": "New York Liberty W",
+    "league": "wnba",
+    "logo": "/images/teams/170.png"
+  },
+  "171": {
+    "name": "Phoenix Mercury W",
+    "league": "wnba",
+    "logo": "/images/teams/171.png"
+  },
+  "172": {
+    "name": "Seattle Storm W",
+    "league": "wnba",
+    "logo": "/images/teams/172.png"
+  },
+  "175": {
+    "name": "Washington Mystics W",
+    "league": "wnba",
+    "logo": "/images/teams/175.png"
+  },
+  "176": {
+    "name": "Alabama",
+    "league": "ncaa",
+    "logo": "/images/teams/176.png"
+  },
+  "177": {
+    "name": "Arkansas",
+    "league": "ncaa",
+    "logo": "/images/teams/177.png"
+  },
+  "178": {
+    "name": "Butler",
+    "league": "ncaa",
+    "logo": "/images/teams/178.png"
+  },
+  "179": {
+    "name": "Campbell",
+    "league": "ncaa",
+    "logo": "/images/teams/179.png"
+  },
+  "180": {
+    "name": "Clemson",
+    "league": "ncaa",
+    "logo": "/images/teams/180.png"
+  },
+  "181": {
+    "name": "Colorado",
+    "league": "ncaa",
+    "logo": "/images/teams/181.png"
+  },
+  "182": {
+    "name": "Creighton",
+    "league": "ncaa",
+    "logo": "/images/teams/182.png"
+  },
+  "183": {
+    "name": "Davidson",
+    "league": "ncaa",
+    "logo": "/images/teams/183.png"
+  },
+  "184": {
+    "name": "Dayton",
+    "league": "ncaa",
+    "logo": "/images/teams/184.png"
+  },
+  "185": {
+    "name": "Furman",
+    "league": "ncaa",
+    "logo": "/images/teams/185.png"
+  },
+  "186": {
+    "name": "Georgetown",
+    "league": "ncaa",
+    "logo": "/images/teams/186.png"
+  },
+  "187": {
+    "name": "Harvard",
+    "league": "ncaa",
+    "logo": "/images/teams/187.png"
+  },
+  "188": {
+    "name": "Hofstra",
+    "league": "ncaa",
+    "logo": "/images/teams/188.png"
+  },
+  "189": {
+    "name": "Indiana",
+    "league": "ncaa",
+    "logo": "/images/teams/189.png"
+  },
+  "190": {
+    "name": "Lipscomb",
+    "league": "ncaa",
+    "logo": "/images/teams/190.png"
+  },
+  "191": {
+    "name": "Loyola Chicago",
+    "league": "ncaa",
+    "logo": "/images/teams/191.png"
+  },
+  "192": {
+    "name": "Memphis",
+    "league": "ncaa",
+    "logo": "/images/teams/192.png"
+  },
+  "193": {
+    "name": "NC Greensboro",
+    "league": "ncaa",
+    "logo": "/images/teams/193.png"
+  },
+  "194": {
+    "name": "NC State",
+    "league": "ncaa",
+    "logo": "/images/teams/194.png"
+  },
+  "195": {
+    "name": "Nebraska",
+    "league": "ncaa",
+    "logo": "/images/teams/195.png"
+  },
+  "196": {
+    "name": "Norfolk State",
+    "league": "ncaa",
+    "logo": "/images/teams/196.png"
+  },
+  "197": {
+    "name": "Providence",
+    "league": "ncaa",
+    "logo": "/images/teams/197.png"
+  },
+  "198": {
+    "name": "Sam Houston St.",
+    "league": "ncaa",
+    "logo": "/images/teams/198.png"
+  },
+  "199": {
+    "name": "San Diego Toreros",
+    "league": "ncaa",
+    "logo": "/images/teams/199.png"
+  },
+  "200": {
+    "name": "South Dakota St.",
+    "league": "ncaa",
+    "logo": "/images/teams/200.png"
+  },
+  "201": {
+    "name": "St. Francis (PA)",
+    "league": "ncaa",
+    "logo": "/images/teams/201.png"
+  },
+  "202": {
+    "name": "TCU",
+    "league": "ncaa",
+    "logo": "/images/teams/202.png"
+  },
+  "203": {
+    "name": "Texas",
+    "league": "ncaa",
+    "logo": "/images/teams/203.png"
+  },
+  "204": {
+    "name": "Toledo",
+    "league": "ncaa",
+    "logo": "/images/teams/204.png"
+  },
+  "205": {
+    "name": "Wichita State",
+    "league": "ncaa",
+    "logo": "/images/teams/205.png"
+  },
+  "206": {
+    "name": "Wright State",
+    "league": "ncaa",
+    "logo": "/images/teams/206.png"
+  },
+  "207": {
+    "name": "Xavier",
+    "league": "ncaa",
+    "logo": "/images/teams/207.png"
+  },
+  "208": {
+    "name": "Brown",
+    "league": "ncaa",
+    "logo": "/images/teams/208.png"
+  },
+  "209": {
+    "name": "CS Northridge",
+    "league": "ncaa",
+    "logo": "/images/teams/209.png"
+  },
+  "210": {
+    "name": "California Baptist",
+    "league": "ncaa",
+    "logo": "/images/teams/210.png"
+  },
+  "211": {
+    "name": "Central Michigan",
+    "league": "ncaa",
+    "logo": "/images/teams/211.png"
+  },
+  "212": {
+    "name": "Coastal Carolina",
+    "league": "ncaa",
+    "logo": "/images/teams/212.png"
+  },
+  "213": {
+    "name": "DePaul",
+    "league": "ncaa",
+    "logo": "/images/teams/213.png"
+  },
+  "214": {
+    "name": "Grand Canyon",
+    "league": "ncaa",
+    "logo": "/images/teams/214.png"
+  },
+  "215": {
+    "name": "Howard",
+    "league": "ncaa",
+    "logo": "/images/teams/215.png"
+  },
+  "216": {
+    "name": "Longwood",
+    "league": "ncaa",
+    "logo": "/images/teams/216.png"
+  },
+  "218": {
+    "name": "South Florida",
+    "league": "ncaa",
+    "logo": "/images/teams/218.png"
+  },
+  "219": {
+    "name": "Southern Miss",
+    "league": "ncaa",
+    "logo": "/images/teams/219.png"
+  },
+  "220": {
+    "name": "Stony Brook",
+    "league": "ncaa",
+    "logo": "/images/teams/220.png"
+  },
+  "221": {
+    "name": "UAB",
+    "league": "ncaa",
+    "logo": "/images/teams/221.png"
+  },
+  "222": {
+    "name": "Utah Valley State",
+    "league": "ncaa",
+    "logo": "/images/teams/222.png"
+  },
+  "223": {
+    "name": "West Virginia",
+    "league": "ncaa",
+    "logo": "/images/teams/223.png"
+  },
+  "224": {
+    "name": "CS Fullerton",
+    "league": "ncaa",
+    "logo": "/images/teams/224.png"
+  },
+  "225": {
+    "name": "CSU Bakersfield",
+    "league": "ncaa",
+    "logo": "/images/teams/225.png"
+  },
+  "226": {
+    "name": "Charleston Southern",
+    "league": "ncaa",
+    "logo": "/images/teams/226.png"
+  },
+  "227": {
+    "name": "Cornell",
+    "league": "ncaa",
+    "logo": "/images/teams/227.png"
+  },
+  "228": {
+    "name": "Drake",
+    "league": "ncaa",
+    "logo": "/images/teams/228.png"
+  },
+  "229": {
+    "name": "East Tennessee St",
+    "league": "ncaa",
+    "logo": "/images/teams/229.png"
+  },
+  "230": {
+    "name": "Florida Atlantic",
+    "league": "ncaa",
+    "logo": "/images/teams/230.png"
+  },
+  "232": {
+    "name": "Grambling St.",
+    "league": "ncaa",
+    "logo": "/images/teams/232.png"
+  },
+  "233": {
+    "name": "Hampton",
+    "league": "ncaa",
+    "logo": "/images/teams/233.png"
+  },
+  "234": {
+    "name": "IUPUI",
+    "league": "ncaa",
+    "logo": "/images/teams/234.png"
+  },
+  "235": {
+    "name": "Kent State",
+    "league": "ncaa",
+    "logo": "/images/teams/235.png"
+  },
+  "236": {
+    "name": "Louisiana Monroe",
+    "league": "ncaa",
+    "logo": "/images/teams/236.png"
+  },
+  "237": {
+    "name": "Marshall",
+    "league": "ncaa",
+    "logo": "/images/teams/237.png"
+  },
+  "238": {
+    "name": "NJIT",
+    "league": "ncaa",
+    "logo": "/images/teams/238.png"
+  },
+  "239": {
+    "name": "New Orleans",
+    "league": "ncaa",
+    "logo": "/images/teams/239.png"
+  },
+  "240": {
+    "name": "Presbyterian",
+    "league": "ncaa",
+    "logo": "/images/teams/240.png"
+  },
+  "241": {
+    "name": "Quinnipiac",
+    "league": "ncaa",
+    "logo": "/images/teams/241.png"
+  },
+  "242": {
+    "name": "Robert Morris",
+    "league": "ncaa",
+    "logo": "/images/teams/242.png"
+  },
+  "243": {
+    "name": "Seattle",
+    "league": "ncaa",
+    "logo": "/images/teams/243.png"
+  },
+  "244": {
+    "name": "Southern Utah",
+    "league": "ncaa",
+    "logo": "/images/teams/244.png"
+  },
+  "246": {
+    "name": "Texas Southern",
+    "league": "ncaa",
+    "logo": "/images/teams/246.png"
+  },
+  "247": {
+    "name": "Texas State",
+    "league": "ncaa",
+    "logo": "/images/teams/247.png"
+  },
+  "248": {
+    "name": "UTRGV",
+    "league": "ncaa",
+    "logo": "/images/teams/248.png"
+  },
+  "249": {
+    "name": "Wisc. Green Bay",
+    "league": "ncaa",
+    "logo": "/images/teams/249.png"
+  },
+  "257": {
+    "name": "IPFW",
+    "league": "ncaa",
+    "logo": "/images/teams/257.png"
+  },
+  "408": {
+    "name": "York",
+    "league": "ncaa",
+    "logo": "/images/teams/408.png"
+  },
+  "519": {
+    "name": "Alba Berlin",
+    "league": "euroleague",
+    "logo": "/images/teams/519.png"
+  },
+  "522": {
+    "name": "Bayern",
+    "league": "euroleague",
+    "logo": "/images/teams/522.png"
+  },
+  "552": {
+    "name": "Heidelberg",
+    "league": "ncaa",
+    "logo": "/images/teams/552.png"
+  },
+  "614": {
+    "name": "Panathinaikos",
+    "league": "euroleague",
+    "logo": "/images/teams/614.png"
+  },
+  "687": {
+    "name": "Maccabi Tel Aviv",
+    "league": "euroleague",
+    "logo": "/images/teams/687.png"
+  },
+  "717": {
+    "name": "Brescia",
+    "league": "ncaa",
+    "logo": "/images/teams/717.png"
+  },
+  "722": {
+    "name": "Olimpia Milano",
+    "league": "euroleague",
+    "logo": "/images/teams/722.png"
+  },
+  "732": {
+    "name": "Virtus Bologna",
+    "league": "euroleague",
+    "logo": "/images/teams/732.png"
+  },
+  "796": {
+    "name": "Zalgiris Kaunas",
+    "league": "euroleague",
+    "logo": "/images/teams/796.png"
+  },
+  "1065": {
+    "name": "Crvena zvezda",
+    "league": "euroleague",
+    "logo": "/images/teams/1065.png"
+  },
+  "1068": {
+    "name": "Partizan",
+    "league": "euroleague",
+    "logo": "/images/teams/1068.png"
+  },
+  "1263": {
+    "name": "Anadolu Efes",
+    "league": "euroleague",
+    "logo": "/images/teams/1263.png"
+  },
+  "1270": {
+    "name": "Fenerbahce",
+    "league": "euroleague",
+    "logo": "/images/teams/1270.png"
+  },
+  "1416": {
+    "name": "East",
+    "league": "nba",
+    "logo": "/images/teams/1416.png"
+  },
+  "1417": {
+    "name": "West",
+    "league": "nba",
+    "logo": "/images/teams/1417.png"
+  },
+  "1489": {
+    "name": "Canisius",
+    "league": "ncaa",
+    "logo": "/images/teams/1489.png"
+  },
+  "1490": {
+    "name": "Central Arkansas",
+    "league": "ncaa",
+    "logo": "/images/teams/1490.png"
+  },
+  "1491": {
+    "name": "Colgate",
+    "league": "ncaa",
+    "logo": "/images/teams/1491.png"
+  },
+  "1492": {
+    "name": "East. Washington",
+    "league": "ncaa",
+    "logo": "/images/teams/1492.png"
+  },
+  "1493": {
+    "name": "Jacksonville State",
+    "league": "ncaa",
+    "logo": "/images/teams/1493.png"
+  },
+  "1494": {
+    "name": "Mercer",
+    "league": "ncaa",
+    "logo": "/images/teams/1494.png"
+  },
+  "1495": {
+    "name": "Miami (Ohio)",
+    "league": "ncaa",
+    "logo": "/images/teams/1495.png"
+  },
+  "1496": {
+    "name": "North Texas",
+    "league": "ncaa",
+    "logo": "/images/teams/1496.png"
+  },
+  "1497": {
+    "name": "San Francisco",
+    "league": "ncaa",
+    "logo": "/images/teams/1497.png"
+  },
+  "1498": {
+    "name": "South Dakota Coyotes",
+    "league": "ncaa",
+    "logo": "/images/teams/1498.png"
+  },
+  "1499": {
+    "name": "George Mason",
+    "league": "ncaa",
+    "logo": "/images/teams/1499.png"
+  },
+  "1500": {
+    "name": "George Washington",
+    "league": "ncaa",
+    "logo": "/images/teams/1500.png"
+  },
+  "1501": {
+    "name": "Georgia Southern",
+    "league": "ncaa",
+    "logo": "/images/teams/1501.png"
+  },
+  "1502": {
+    "name": "Illinois (Chi.)",
+    "league": "ncaa",
+    "logo": "/images/teams/1502.png"
+  },
+  "1503": {
+    "name": "Loyola Maryland",
+    "league": "ncaa",
+    "logo": "/images/teams/1503.png"
+  },
+  "1504": {
+    "name": "Rice",
+    "league": "ncaa",
+    "logo": "/images/teams/1504.png"
+  },
+  "1505": {
+    "name": "UMKC",
+    "league": "ncaa",
+    "logo": "/images/teams/1505.png"
+  },
+  "1506": {
+    "name": "Wyoming",
+    "league": "ncaa",
+    "logo": "/images/teams/1506.png"
+  },
+  "1542": {
+    "name": "Olympiacos",
+    "league": "euroleague",
+    "logo": "/images/teams/1542.png"
+  },
+  "1570": {
+    "name": "Siena",
+    "league": "ncaa",
+    "logo": "/images/teams/1570.png"
+  },
+  "1700": {
+    "name": "Avila",
+    "league": "ncaa",
+    "logo": "/images/teams/1700.png"
+  },
+  "1803": {
+    "name": "Abilene Christian",
+    "league": "ncaa",
+    "logo": "/images/teams/1803.png"
+  },
+  "1804": {
+    "name": "Air Force",
+    "league": "ncaa",
+    "logo": "/images/teams/1804.png"
+  },
+  "1805": {
+    "name": "Akron",
+    "league": "ncaa",
+    "logo": "/images/teams/1805.png"
+  },
+  "1806": {
+    "name": "Alabama A&M Bulldogs",
+    "league": "ncaa",
+    "logo": "/images/teams/1806.png"
+  },
+  "1807": {
+    "name": "Alabama State",
+    "league": "ncaa",
+    "logo": "/images/teams/1807.png"
+  },
+  "1808": {
+    "name": "Albany",
+    "league": "ncaa",
+    "logo": "/images/teams/1808.png"
+  },
+  "1809": {
+    "name": "Alcorn State",
+    "league": "ncaa",
+    "logo": "/images/teams/1809.png"
+  },
+  "1810": {
+    "name": "Alice Loyd",
+    "league": "ncaa",
+    "logo": "/images/teams/1810.png"
+  },
+  "1811": {
+    "name": "American University",
+    "league": "ncaa",
+    "logo": "/images/teams/1811.png"
+  },
+  "1813": {
+    "name": "Appalachian State",
+    "league": "ncaa",
+    "logo": "/images/teams/1813.png"
+  },
+  "1814": {
+    "name": "Aquinas",
+    "league": "ncaa",
+    "logo": "/images/teams/1814.png"
+  },
+  "1815": {
+    "name": "Arizona",
+    "league": "ncaa",
+    "logo": "/images/teams/1815.png"
+  },
+  "1816": {
+    "name": "Arizona State",
+    "league": "ncaa",
+    "logo": "/images/teams/1816.png"
+  },
+  "1817": {
+    "name": "Arkansas State",
+    "league": "ncaa",
+    "logo": "/images/teams/1817.png"
+  },
+  "1818": {
+    "name": "Arkansas-Pine Bluff",
+    "league": "ncaa",
+    "logo": "/images/teams/1818.png"
+  },
+  "1819": {
+    "name": "Arlington Baptist Patriots",
+    "league": "ncaa",
+    "logo": "/images/teams/1819.png"
+  },
+  "1820": {
+    "name": "Army",
+    "league": "ncaa",
+    "logo": "/images/teams/1820.png"
+  },
+  "1822": {
+    "name": "Auburn",
+    "league": "ncaa",
+    "logo": "/images/teams/1822.png"
+  },
+  "1823": {
+    "name": "Austin Peay",
+    "league": "ncaa",
+    "logo": "/images/teams/1823.png"
+  },
+  "1824": {
+    "name": "Ball State",
+    "league": "ncaa",
+    "logo": "/images/teams/1824.png"
+  },
+  "1825": {
+    "name": "Baylor",
+    "league": "ncaa",
+    "logo": "/images/teams/1825.png"
+  },
+  "1826": {
+    "name": "Belmont",
+    "league": "ncaa",
+    "logo": "/images/teams/1826.png"
+  },
+  "1827": {
+    "name": "Bethany",
+    "league": "ncaa",
+    "logo": "/images/teams/1827.png"
+  },
+  "1828": {
+    "name": "Bethesda",
+    "league": "ncaa",
+    "logo": "/images/teams/1828.png"
+  },
+  "1829": {
+    "name": "Bethune-Cookman",
+    "league": "ncaa",
+    "logo": "/images/teams/1829.png"
+  },
+  "1830": {
+    "name": "Binghamton",
+    "league": "ncaa",
+    "logo": "/images/teams/1830.png"
+  },
+  "1831": {
+    "name": "Birmingham Southern",
+    "league": "ncaa",
+    "logo": "/images/teams/1831.png"
+  },
+  "1832": {
+    "name": "Blue Mountain",
+    "league": "ncaa",
+    "logo": "/images/teams/1832.png"
+  },
+  "1833": {
+    "name": "Bluefield State",
+    "league": "ncaa",
+    "logo": "/images/teams/1833.png"
+  },
+  "1834": {
+    "name": "Bob Jones",
+    "league": "ncaa",
+    "logo": "/images/teams/1834.png"
+  },
+  "1835": {
+    "name": "Boise State",
+    "league": "ncaa",
+    "logo": "/images/teams/1835.png"
+  },
+  "1836": {
+    "name": "Boston College",
+    "league": "ncaa",
+    "logo": "/images/teams/1836.png"
+  },
+  "1837": {
+    "name": "Boston University",
+    "league": "ncaa",
+    "logo": "/images/teams/1837.png"
+  },
+  "1838": {
+    "name": "Bowling Green",
+    "league": "ncaa",
+    "logo": "/images/teams/1838.png"
+  },
+  "1839": {
+    "name": "Bradley",
+    "league": "ncaa",
+    "logo": "/images/teams/1839.png"
+  },
+  "1840": {
+    "name": "Brevard College",
+    "league": "ncaa",
+    "logo": "/images/teams/1840.png"
+  },
+  "1841": {
+    "name": "Brigham Young",
+    "league": "ncaa",
+    "logo": "/images/teams/1841.png"
+  },
+  "1842": {
+    "name": "Bryan",
+    "league": "ncaa",
+    "logo": "/images/teams/1842.png"
+  },
+  "1843": {
+    "name": "Bryant University",
+    "league": "ncaa",
+    "logo": "/images/teams/1843.png"
+  },
+  "1844": {
+    "name": "Bucknell",
+    "league": "ncaa",
+    "logo": "/images/teams/1844.png"
+  },
+  "1845": {
+    "name": "Buffalo",
+    "league": "ncaa",
+    "logo": "/images/teams/1845.png"
+  },
+  "1847": {
+    "name": "Cal Poly",
+    "league": "ncaa",
+    "logo": "/images/teams/1847.png"
+  },
+  "1850": {
+    "name": "California",
+    "league": "ncaa",
+    "logo": "/images/teams/1850.png"
+  },
+  "1851": {
+    "name": "California Merced",
+    "league": "ncaa",
+    "logo": "/images/teams/1851.png"
+  },
+  "1852": {
+    "name": "Campbellsville",
+    "league": "ncaa",
+    "logo": "/images/teams/1852.png"
+  },
+  "1856": {
+    "name": "Central Connecticut State",
+    "league": "ncaa",
+    "logo": "/images/teams/1856.png"
+  },
+  "1858": {
+    "name": "Central Penn",
+    "league": "ncaa",
+    "logo": "/images/teams/1858.png"
+  },
+  "1859": {
+    "name": "Chaminade Silverswords",
+    "league": "ncaa",
+    "logo": "/images/teams/1859.png"
+  },
+  "1860": {
+    "name": "Champion Christian Tigers",
+    "league": "ncaa",
+    "logo": "/images/teams/1860.png"
+  },
+  "1861": {
+    "name": "Charleston",
+    "league": "ncaa",
+    "logo": "/images/teams/1861.png"
+  },
+  "1863": {
+    "name": "Chicago State",
+    "league": "ncaa",
+    "logo": "/images/teams/1863.png"
+  },
+  "1864": {
+    "name": "Christendom",
+    "league": "ncaa",
+    "logo": "/images/teams/1864.png"
+  },
+  "1865": {
+    "name": "Cincinnati",
+    "league": "ncaa",
+    "logo": "/images/teams/1865.png"
+  },
+  "1866": {
+    "name": "Citadel",
+    "league": "ncaa",
+    "logo": "/images/teams/1866.png"
+  },
+  "1867": {
+    "name": "Cleveland State",
+    "league": "ncaa",
+    "logo": "/images/teams/1867.png"
+  },
+  "1868": {
+    "name": "Coker",
+    "league": "ncaa",
+    "logo": "/images/teams/1868.png"
+  },
+  "1869": {
+    "name": "Colorado Christian",
+    "league": "ncaa",
+    "logo": "/images/teams/1869.png"
+  },
+  "1870": {
+    "name": "Colorado State",
+    "league": "ncaa",
+    "logo": "/images/teams/1870.png"
+  },
+  "1871": {
+    "name": "Columbia",
+    "league": "ncaa",
+    "logo": "/images/teams/1871.png"
+  },
+  "1872": {
+    "name": "Columbia International",
+    "league": "ncaa",
+    "logo": "/images/teams/1872.png"
+  },
+  "1878": {
+    "name": "Coppin State",
+    "league": "ncaa",
+    "logo": "/images/teams/1878.png"
+  },
+  "1882": {
+    "name": "Dallas Christian",
+    "league": "ncaa",
+    "logo": "/images/teams/1882.png"
+  },
+  "1883": {
+    "name": "Dartmouth",
+    "league": "ncaa",
+    "logo": "/images/teams/1883.png"
+  },
+  "1884": {
+    "name": "Delaware",
+    "league": "ncaa",
+    "logo": "/images/teams/1884.png"
+  },
+  "1885": {
+    "name": "Delaware State",
+    "league": "ncaa",
+    "logo": "/images/teams/1885.png"
+  },
+  "1886": {
+    "name": "Denver",
+    "league": "ncaa",
+    "logo": "/images/teams/1886.png"
+  },
+  "1887": {
+    "name": "Detroit",
+    "league": "ncaa",
+    "logo": "/images/teams/1887.png"
+  },
+  "1888": {
+    "name": "Doane Tigers",
+    "league": "ncaa",
+    "logo": "/images/teams/1888.png"
+  },
+  "1889": {
+    "name": "Drexel",
+    "league": "ncaa",
+    "logo": "/images/teams/1889.png"
+  },
+  "1890": {
+    "name": "Duke",
+    "league": "ncaa",
+    "logo": "/images/teams/1890.png"
+  },
+  "1891": {
+    "name": "Duquesne",
+    "league": "ncaa",
+    "logo": "/images/teams/1891.png"
+  },
+  "1892": {
+    "name": "East Carolina",
+    "league": "ncaa",
+    "logo": "/images/teams/1892.png"
+  },
+  "1894": {
+    "name": "Eastern Illinois",
+    "league": "ncaa",
+    "logo": "/images/teams/1894.png"
+  },
+  "1895": {
+    "name": "Eastern Kentucky",
+    "league": "ncaa",
+    "logo": "/images/teams/1895.png"
+  },
+  "1896": {
+    "name": "Eastern Michigan",
+    "league": "ncaa",
+    "logo": "/images/teams/1896.png"
+  },
+  "1897": {
+    "name": "Eastern Oregon",
+    "league": "ncaa",
+    "logo": "/images/teams/1897.png"
+  },
+  "1898": {
+    "name": "Ecclesia",
+    "league": "ncaa",
+    "logo": "/images/teams/1898.png"
+  },
+  "1901": {
+    "name": "Elon",
+    "league": "ncaa",
+    "logo": "/images/teams/1901.png"
+  },
+  "1903": {
+    "name": "Eureka",
+    "league": "ncaa",
+    "logo": "/images/teams/1903.png"
+  },
+  "1904": {
+    "name": "Evansville",
+    "league": "ncaa",
+    "logo": "/images/teams/1904.png"
+  },
+  "1905": {
+    "name": "Evergreen State",
+    "league": "ncaa",
+    "logo": "/images/teams/1905.png"
+  },
+  "1906": {
+    "name": "Fairfield",
+    "league": "ncaa",
+    "logo": "/images/teams/1906.png"
+  },
+  "1907": {
+    "name": "Fairleigh Dickinson",
+    "league": "ncaa",
+    "logo": "/images/teams/1907.png"
+  },
+  "1908": {
+    "name": "Ferrum",
+    "league": "ncaa",
+    "logo": "/images/teams/1908.png"
+  },
+  "1909": {
+    "name": "Florida",
+    "league": "ncaa",
+    "logo": "/images/teams/1909.png"
+  },
+  "1910": {
+    "name": "Florida A&M",
+    "league": "ncaa",
+    "logo": "/images/teams/1910.png"
+  },
+  "1912": {
+    "name": "Florida Gulf Coast",
+    "league": "ncaa",
+    "logo": "/images/teams/1912.png"
+  },
+  "1913": {
+    "name": "Florida Mem.",
+    "league": "ncaa",
+    "logo": "/images/teams/1913.png"
+  },
+  "1914": {
+    "name": "Florida State",
+    "league": "ncaa",
+    "logo": "/images/teams/1914.png"
+  },
+  "1916": {
+    "name": "Fordham",
+    "league": "ncaa",
+    "logo": "/images/teams/1916.png"
+  },
+  "1919": {
+    "name": "Fresno State",
+    "league": "ncaa",
+    "logo": "/images/teams/1919.png"
+  },
+  "1922": {
+    "name": "Gardner Webb",
+    "league": "ncaa",
+    "logo": "/images/teams/1922.png"
+  },
+  "1924": {
+    "name": "Georgia",
+    "league": "ncaa",
+    "logo": "/images/teams/1924.png"
+  },
+  "1925": {
+    "name": "Georgia State",
+    "league": "ncaa",
+    "logo": "/images/teams/1925.png"
+  },
+  "1926": {
+    "name": "Georgia Tech",
+    "league": "ncaa",
+    "logo": "/images/teams/1926.png"
+  },
+  "1927": {
+    "name": "Gonzaga",
+    "league": "ncaa",
+    "logo": "/images/teams/1927.png"
+  },
+  "1930": {
+    "name": "Hartford",
+    "league": "ncaa",
+    "logo": "/images/teams/1930.png"
+  },
+  "1933": {
+    "name": "Hawaii",
+    "league": "ncaa",
+    "logo": "/images/teams/1933.png"
+  },
+  "1934": {
+    "name": "High Point",
+    "league": "ncaa",
+    "logo": "/images/teams/1934.png"
+  },
+  "1936": {
+    "name": "Holy Cross",
+    "league": "ncaa",
+    "logo": "/images/teams/1936.png"
+  },
+  "1938": {
+    "name": "Houston",
+    "league": "ncaa",
+    "logo": "/images/teams/1938.png"
+  },
+  "1939": {
+    "name": "Houston Christian",
+    "league": "ncaa",
+    "logo": "/images/teams/1939.png"
+  },
+  "1940": {
+    "name": "Howard Payne",
+    "league": "ncaa",
+    "logo": "/images/teams/1940.png"
+  },
+  "1942": {
+    "name": "Idaho",
+    "league": "ncaa",
+    "logo": "/images/teams/1942.png"
+  },
+  "1943": {
+    "name": "Idaho State",
+    "league": "ncaa",
+    "logo": "/images/teams/1943.png"
+  },
+  "1944": {
+    "name": "Illinois",
+    "league": "ncaa",
+    "logo": "/images/teams/1944.png"
+  },
+  "1945": {
+    "name": "Illinois State",
+    "league": "ncaa",
+    "logo": "/images/teams/1945.png"
+  },
+  "1946": {
+    "name": "Incarnate Word",
+    "league": "ncaa",
+    "logo": "/images/teams/1946.png"
+  },
+  "1948": {
+    "name": "Indiana State",
+    "league": "ncaa",
+    "logo": "/images/teams/1948.png"
+  },
+  "1949": {
+    "name": "Iona",
+    "league": "ncaa",
+    "logo": "/images/teams/1949.png"
+  },
+  "1950": {
+    "name": "Iowa",
+    "league": "ncaa",
+    "logo": "/images/teams/1950.png"
+  },
+  "1951": {
+    "name": "Iowa State",
+    "league": "ncaa",
+    "logo": "/images/teams/1951.png"
+  },
+  "1952": {
+    "name": "Jackson State",
+    "league": "ncaa",
+    "logo": "/images/teams/1952.png"
+  },
+  "1953": {
+    "name": "Jacksonville",
+    "league": "ncaa",
+    "logo": "/images/teams/1953.png"
+  },
+  "1954": {
+    "name": "James Madison",
+    "league": "ncaa",
+    "logo": "/images/teams/1954.png"
+  },
+  "1955": {
+    "name": "Johnson & Wales (RI)",
+    "league": "ncaa",
+    "logo": "/images/teams/1955.png"
+  },
+  "1959": {
+    "name": "Kansas",
+    "league": "ncaa",
+    "logo": "/images/teams/1959.png"
+  },
+  "1960": {
+    "name": "Kansas State",
+    "league": "ncaa",
+    "logo": "/images/teams/1960.png"
+  },
+  "1961": {
+    "name": "Kean",
+    "league": "ncaa",
+    "logo": "/images/teams/1961.png"
+  },
+  "1962": {
+    "name": "Keiser",
+    "league": "ncaa",
+    "logo": "/images/teams/1962.png"
+  },
+  "1963": {
+    "name": "Kennesaw State",
+    "league": "ncaa",
+    "logo": "/images/teams/1963.png"
+  },
+  "1964": {
+    "name": "Kentucky",
+    "league": "ncaa",
+    "logo": "/images/teams/1964.png"
+  },
+  "1965": {
+    "name": "Kentucky Christian",
+    "league": "ncaa",
+    "logo": "/images/teams/1965.png"
+  },
+  "1966": {
+    "name": "LIU Sharks",
+    "league": "ncaa",
+    "logo": "/images/teams/1966.png"
+  },
+  "1967": {
+    "name": "LSU",
+    "league": "ncaa",
+    "logo": "/images/teams/1967.png"
+  },
+  "1968": {
+    "name": "La Salle",
+    "league": "ncaa",
+    "logo": "/images/teams/1968.png"
+  },
+  "1969": {
+    "name": "Lafayette",
+    "league": "ncaa",
+    "logo": "/images/teams/1969.png"
+  },
+  "1970": {
+    "name": "Lamar",
+    "league": "ncaa",
+    "logo": "/images/teams/1970.png"
+  },
+  "1971": {
+    "name": "Lehigh",
+    "league": "ncaa",
+    "logo": "/images/teams/1971.png"
+  },
+  "1972": {
+    "name": "Liberty",
+    "league": "ncaa",
+    "logo": "/images/teams/1972.png"
+  },
+  "1973": {
+    "name": "Lindenwood",
+    "league": "ncaa",
+    "logo": "/images/teams/1973.png"
+  },
+  "1974": {
+    "name": "Long Beach State",
+    "league": "ncaa",
+    "logo": "/images/teams/1974.png"
+  },
+  "1975": {
+    "name": "Louisiana Lafayette",
+    "league": "ncaa",
+    "logo": "/images/teams/1975.png"
+  },
+  "1976": {
+    "name": "Louisiana Tech",
+    "league": "ncaa",
+    "logo": "/images/teams/1976.png"
+  },
+  "1977": {
+    "name": "Louisville",
+    "league": "ncaa",
+    "logo": "/images/teams/1977.png"
+  },
+  "1978": {
+    "name": "Luther Norse",
+    "league": "ncaa",
+    "logo": "/images/teams/1978.png"
+  },
+  "1979": {
+    "name": "Maine Black Bears",
+    "league": "ncaa",
+    "logo": "/images/teams/1979.png"
+  },
+  "1981": {
+    "name": "Manhattan",
+    "league": "ncaa",
+    "logo": "/images/teams/1981.png"
+  },
+  "1982": {
+    "name": "Marist",
+    "league": "ncaa",
+    "logo": "/images/teams/1982.png"
+  },
+  "1983": {
+    "name": "Marquette",
+    "league": "ncaa",
+    "logo": "/images/teams/1983.png"
+  },
+  "1985": {
+    "name": "Maryland",
+    "league": "ncaa",
+    "logo": "/images/teams/1985.png"
+  },
+  "1987": {
+    "name": "Massachusetts-Boston",
+    "league": "ncaa",
+    "logo": "/images/teams/1987.png"
+  },
+  "1988": {
+    "name": "Mayville St",
+    "league": "ncaa",
+    "logo": "/images/teams/1988.png"
+  },
+  "1990": {
+    "name": "McNeese State",
+    "league": "ncaa",
+    "logo": "/images/teams/1990.png"
+  },
+  "1991": {
+    "name": "Md.-East. Shore",
+    "league": "ncaa",
+    "logo": "/images/teams/1991.png"
+  },
+  "1992": {
+    "name": "Merrimack Warriors",
+    "league": "ncaa",
+    "logo": "/images/teams/1992.png"
+  },
+  "1993": {
+    "name": "Miami (FL)",
+    "league": "ncaa",
+    "logo": "/images/teams/1993.png"
+  },
+  "1994": {
+    "name": "Michigan",
+    "league": "ncaa",
+    "logo": "/images/teams/1994.png"
+  },
+  "1995": {
+    "name": "Michigan State",
+    "league": "ncaa",
+    "logo": "/images/teams/1995.png"
+  },
+  "1996": {
+    "name": "Mid-America Christian",
+    "league": "ncaa",
+    "logo": "/images/teams/1996.png"
+  },
+  "1997": {
+    "name": "Mid-Atlantic",
+    "league": "ncaa",
+    "logo": "/images/teams/1997.png"
+  },
+  "1998": {
+    "name": "Middle Georgia State",
+    "league": "ncaa",
+    "logo": "/images/teams/1998.png"
+  },
+  "1999": {
+    "name": "Middle Tenn. St.",
+    "league": "ncaa",
+    "logo": "/images/teams/1999.png"
+  },
+  "2001": {
+    "name": "Milligan",
+    "league": "ncaa",
+    "logo": "/images/teams/2001.png"
+  },
+  "2002": {
+    "name": "Millsaps",
+    "league": "ncaa",
+    "logo": "/images/teams/2002.png"
+  },
+  "2003": {
+    "name": "Minnesota",
+    "league": "ncaa",
+    "logo": "/images/teams/2003.png"
+  },
+  "2004": {
+    "name": "Miss. Valley St.",
+    "league": "ncaa",
+    "logo": "/images/teams/2004.png"
+  },
+  "2005": {
+    "name": "Mississippi St.",
+    "league": "ncaa",
+    "logo": "/images/teams/2005.png"
+  },
+  "2006": {
+    "name": "Missouri",
+    "league": "ncaa",
+    "logo": "/images/teams/2006.png"
+  },
+  "2007": {
+    "name": "Missouri Baptist",
+    "league": "ncaa",
+    "logo": "/images/teams/2007.png"
+  },
+  "2008": {
+    "name": "Missouri State",
+    "league": "ncaa",
+    "logo": "/images/teams/2008.png"
+  },
+  "2010": {
+    "name": "Mobile",
+    "league": "ncaa",
+    "logo": "/images/teams/2010.png"
+  },
+  "2011": {
+    "name": "Monmouth",
+    "league": "ncaa",
+    "logo": "/images/teams/2011.png"
+  },
+  "2012": {
+    "name": "Montana",
+    "league": "ncaa",
+    "logo": "/images/teams/2012.png"
+  },
+  "2013": {
+    "name": "Montana State",
+    "league": "ncaa",
+    "logo": "/images/teams/2013.png"
+  },
+  "2014": {
+    "name": "Montana Tech",
+    "league": "ncaa",
+    "logo": "/images/teams/2014.png"
+  },
+  "2015": {
+    "name": "Montevallo",
+    "league": "ncaa",
+    "logo": "/images/teams/2015.png"
+  },
+  "2016": {
+    "name": "Morehead State",
+    "league": "ncaa",
+    "logo": "/images/teams/2016.png"
+  },
+  "2017": {
+    "name": "Morehouse",
+    "league": "ncaa",
+    "logo": "/images/teams/2017.png"
+  },
+  "2018": {
+    "name": "Morgan State",
+    "league": "ncaa",
+    "logo": "/images/teams/2018.png"
+  },
+  "2019": {
+    "name": "Mount Marty",
+    "league": "ncaa",
+    "logo": "/images/teams/2019.png"
+  },
+  "2020": {
+    "name": "Mount St. Mary's",
+    "league": "ncaa",
+    "logo": "/images/teams/2020.png"
+  },
+  "2021": {
+    "name": "Mount St. Vincent",
+    "league": "ncaa",
+    "logo": "/images/teams/2021.png"
+  },
+  "2024": {
+    "name": "Murray State",
+    "league": "ncaa",
+    "logo": "/images/teams/2024.png"
+  },
+  "2025": {
+    "name": "N. Carolina A&T",
+    "league": "ncaa",
+    "logo": "/images/teams/2025.png"
+  },
+  "2026": {
+    "name": "N. Carolina Central",
+    "league": "ncaa",
+    "logo": "/images/teams/2026.png"
+  },
+  "2028": {
+    "name": "NC Wilmington",
+    "league": "ncaa",
+    "logo": "/images/teams/2028.png"
+  },
+  "2029": {
+    "name": "Navy",
+    "league": "ncaa",
+    "logo": "/images/teams/2029.png"
+  },
+  "2030": {
+    "name": "Nebraska O.",
+    "league": "ncaa",
+    "logo": "/images/teams/2030.png"
+  },
+  "2032": {
+    "name": "Nevada",
+    "league": "ncaa",
+    "logo": "/images/teams/2032.png"
+  },
+  "2033": {
+    "name": "New Hampshire",
+    "league": "ncaa",
+    "logo": "/images/teams/2033.png"
+  },
+  "2034": {
+    "name": "New Mexico",
+    "league": "ncaa",
+    "logo": "/images/teams/2034.png"
+  },
+  "2035": {
+    "name": "New Mexico State",
+    "league": "ncaa",
+    "logo": "/images/teams/2035.png"
+  },
+  "2036": {
+    "name": "Niagara",
+    "league": "ncaa",
+    "logo": "/images/teams/2036.png"
+  },
+  "2037": {
+    "name": "Nicholls State",
+    "league": "ncaa",
+    "logo": "/images/teams/2037.png"
+  },
+  "2038": {
+    "name": "North Alabama",
+    "league": "ncaa",
+    "logo": "/images/teams/2038.png"
+  },
+  "2039": {
+    "name": "North Carolina",
+    "league": "ncaa",
+    "logo": "/images/teams/2039.png"
+  },
+  "2041": {
+    "name": "North Dakota",
+    "league": "ncaa",
+    "logo": "/images/teams/2041.png"
+  },
+  "2042": {
+    "name": "North Dakota St",
+    "league": "ncaa",
+    "logo": "/images/teams/2042.png"
+  },
+  "2043": {
+    "name": "North Florida",
+    "league": "ncaa",
+    "logo": "/images/teams/2043.png"
+  },
+  "2044": {
+    "name": "North Greenville",
+    "league": "ncaa",
+    "logo": "/images/teams/2044.png"
+  },
+  "2045": {
+    "name": "Northeastern",
+    "league": "ncaa",
+    "logo": "/images/teams/2045.png"
+  },
+  "2046": {
+    "name": "Northern Arizona",
+    "league": "ncaa",
+    "logo": "/images/teams/2046.png"
+  },
+  "2047": {
+    "name": "Northern Colorado",
+    "league": "ncaa",
+    "logo": "/images/teams/2047.png"
+  },
+  "2048": {
+    "name": "Northern Illinois",
+    "league": "ncaa",
+    "logo": "/images/teams/2048.png"
+  },
+  "2049": {
+    "name": "Northern Iowa",
+    "league": "ncaa",
+    "logo": "/images/teams/2049.png"
+  },
+  "2050": {
+    "name": "Northern Kentucky",
+    "league": "ncaa",
+    "logo": "/images/teams/2050.png"
+  },
+  "2051": {
+    "name": "Northern New Mexico",
+    "league": "ncaa",
+    "logo": "/images/teams/2051.png"
+  },
+  "2052": {
+    "name": "Northland",
+    "league": "ncaa",
+    "logo": "/images/teams/2052.png"
+  },
+  "2053": {
+    "name": "Northwestern",
+    "league": "ncaa",
+    "logo": "/images/teams/2053.png"
+  },
+  "2054": {
+    "name": "Northwestern St.",
+    "league": "ncaa",
+    "logo": "/images/teams/2054.png"
+  },
+  "2055": {
+    "name": "Notre Dame",
+    "league": "ncaa",
+    "logo": "/images/teams/2055.png"
+  },
+  "2056": {
+    "name": "Oakland",
+    "league": "ncaa",
+    "logo": "/images/teams/2056.png"
+  },
+  "2057": {
+    "name": "Ohio",
+    "league": "ncaa",
+    "logo": "/images/teams/2057.png"
+  },
+  "2058": {
+    "name": "Ohio State",
+    "league": "ncaa",
+    "logo": "/images/teams/2058.png"
+  },
+  "2059": {
+    "name": "Oklahoma",
+    "league": "ncaa",
+    "logo": "/images/teams/2059.png"
+  },
+  "2060": {
+    "name": "Oklahoma State",
+    "league": "ncaa",
+    "logo": "/images/teams/2060.png"
+  },
+  "2061": {
+    "name": "Old Dominion",
+    "league": "ncaa",
+    "logo": "/images/teams/2061.png"
+  },
+  "2062": {
+    "name": "Ole Miss",
+    "league": "ncaa",
+    "logo": "/images/teams/2062.png"
+  },
+  "2063": {
+    "name": "Oneonta State",
+    "league": "ncaa",
+    "logo": "/images/teams/2063.png"
+  },
+  "2064": {
+    "name": "Oral Roberts",
+    "league": "ncaa",
+    "logo": "/images/teams/2064.png"
+  },
+  "2065": {
+    "name": "Oregon",
+    "league": "ncaa",
+    "logo": "/images/teams/2065.png"
+  },
+  "2066": {
+    "name": "Oregon State",
+    "league": "ncaa",
+    "logo": "/images/teams/2066.png"
+  },
+  "2068": {
+    "name": "Our Lady Of The Lake",
+    "league": "ncaa",
+    "logo": "/images/teams/2068.png"
+  },
+  "2069": {
+    "name": "Pacific",
+    "league": "ncaa",
+    "logo": "/images/teams/2069.png"
+  },
+  "2070": {
+    "name": "Pacific Union",
+    "league": "ncaa",
+    "logo": "/images/teams/2070.png"
+  },
+  "2071": {
+    "name": "Paul Quinn",
+    "league": "ncaa",
+    "logo": "/images/teams/2071.png"
+  },
+  "2072": {
+    "name": "Penn",
+    "league": "ncaa",
+    "logo": "/images/teams/2072.png"
+  },
+  "2073": {
+    "name": "Penn State",
+    "league": "ncaa",
+    "logo": "/images/teams/2073.png"
+  },
+  "2074": {
+    "name": "Pepperdine",
+    "league": "ncaa",
+    "logo": "/images/teams/2074.png"
+  },
+  "2076": {
+    "name": "Piedmont",
+    "league": "ncaa",
+    "logo": "/images/teams/2076.png"
+  },
+  "2079": {
+    "name": "Pittsburgh",
+    "league": "ncaa",
+    "logo": "/images/teams/2079.png"
+  },
+  "2080": {
+    "name": "Portland",
+    "league": "ncaa",
+    "logo": "/images/teams/2080.png"
+  },
+  "2081": {
+    "name": "Portland Bible",
+    "league": "ncaa",
+    "logo": "/images/teams/2081.png"
+  },
+  "2082": {
+    "name": "Portland State",
+    "league": "ncaa",
+    "logo": "/images/teams/2082.png"
+  },
+  "2083": {
+    "name": "Prairie View A&M",
+    "league": "ncaa",
+    "logo": "/images/teams/2083.png"
+  },
+  "2084": {
+    "name": "Princeton",
+    "league": "ncaa",
+    "logo": "/images/teams/2084.png"
+  },
+  "2085": {
+    "name": "Purdue",
+    "league": "ncaa",
+    "logo": "/images/teams/2085.png"
+  },
+  "2087": {
+    "name": "Radford",
+    "league": "ncaa",
+    "logo": "/images/teams/2087.png"
+  },
+  "2089": {
+    "name": "Regent University",
+    "league": "ncaa",
+    "logo": "/images/teams/2089.png"
+  },
+  "2090": {
+    "name": "Reinhardt",
+    "league": "ncaa",
+    "logo": "/images/teams/2090.png"
+  },
+  "2091": {
+    "name": "Rhode Island",
+    "league": "ncaa",
+    "logo": "/images/teams/2091.png"
+  },
+  "2092": {
+    "name": "Richmond Spiders",
+    "league": "ncaa",
+    "logo": "/images/teams/2092.png"
+  },
+  "2093": {
+    "name": "Rider",
+    "league": "ncaa",
+    "logo": "/images/teams/2093.png"
+  },
+  "2095": {
+    "name": "Rust College",
+    "league": "ncaa",
+    "logo": "/images/teams/2095.png"
+  },
+  "2096": {
+    "name": "Rutgers",
+    "league": "ncaa",
+    "logo": "/images/teams/2096.png"
+  },
+  "2098": {
+    "name": "SE Louisiana",
+    "league": "ncaa",
+    "logo": "/images/teams/2098.png"
+  },
+  "2099": {
+    "name": "SMU Mustangs",
+    "league": "ncaa",
+    "logo": "/images/teams/2099.png"
+  },
+  "2101": {
+    "name": "Sacramento State",
+    "league": "ncaa",
+    "logo": "/images/teams/2101.png"
+  },
+  "2102": {
+    "name": "Sacred Heart",
+    "league": "ncaa",
+    "logo": "/images/teams/2102.png"
+  },
+  "2103": {
+    "name": "Saint Josephs Hawks",
+    "league": "ncaa",
+    "logo": "/images/teams/2103.png"
+  },
+  "2104": {
+    "name": "Saint Katherine",
+    "league": "ncaa",
+    "logo": "/images/teams/2104.png"
+  },
+  "2106": {
+    "name": "Samford",
+    "league": "ncaa",
+    "logo": "/images/teams/2106.png"
+  },
+  "2108": {
+    "name": "San Diego State",
+    "league": "ncaa",
+    "logo": "/images/teams/2108.png"
+  },
+  "2109": {
+    "name": "San Francisco State",
+    "league": "ncaa",
+    "logo": "/images/teams/2109.png"
+  },
+  "2110": {
+    "name": "San Jose State",
+    "league": "ncaa",
+    "logo": "/images/teams/2110.png"
+  },
+  "2111": {
+    "name": "Santa Clara",
+    "league": "ncaa",
+    "logo": "/images/teams/2111.png"
+  },
+  "2112": {
+    "name": "Seton Hall",
+    "league": "ncaa",
+    "logo": "/images/teams/2112.png"
+  },
+  "2114": {
+    "name": "Siu Edwardsville",
+    "league": "ncaa",
+    "logo": "/images/teams/2114.png"
+  },
+  "2115": {
+    "name": "South Alabama",
+    "league": "ncaa",
+    "logo": "/images/teams/2115.png"
+  },
+  "2116": {
+    "name": "South Carolina",
+    "league": "ncaa",
+    "logo": "/images/teams/2116.png"
+  },
+  "2117": {
+    "name": "South Carolina St",
+    "league": "ncaa",
+    "logo": "/images/teams/2117.png"
+  },
+  "2118": {
+    "name": "Southeast Missouri State",
+    "league": "ncaa",
+    "logo": "/images/teams/2118.png"
+  },
+  "2120": {
+    "name": "Southern Illinois",
+    "league": "ncaa",
+    "logo": "/images/teams/2120.png"
+  },
+  "2121": {
+    "name": "Southern Univ.",
+    "league": "ncaa",
+    "logo": "/images/teams/2121.png"
+  },
+  "2122": {
+    "name": "Southern-New O.",
+    "league": "ncaa",
+    "logo": "/images/teams/2122.png"
+  },
+  "2123": {
+    "name": "Springfield Pride",
+    "league": "ncaa",
+    "logo": "/images/teams/2123.png"
+  },
+  "2124": {
+    "name": "St. Andrews",
+    "league": "ncaa",
+    "logo": "/images/teams/2124.png"
+  },
+  "2125": {
+    "name": "St. Bonaventure",
+    "league": "ncaa",
+    "logo": "/images/teams/2125.png"
+  },
+  "2126": {
+    "name": "St. Elizabeth",
+    "league": "ncaa",
+    "logo": "/images/teams/2126.png"
+  },
+  "2127": {
+    "name": "St. John's (N.Y.)",
+    "league": "ncaa",
+    "logo": "/images/teams/2127.png"
+  },
+  "2128": {
+    "name": "St. Louis Billikens",
+    "league": "ncaa",
+    "logo": "/images/teams/2128.png"
+  },
+  "2129": {
+    "name": "St. Mary's (TX)",
+    "league": "ncaa",
+    "logo": "/images/teams/2129.png"
+  },
+  "2130": {
+    "name": "St. Marys (CA)",
+    "league": "ncaa",
+    "logo": "/images/teams/2130.png"
+  },
+  "2131": {
+    "name": "St. Peters",
+    "league": "ncaa",
+    "logo": "/images/teams/2131.png"
+  },
+  "2132": {
+    "name": "St. Thomas (TX)",
+    "league": "ncaa",
+    "logo": "/images/teams/2132.png"
+  },
+  "2133": {
+    "name": "Stanford",
+    "league": "ncaa",
+    "logo": "/images/teams/2133.png"
+  },
+  "2134": {
+    "name": "Stephen F. Austin",
+    "league": "ncaa",
+    "logo": "/images/teams/2134.png"
+  },
+  "2135": {
+    "name": "Stetson",
+    "league": "ncaa",
+    "logo": "/images/teams/2135.png"
+  },
+  "2137": {
+    "name": "Syracuse",
+    "league": "ncaa",
+    "logo": "/images/teams/2137.png"
+  },
+  "2140": {
+    "name": "Temple",
+    "league": "ncaa",
+    "logo": "/images/teams/2140.png"
+  },
+  "2141": {
+    "name": "Tennessee",
+    "league": "ncaa",
+    "logo": "/images/teams/2141.png"
+  },
+  "2142": {
+    "name": "Tennessee State",
+    "league": "ncaa",
+    "logo": "/images/teams/2142.png"
+  },
+  "2143": {
+    "name": "Tennessee Tech",
+    "league": "ncaa",
+    "logo": "/images/teams/2143.png"
+  },
+  "2144": {
+    "name": "Texas A&M",
+    "league": "ncaa",
+    "logo": "/images/teams/2144.png"
+  },
+  "2145": {
+    "name": "Texas A&M-CC",
+    "league": "ncaa",
+    "logo": "/images/teams/2145.png"
+  },
+  "2146": {
+    "name": "Texas Tech",
+    "league": "ncaa",
+    "logo": "/images/teams/2146.png"
+  },
+  "2150": {
+    "name": "Toccoa Falls",
+    "league": "ncaa",
+    "logo": "/images/teams/2150.png"
+  },
+  "2152": {
+    "name": "Towson",
+    "league": "ncaa",
+    "logo": "/images/teams/2152.png"
+  },
+  "2153": {
+    "name": "Trevecca Nazarene",
+    "league": "ncaa",
+    "logo": "/images/teams/2153.png"
+  },
+  "2154": {
+    "name": "Trinity (IL)",
+    "league": "ncaa",
+    "logo": "/images/teams/2154.png"
+  },
+  "2155": {
+    "name": "Trinity Baptist",
+    "league": "ncaa",
+    "logo": "/images/teams/2155.png"
+  },
+  "2157": {
+    "name": "Troy",
+    "league": "ncaa",
+    "logo": "/images/teams/2157.png"
+  },
+  "2158": {
+    "name": "Tulane",
+    "league": "ncaa",
+    "logo": "/images/teams/2158.png"
+  },
+  "2159": {
+    "name": "Tulsa",
+    "league": "ncaa",
+    "logo": "/images/teams/2159.png"
+  },
+  "2160": {
+    "name": "UALR",
+    "league": "ncaa",
+    "logo": "/images/teams/2160.png"
+  },
+  "2161": {
+    "name": "UC Davis",
+    "league": "ncaa",
+    "logo": "/images/teams/2161.png"
+  },
+  "2162": {
+    "name": "UC Irvine",
+    "league": "ncaa",
+    "logo": "/images/teams/2162.png"
+  },
+  "2163": {
+    "name": "UC Riverside",
+    "league": "ncaa",
+    "logo": "/images/teams/2163.png"
+  },
+  "2164": {
+    "name": "UC Santa Barbara",
+    "league": "ncaa",
+    "logo": "/images/teams/2164.png"
+  },
+  "2165": {
+    "name": "UCF Knights",
+    "league": "ncaa",
+    "logo": "/images/teams/2165.png"
+  },
+  "2166": {
+    "name": "UCLA",
+    "league": "ncaa",
+    "logo": "/images/teams/2166.png"
+  },
+  "2167": {
+    "name": "UMBC Retrievers",
+    "league": "ncaa",
+    "logo": "/images/teams/2167.png"
+  },
+  "2168": {
+    "name": "UMass",
+    "league": "ncaa",
+    "logo": "/images/teams/2168.png"
+  },
+  "2169": {
+    "name": "UMass Lowell",
+    "league": "ncaa",
+    "logo": "/images/teams/2169.png"
+  },
+  "2170": {
+    "name": "UNC Asheville",
+    "league": "ncaa",
+    "logo": "/images/teams/2170.png"
+  },
+  "2171": {
+    "name": "UNLV",
+    "league": "ncaa",
+    "logo": "/images/teams/2171.png"
+  },
+  "2172": {
+    "name": "USC",
+    "league": "ncaa",
+    "logo": "/images/teams/2172.png"
+  },
+  "2173": {
+    "name": "USC Upstate",
+    "league": "ncaa",
+    "logo": "/images/teams/2173.png"
+  },
+  "2174": {
+    "name": "UT Arlington",
+    "league": "ncaa",
+    "logo": "/images/teams/2174.png"
+  },
+  "2176": {
+    "name": "UT Martin",
+    "league": "ncaa",
+    "logo": "/images/teams/2176.png"
+  },
+  "2177": {
+    "name": "UTEP",
+    "league": "ncaa",
+    "logo": "/images/teams/2177.png"
+  },
+  "2178": {
+    "name": "UTSA Roadrunners",
+    "league": "ncaa",
+    "logo": "/images/teams/2178.png"
+  },
+  "2179": {
+    "name": "Uconn",
+    "league": "ncaa",
+    "logo": "/images/teams/2179.png"
+  },
+  "2180": {
+    "name": "Utah State",
+    "league": "ncaa",
+    "logo": "/images/teams/2180.png"
+  },
+  "2181": {
+    "name": "Utah Utes",
+    "league": "ncaa",
+    "logo": "/images/teams/2181.png"
+  },
+  "2182": {
+    "name": "VCU Rams",
+    "league": "ncaa",
+    "logo": "/images/teams/2182.png"
+  },
+  "2183": {
+    "name": "VMI",
+    "league": "ncaa",
+    "logo": "/images/teams/2183.png"
+  },
+  "2184": {
+    "name": "Valparaiso",
+    "league": "ncaa",
+    "logo": "/images/teams/2184.png"
+  },
+  "2185": {
+    "name": "Vanderbilt",
+    "league": "ncaa",
+    "logo": "/images/teams/2185.png"
+  },
+  "2186": {
+    "name": "Vanguard Lions",
+    "league": "ncaa",
+    "logo": "/images/teams/2186.png"
+  },
+  "2187": {
+    "name": "Vermont",
+    "league": "ncaa",
+    "logo": "/images/teams/2187.png"
+  },
+  "2188": {
+    "name": "Villanova",
+    "league": "ncaa",
+    "logo": "/images/teams/2188.png"
+  },
+  "2189": {
+    "name": "Virginia",
+    "league": "ncaa",
+    "logo": "/images/teams/2189.png"
+  },
+  "2190": {
+    "name": "Virginia Tech",
+    "league": "ncaa",
+    "logo": "/images/teams/2190.png"
+  },
+  "2191": {
+    "name": "Wagner",
+    "league": "ncaa",
+    "logo": "/images/teams/2191.png"
+  },
+  "2192": {
+    "name": "Wake Forest",
+    "league": "ncaa",
+    "logo": "/images/teams/2192.png"
+  },
+  "2193": {
+    "name": "Washington",
+    "league": "ncaa",
+    "logo": "/images/teams/2193.png"
+  },
+  "2195": {
+    "name": "Washington State",
+    "league": "ncaa",
+    "logo": "/images/teams/2195.png"
+  },
+  "2196": {
+    "name": "Weber State",
+    "league": "ncaa",
+    "logo": "/images/teams/2196.png"
+  },
+  "2198": {
+    "name": "Westcliff",
+    "league": "ncaa",
+    "logo": "/images/teams/2198.png"
+  },
+  "2199": {
+    "name": "Western Carolina",
+    "league": "ncaa",
+    "logo": "/images/teams/2199.png"
+  },
+  "2200": {
+    "name": "Western Illinois",
+    "league": "ncaa",
+    "logo": "/images/teams/2200.png"
+  },
+  "2201": {
+    "name": "Western Kentucky",
+    "league": "ncaa",
+    "logo": "/images/teams/2201.png"
+  },
+  "2202": {
+    "name": "Western Michigan",
+    "league": "ncaa",
+    "logo": "/images/teams/2202.png"
+  },
+  "2204": {
+    "name": "Westmont Warriors",
+    "league": "ncaa",
+    "logo": "/images/teams/2204.png"
+  },
+  "2205": {
+    "name": "Whittier",
+    "league": "ncaa",
+    "logo": "/images/teams/2205.png"
+  },
+  "2207": {
+    "name": "Wilberforce",
+    "league": "ncaa",
+    "logo": "/images/teams/2207.png"
+  },
+  "2208": {
+    "name": "Wiley",
+    "league": "ncaa",
+    "logo": "/images/teams/2208.png"
+  },
+  "2209": {
+    "name": "William & Mary",
+    "league": "ncaa",
+    "logo": "/images/teams/2209.png"
+  },
+  "2210": {
+    "name": "William Peace",
+    "league": "ncaa",
+    "logo": "/images/teams/2210.png"
+  },
+  "2212": {
+    "name": "Winthrop",
+    "league": "ncaa",
+    "logo": "/images/teams/2212.png"
+  },
+  "2213": {
+    "name": "Wisc. Milwaukee",
+    "league": "ncaa",
+    "logo": "/images/teams/2213.png"
+  },
+  "2214": {
+    "name": "Wisconsin",
+    "league": "ncaa",
+    "logo": "/images/teams/2214.png"
+  },
+  "2215": {
+    "name": "Wofford",
+    "league": "ncaa",
+    "logo": "/images/teams/2215.png"
+  },
+  "2217": {
+    "name": "Yale",
+    "league": "ncaa",
+    "logo": "/images/teams/2217.png"
+  },
+  "2218": {
+    "name": "Youngstown State",
+    "league": "ncaa",
+    "logo": "/images/teams/2218.png"
+  },
+  "2221": {
+    "name": "Fresno Pacific",
+    "league": "ncaa",
+    "logo": "/images/teams/2221.png"
+  },
+  "2223": {
+    "name": "Medgar Evers",
+    "league": "ncaa",
+    "logo": "/images/teams/2223.png"
+  },
+  "2224": {
+    "name": "Menlo",
+    "league": "ncaa",
+    "logo": "/images/teams/2224.png"
+  },
+  "2225": {
+    "name": "Midway",
+    "league": "ncaa",
+    "logo": "/images/teams/2225.png"
+  },
+  "2229": {
+    "name": "Pfeiffer Falcons",
+    "league": "ncaa",
+    "logo": "/images/teams/2229.png"
+  },
+  "2231": {
+    "name": "Rosemont",
+    "league": "ncaa",
+    "logo": "/images/teams/2231.png"
+  },
+  "2233": {
+    "name": "Southwestern Christian",
+    "league": "ncaa",
+    "logo": "/images/teams/2233.png"
+  },
+  "2237": {
+    "name": "Walla Walla",
+    "league": "ncaa",
+    "logo": "/images/teams/2237.png"
+  },
+  "2238": {
+    "name": "William Carey",
+    "league": "ncaa",
+    "logo": "/images/teams/2238.png"
+  },
+  "2248": {
+    "name": "Gallaudet Univ.",
+    "league": "ncaa",
+    "logo": "/images/teams/2248.png"
+  },
+  "2252": {
+    "name": "Thomas Univ.",
+    "league": "ncaa",
+    "logo": "/images/teams/2252.png"
+  },
+  "2253": {
+    "name": "Wesleyan Univ.",
+    "league": "ncaa",
+    "logo": "/images/teams/2253.png"
+  },
+  "2329": {
+    "name": "Barcelona",
+    "league": "euroleague",
+    "logo": "/images/teams/2329.png"
+  },
+  "2331": {
+    "name": "Baskonia",
+    "league": "euroleague",
+    "logo": "/images/teams/2331.png"
+  },
+  "2338": {
+    "name": "Real Madrid",
+    "league": "euroleague",
+    "logo": "/images/teams/2338.png"
+  },
+  "2357": {
+    "name": "Belhaven",
+    "league": "ncaa",
+    "logo": "/images/teams/2357.png"
+  },
+  "2358": {
+    "name": "Bellarmine",
+    "league": "ncaa",
+    "logo": "/images/teams/2358.png"
+  },
+  "2359": {
+    "name": "Chattanooga Mocs",
+    "league": "ncaa",
+    "logo": "/images/teams/2359.png"
+  },
+  "2362": {
+    "name": "Tarleton",
+    "league": "ncaa",
+    "logo": "/images/teams/2362.png"
+  },
+  "2363": {
+    "name": "UC San Diego",
+    "league": "ncaa",
+    "logo": "/images/teams/2363.png"
+  },
+  "2371": {
+    "name": "Adams State",
+    "league": "ncaa",
+    "logo": "/images/teams/2371.png"
+  },
+  "2373": {
+    "name": "Bowie",
+    "league": "ncaa",
+    "logo": "/images/teams/2373.png"
+  },
+  "2374": {
+    "name": "Brewton Parker",
+    "league": "ncaa",
+    "logo": "/images/teams/2374.png"
+  },
+  "2375": {
+    "name": "Carolina University",
+    "league": "ncaa",
+    "logo": "/images/teams/2375.png"
+  },
+  "2378": {
+    "name": "Covenant",
+    "league": "ncaa",
+    "logo": "/images/teams/2378.png"
+  },
+  "2379": {
+    "name": "Utah Tech",
+    "league": "ncaa",
+    "logo": "/images/teams/2379.png"
+  },
+  "2385": {
+    "name": "Hardin Simmons",
+    "league": "ncaa",
+    "logo": "/images/teams/2385.png"
+  },
+  "2387": {
+    "name": "Kentucky Wesleyan Panthers",
+    "league": "ncaa",
+    "logo": "/images/teams/2387.png"
+  },
+  "2388": {
+    "name": "LSU-Shreveport",
+    "league": "ncaa",
+    "logo": "/images/teams/2388.png"
+  },
+  "2389": {
+    "name": "Lancaster",
+    "league": "ncaa",
+    "logo": "/images/teams/2389.png"
+  },
+  "2391": {
+    "name": "Limestone College",
+    "league": "ncaa",
+    "logo": "/images/teams/2391.png"
+  },
+  "2394": {
+    "name": "Loyola NO",
+    "league": "ncaa",
+    "logo": "/images/teams/2394.png"
+  },
+  "2395": {
+    "name": "McMurry",
+    "league": "ncaa",
+    "logo": "/images/teams/2395.png"
+  },
+  "2397": {
+    "name": "Northwest",
+    "league": "ncaa",
+    "logo": "/images/teams/2397.png"
+  },
+  "2399": {
+    "name": "Point Park Pioneers",
+    "league": "ncaa",
+    "logo": "/images/teams/2399.png"
+  },
+  "2400": {
+    "name": "Rhode Island Anchormen",
+    "league": "ncaa",
+    "logo": "/images/teams/2400.png"
+  },
+  "2402": {
+    "name": "SAGU",
+    "league": "ncaa",
+    "logo": "/images/teams/2402.png"
+  },
+  "2403": {
+    "name": "Southern W.",
+    "league": "ncaa",
+    "logo": "/images/teams/2403.png"
+  },
+  "2405": {
+    "name": "Thomas College",
+    "league": "ncaa",
+    "logo": "/images/teams/2405.png"
+  },
+  "2406": {
+    "name": "VA Wesleyan",
+    "league": "ncaa",
+    "logo": "/images/teams/2406.png"
+  },
+  "2413": {
+    "name": "Boyce",
+    "league": "ncaa",
+    "logo": "/images/teams/2413.png"
+  },
+  "2414": {
+    "name": "CU Irvine",
+    "league": "ncaa",
+    "logo": "/images/teams/2414.png"
+  },
+  "2418": {
+    "name": "Coastal Georgia",
+    "league": "ncaa",
+    "logo": "/images/teams/2418.png"
+  },
+  "2420": {
+    "name": "Defiance College",
+    "league": "ncaa",
+    "logo": "/images/teams/2420.png"
+  },
+  "2421": {
+    "name": "Edward Waters",
+    "league": "ncaa",
+    "logo": "/images/teams/2421.png"
+  },
+  "2423": {
+    "name": "Fort Lauderdale",
+    "league": "ncaa",
+    "logo": "/images/teams/2423.png"
+  },
+  "2427": {
+    "name": "Oakwood Ambassadors",
+    "league": "ncaa",
+    "logo": "/images/teams/2427.png"
+  },
+  "2430": {
+    "name": "Queens Royals",
+    "league": "ncaa",
+    "logo": "/images/teams/2430.png"
+  },
+  "2432": {
+    "name": "St. Ambrose",
+    "league": "ncaa",
+    "logo": "/images/teams/2432.png"
+  },
+  "2433": {
+    "name": "St. Louis College of Pharmacy",
+    "league": "ncaa",
+    "logo": "/images/teams/2433.png"
+  },
+  "2434": {
+    "name": "Sul Ross State",
+    "league": "ncaa",
+    "logo": "/images/teams/2434.png"
+  },
+  "2438": {
+    "name": "Tusculum",
+    "league": "ncaa",
+    "logo": "/images/teams/2438.png"
+  },
+  "2439": {
+    "name": "USMMA",
+    "league": "ncaa",
+    "logo": "/images/teams/2439.png"
+  },
+  "2443": {
+    "name": "Bethel (TN)",
+    "league": "ncaa",
+    "logo": "/images/teams/2443.png"
+  },
+  "2446": {
+    "name": "La Sierra",
+    "league": "ncaa",
+    "logo": "/images/teams/2446.png"
+  },
+  "2447": {
+    "name": "Life Pacific",
+    "league": "ncaa",
+    "logo": "/images/teams/2447.png"
+  },
+  "2449": {
+    "name": "Oakland City",
+    "league": "ncaa",
+    "logo": "/images/teams/2449.png"
+  },
+  "2451": {
+    "name": "Truman State",
+    "league": "ncaa",
+    "logo": "/images/teams/2451.png"
+  },
+  "2477": {
+    "name": "Colorado State - Pueblo",
+    "league": "ncaa",
+    "logo": "/images/teams/2477.png"
+  },
+  "2478": {
+    "name": "Dalton",
+    "league": "ncaa",
+    "logo": "/images/teams/2478.png"
+  },
+  "2481": {
+    "name": "West Virginia University",
+    "league": "ncaa",
+    "logo": "/images/teams/2481.png"
+  },
+  "2486": {
+    "name": "Kansas Christian",
+    "league": "ncaa",
+    "logo": "/images/teams/2486.png"
+  },
+  "2488": {
+    "name": "Malone Pioneers",
+    "league": "ncaa",
+    "logo": "/images/teams/2488.png"
+  },
+  "2498": {
+    "name": "Coe",
+    "league": "ncaa",
+    "logo": "/images/teams/2498.png"
+  },
+  "2501": {
+    "name": "Northwest Nazarene",
+    "league": "ncaa",
+    "logo": "/images/teams/2501.png"
+  },
+  "2504": {
+    "name": "Southern Virginia",
+    "league": "ncaa",
+    "logo": "/images/teams/2504.png"
+  },
+  "2505": {
+    "name": "Spring Hill",
+    "league": "ncaa",
+    "logo": "/images/teams/2505.png"
+  },
+  "2508": {
+    "name": "Western N. M.",
+    "league": "ncaa",
+    "logo": "/images/teams/2508.png"
+  },
+  "2514": {
+    "name": "Warner Pacific",
+    "league": "ncaa",
+    "logo": "/images/teams/2514.png"
+  },
+  "3003": {
+    "name": "Southwest Adventist",
+    "league": "ncaa",
+    "logo": "/images/teams/3003.png"
+  },
+  "3072": {
+    "name": "Team USA W",
+    "league": "wnba",
+    "logo": "/images/teams/3072.png"
+  },
+  "3073": {
+    "name": "Team WNBA W",
+    "league": "wnba",
+    "logo": "/images/teams/3073.png"
+  },
+  "3220": {
+    "name": "Asbury",
+    "league": "ncaa",
+    "logo": "/images/teams/3220.png"
+  },
+  "3225": {
+    "name": "Bryn Athyn",
+    "league": "ncaa",
+    "logo": "/images/teams/3225.png"
+  },
+  "3226": {
+    "name": "Buffalo State",
+    "league": "ncaa",
+    "logo": "/images/teams/3226.png"
+  },
+  "3227": {
+    "name": "Cairn",
+    "league": "ncaa",
+    "logo": "/images/teams/3227.png"
+  },
+  "3229": {
+    "name": "California State-Stanislaus Warriors",
+    "league": "ncaa",
+    "logo": "/images/teams/3229.png"
+  },
+  "3232": {
+    "name": "Colorado College",
+    "league": "ncaa",
+    "logo": "/images/teams/3232.png"
+  },
+  "3233": {
+    "name": "Concordia Cobbers",
+    "league": "ncaa",
+    "logo": "/images/teams/3233.png"
+  },
+  "3234": {
+    "name": "Crown College",
+    "league": "ncaa",
+    "logo": "/images/teams/3234.png"
+  },
+  "3235": {
+    "name": "DePauw",
+    "league": "ncaa",
+    "logo": "/images/teams/3235.png"
+  },
+  "3236": {
+    "name": "Dillard",
+    "league": "ncaa",
+    "logo": "/images/teams/3236.png"
+  },
+  "3239": {
+    "name": "EWU Phantoms",
+    "league": "ncaa",
+    "logo": "/images/teams/3239.png"
+  },
+  "3241": {
+    "name": "Eastern Mennonite",
+    "league": "ncaa",
+    "logo": "/images/teams/3241.png"
+  },
+  "3245": {
+    "name": "Emerson",
+    "league": "ncaa",
+    "logo": "/images/teams/3245.png"
+  },
+  "3246": {
+    "name": "Erskine",
+    "league": "ncaa",
+    "logo": "/images/teams/3246.png"
+  },
+  "3248": {
+    "name": "Fisher",
+    "league": "ncaa",
+    "logo": "/images/teams/3248.png"
+  },
+  "3249": {
+    "name": "Fisk",
+    "league": "ncaa",
+    "logo": "/images/teams/3249.png"
+  },
+  "3250": {
+    "name": "Fort Valley State Wildcats",
+    "league": "ncaa",
+    "logo": "/images/teams/3250.png"
+  },
+  "3251": {
+    "name": "Fredonia State",
+    "league": "ncaa",
+    "logo": "/images/teams/3251.png"
+  },
+  "3252": {
+    "name": "George Fox",
+    "league": "ncaa",
+    "logo": "/images/teams/3252.png"
+  },
+  "3255": {
+    "name": "Gwynedd-Mercy",
+    "league": "ncaa",
+    "logo": "/images/teams/3255.png"
+  },
+  "3259": {
+    "name": "Harris-Stowe",
+    "league": "ncaa",
+    "logo": "/images/teams/3259.png"
+  },
+  "3261": {
+    "name": "Hendrix College",
+    "league": "ncaa",
+    "logo": "/images/teams/3261.png"
+  },
+  "3262": {
+    "name": "Hood",
+    "league": "ncaa",
+    "logo": "/images/teams/3262.png"
+  },
+  "3265": {
+    "name": "Immaculata",
+    "league": "ncaa",
+    "logo": "/images/teams/3265.png"
+  },
+  "3268": {
+    "name": "Jarvis Christian",
+    "league": "ncaa",
+    "logo": "/images/teams/3268.png"
+  },
+  "3269": {
+    "name": "Johnson Suns",
+    "league": "ncaa",
+    "logo": "/images/teams/3269.png"
+  },
+  "3271": {
+    "name": "La Verne",
+    "league": "ncaa",
+    "logo": "/images/teams/3271.png"
+  },
+  "3273": {
+    "name": "Lake Erie",
+    "league": "ncaa",
+    "logo": "/images/teams/3273.png"
+  },
+  "3274": {
+    "name": "Le Moyne",
+    "league": "ncaa",
+    "logo": "/images/teams/3274.png"
+  },
+  "3276": {
+    "name": "Lemoyne-Owen",
+    "league": "ncaa",
+    "logo": "/images/teams/3276.png"
+  },
+  "3283": {
+    "name": "Mary Baldwin",
+    "league": "ncaa",
+    "logo": "/images/teams/3283.png"
+  },
+  "3288": {
+    "name": "Mississippi Coll.",
+    "league": "ncaa",
+    "logo": "/images/teams/3288.png"
+  },
+  "3289": {
+    "name": "Molloy",
+    "league": "ncaa",
+    "logo": "/images/teams/3289.png"
+  },
+  "3292": {
+    "name": "Mount Olive Trojans",
+    "league": "ncaa",
+    "logo": "/images/teams/3292.png"
+  },
+  "3296": {
+    "name": "Newport Apprentice",
+    "league": "ncaa",
+    "logo": "/images/teams/3296.png"
+  },
+  "3297": {
+    "name": "North Central Rams",
+    "league": "ncaa",
+    "logo": "/images/teams/3297.png"
+  },
+  "3298": {
+    "name": "North Park",
+    "league": "ncaa",
+    "logo": "/images/teams/3298.png"
+  },
+  "3299": {
+    "name": "Northwood",
+    "league": "ncaa",
+    "logo": "/images/teams/3299.png"
+  },
+  "3304": {
+    "name": "Pacific Lutheran",
+    "league": "ncaa",
+    "logo": "/images/teams/3304.png"
+  },
+  "3306": {
+    "name": "Penn State Wilkes-Barre",
+    "league": "ncaa",
+    "logo": "/images/teams/3306.png"
+  },
+  "3314": {
+    "name": "Rivier",
+    "league": "ncaa",
+    "logo": "/images/teams/3314.png"
+  },
+  "3315": {
+    "name": "Rockford University",
+    "league": "ncaa",
+    "logo": "/images/teams/3315.png"
+  },
+  "3316": {
+    "name": "Rocky Mountain",
+    "league": "ncaa",
+    "logo": "/images/teams/3316.png"
+  },
+  "3318": {
+    "name": "Saginaw Valley",
+    "league": "ncaa",
+    "logo": "/images/teams/3318.png"
+  },
+  "3321": {
+    "name": "Schreiner Mountaineers",
+    "league": "ncaa",
+    "logo": "/images/teams/3321.png"
+  },
+  "3324": {
+    "name": "Spalding",
+    "league": "ncaa",
+    "logo": "/images/teams/3324.png"
+  },
+  "3325": {
+    "name": "St. Thomas (Minn.)",
+    "league": "ncaa",
+    "logo": "/images/teams/3325.png"
+  },
+  "3326": {
+    "name": "St. Xavier",
+    "league": "ncaa",
+    "logo": "/images/teams/3326.png"
+  },
+  "3329": {
+    "name": "Truett-McConnell",
+    "league": "ncaa",
+    "logo": "/images/teams/3329.png"
+  },
+  "3331": {
+    "name": "Vassar",
+    "league": "ncaa",
+    "logo": "/images/teams/3331.png"
+  },
+  "3332": {
+    "name": "Virginia-Lynchburg",
+    "league": "ncaa",
+    "logo": "/images/teams/3332.png"
+  },
+  "3333": {
+    "name": "Voorhees",
+    "league": "ncaa",
+    "logo": "/images/teams/3333.png"
+  },
+  "3334": {
+    "name": "Waldorf College",
+    "league": "ncaa",
+    "logo": "/images/teams/3334.png"
+  },
+  "3336": {
+    "name": "Warren Wilson",
+    "league": "ncaa",
+    "logo": "/images/teams/3336.png"
+  },
+  "3338": {
+    "name": "Washington Coll",
+    "league": "ncaa",
+    "logo": "/images/teams/3338.png"
+  },
+  "3340": {
+    "name": "Western Colorado",
+    "league": "ncaa",
+    "logo": "/images/teams/3340.png"
+  },
+  "3341": {
+    "name": "Western New England",
+    "league": "ncaa",
+    "logo": "/images/teams/3341.png"
+  },
+  "3343": {
+    "name": "Willamette",
+    "league": "ncaa",
+    "logo": "/images/teams/3343.png"
+  },
+  "3344": {
+    "name": "William Woods",
+    "league": "ncaa",
+    "logo": "/images/teams/3344.png"
+  },
+  "3345": {
+    "name": "Wilson College",
+    "league": "ncaa",
+    "logo": "/images/teams/3345.png"
+  },
+  "3347": {
+    "name": "Arkansas Baptist",
+    "league": "ncaa",
+    "logo": "/images/teams/3347.png"
+  },
+  "3348": {
+    "name": "Benedictine (AZ)",
+    "league": "ncaa",
+    "logo": "/images/teams/3348.png"
+  },
+  "3349": {
+    "name": "Keystone",
+    "league": "ncaa",
+    "logo": "/images/teams/3349.png"
+  },
+  "3350": {
+    "name": "Life University",
+    "league": "ncaa",
+    "logo": "/images/teams/3350.png"
+  },
+  "3351": {
+    "name": "Miami-Hamilton",
+    "league": "ncaa",
+    "logo": "/images/teams/3351.png"
+  },
+  "3353": {
+    "name": "Penn St.-Allegheny",
+    "league": "ncaa",
+    "logo": "/images/teams/3353.png"
+  },
+  "3362": {
+    "name": "Wells College",
+    "league": "ncaa",
+    "logo": "/images/teams/3362.png"
+  },
+  "3366": {
+    "name": "Carroll College",
+    "league": "ncaa",
+    "logo": "/images/teams/3366.png"
+  },
+  "3371": {
+    "name": "Penn State-York",
+    "league": "ncaa",
+    "logo": "/images/teams/3371.png"
+  },
+  "3380": {
+    "name": "Dallas Univ.",
+    "league": "ncaa",
+    "logo": "/images/teams/3380.png"
+  },
+  "3382": {
+    "name": "Loyola Marymount",
+    "league": "ncaa",
+    "logo": "/images/teams/3382.png"
+  },
+  "3383": {
+    "name": "TX A&M Commerce",
+    "league": "ncaa",
+    "logo": "/images/teams/3383.png"
+  },
+  "3392": {
+    "name": "John Jay",
+    "league": "ncaa",
+    "logo": "/images/teams/3392.png"
+  },
+  "3393": {
+    "name": "Montreat College",
+    "league": "ncaa",
+    "logo": "/images/teams/3393.png"
+  },
+  "3408": {
+    "name": "Lyon",
+    "league": "ncaa",
+    "logo": "/images/teams/3408.png"
+  },
+  "3410": {
+    "name": "Ohio Christian",
+    "league": "ncaa",
+    "logo": "/images/teams/3410.png"
+  },
+  "3429": {
+    "name": "Charlotte",
+    "league": "ncaa",
+    "logo": "/images/teams/3429.png"
+  },
+  "5566": {
+    "name": "Southern Indiana",
+    "league": "ncaa",
+    "logo": "/images/teams/5566.png"
+  },
+  "5628": {
+    "name": "Florida International",
+    "league": "ncaa",
+    "logo": "/images/teams/5628.png"
+  },
+  "5702": {
+    "name": "Albany State",
+    "league": "ncaa",
+    "logo": "/images/teams/5702.png"
+  },
+  "5705": {
+    "name": "Anderson (Ind.)",
+    "league": "ncaa",
+    "logo": "/images/teams/5705.png"
+  },
+  "5707": {
+    "name": "Arcadia",
+    "league": "ncaa",
+    "logo": "/images/teams/5707.png"
+  },
+  "5708": {
+    "name": "Aurora",
+    "league": "ncaa",
+    "logo": "/images/teams/5708.png"
+  },
+  "5709": {
+    "name": "Ave Maria",
+    "league": "ncaa",
+    "logo": "/images/teams/5709.png"
+  },
+  "5711": {
+    "name": "Bellevue",
+    "league": "ncaa",
+    "logo": "/images/teams/5711.png"
+  },
+  "5715": {
+    "name": "Blackburn",
+    "league": "ncaa",
+    "logo": "/images/teams/5715.png"
+  },
+  "5719": {
+    "name": "Bridgewater College (VA)",
+    "league": "ncaa",
+    "logo": "/images/teams/5719.png"
+  },
+  "5725": {
+    "name": "California Maritime",
+    "league": "ncaa",
+    "logo": "/images/teams/5725.png"
+  },
+  "5726": {
+    "name": "Calumet College",
+    "league": "ncaa",
+    "logo": "/images/teams/5726.png"
+  },
+  "5738": {
+    "name": "Coast Guard",
+    "league": "ncaa",
+    "logo": "/images/teams/5738.png"
+  },
+  "5740": {
+    "name": "Colby-Sawyer",
+    "league": "ncaa",
+    "logo": "/images/teams/5740.png"
+  },
+  "5741": {
+    "name": "D'Youville University",
+    "league": "ncaa",
+    "logo": "/images/teams/5741.png"
+  },
+  "5751": {
+    "name": "FDU-Florham",
+    "league": "ncaa",
+    "logo": "/images/teams/5751.png"
+  },
+  "5754": {
+    "name": "Framingham State",
+    "league": "ncaa",
+    "logo": "/images/teams/5754.png"
+  },
+  "5759": {
+    "name": "Goshen",
+    "league": "ncaa",
+    "logo": "/images/teams/5759.png"
+  },
+  "5761": {
+    "name": "Greensboro",
+    "league": "ncaa",
+    "logo": "/images/teams/5761.png"
+  },
+  "5762": {
+    "name": "Hannibal-LaGrange",
+    "league": "ncaa",
+    "logo": "/images/teams/5762.png"
+  },
+  "5764": {
+    "name": "Houghton",
+    "league": "ncaa",
+    "logo": "/images/teams/5764.png"
+  },
+  "5768": {
+    "name": "Illinois Tech",
+    "league": "ncaa",
+    "logo": "/images/teams/5768.png"
+  },
+  "5770": {
+    "name": "John Brown",
+    "league": "ncaa",
+    "logo": "/images/teams/5770.png"
+  },
+  "5771": {
+    "name": "Johnson Royals",
+    "league": "ncaa",
+    "logo": "/images/teams/5771.png"
+  },
+  "5773": {
+    "name": "Kentucky State",
+    "league": "ncaa",
+    "logo": "/images/teams/5773.png"
+  },
+  "5775": {
+    "name": "La Grange",
+    "league": "ncaa",
+    "logo": "/images/teams/5775.png"
+  },
+  "5777": {
+    "name": "Le Tourneau",
+    "league": "ncaa",
+    "logo": "/images/teams/5777.png"
+  },
+  "5779": {
+    "name": "Lewis &. Clark State",
+    "league": "ncaa",
+    "logo": "/images/teams/5779.png"
+  },
+  "5780": {
+    "name": "Lincoln Mo.",
+    "league": "ncaa",
+    "logo": "/images/teams/5780.png"
+  },
+  "5781": {
+    "name": "Loras Duhawks",
+    "league": "ncaa",
+    "logo": "/images/teams/5781.png"
+  },
+  "5782": {
+    "name": "Louisiana Christian",
+    "league": "ncaa",
+    "logo": "/images/teams/5782.png"
+  },
+  "5785": {
+    "name": "Lourdes",
+    "league": "ncaa",
+    "logo": "/images/teams/5785.png"
+  },
+  "5787": {
+    "name": "Lynchburg",
+    "league": "ncaa",
+    "logo": "/images/teams/5787.png"
+  },
+  "5788": {
+    "name": "Lynn University",
+    "league": "ncaa",
+    "logo": "/images/teams/5788.png"
+  },
+  "5789": {
+    "name": "MUW Owls",
+    "league": "ncaa",
+    "logo": "/images/teams/5789.png"
+  },
+  "5796": {
+    "name": "Mercy",
+    "league": "ncaa",
+    "logo": "/images/teams/5796.png"
+  },
+  "5800": {
+    "name": "Milwaukee School of Engineering",
+    "league": "ncaa",
+    "logo": "/images/teams/5800.png"
+  },
+  "5806": {
+    "name": "Montana State-Northern",
+    "league": "ncaa",
+    "logo": "/images/teams/5806.png"
+  },
+  "5808": {
+    "name": "Mount St. Mary College",
+    "league": "ncaa",
+    "logo": "/images/teams/5808.png"
+  },
+  "5809": {
+    "name": "Muskingum",
+    "league": "ncaa",
+    "logo": "/images/teams/5809.png"
+  },
+  "5820": {
+    "name": "North American Stallions",
+    "league": "ncaa",
+    "logo": "/images/teams/5820.png"
+  },
+  "5821": {
+    "name": "North Texas-Dallas",
+    "league": "ncaa",
+    "logo": "/images/teams/5821.png"
+  },
+  "5822": {
+    "name": "Northern Vermont - Johnson",
+    "league": "ncaa",
+    "logo": "/images/teams/5822.png"
+  },
+  "5823": {
+    "name": "Northwest Indian",
+    "league": "ncaa",
+    "logo": "/images/teams/5823.png"
+  },
+  "5827": {
+    "name": "Occidental",
+    "league": "ncaa",
+    "logo": "/images/teams/5827.png"
+  },
+  "5828": {
+    "name": "Oglethorpe",
+    "league": "ncaa",
+    "logo": "/images/teams/5828.png"
+  },
+  "5829": {
+    "name": "Ohio Dominican",
+    "league": "ncaa",
+    "logo": "/images/teams/5829.png"
+  },
+  "5835": {
+    "name": "Penn State-New Kensington",
+    "league": "ncaa",
+    "logo": "/images/teams/5835.png"
+  },
+  "5837": {
+    "name": "Pittsburgh - Greensburg",
+    "league": "ncaa",
+    "logo": "/images/teams/5837.png"
+  },
+  "5844": {
+    "name": "SMWC Pomeroys",
+    "league": "ncaa",
+    "logo": "/images/teams/5844.png"
+  },
+  "5845": {
+    "name": "SUNY-Canton",
+    "league": "ncaa",
+    "logo": "/images/teams/5845.png"
+  },
+  "5846": {
+    "name": "SUNY-Delhi",
+    "league": "ncaa",
+    "logo": "/images/teams/5846.png"
+  },
+  "5849": {
+    "name": "Siena Heights",
+    "league": "ncaa",
+    "logo": "/images/teams/5849.png"
+  },
+  "5851": {
+    "name": "Sonoma State",
+    "league": "ncaa",
+    "logo": "/images/teams/5851.png"
+  },
+  "5857": {
+    "name": "St. Augustine",
+    "league": "ncaa",
+    "logo": "/images/teams/5857.png"
+  },
+  "5858": {
+    "name": "St. Francis (ILL)",
+    "league": "ncaa",
+    "logo": "/images/teams/5858.png"
+  },
+  "5860": {
+    "name": "St. Joseph's (Brooklyn)",
+    "league": "ncaa",
+    "logo": "/images/teams/5860.png"
+  },
+  "5865": {
+    "name": "St. Vincent",
+    "league": "ncaa",
+    "logo": "/images/teams/5865.png"
+  },
+  "5866": {
+    "name": "Stonehill",
+    "league": "ncaa",
+    "logo": "/images/teams/5866.png"
+  },
+  "5867": {
+    "name": "Suny Maritime",
+    "league": "ncaa",
+    "logo": "/images/teams/5867.png"
+  },
+  "5869": {
+    "name": "Texas Lutheran",
+    "league": "ncaa",
+    "logo": "/images/teams/5869.png"
+  },
+  "5882": {
+    "name": "UW-Stout",
+    "league": "ncaa",
+    "logo": "/images/teams/5882.png"
+  },
+  "5884": {
+    "name": "University of Sciences",
+    "league": "ncaa",
+    "logo": "/images/teams/5884.png"
+  },
+  "5897": {
+    "name": "Western Oregon",
+    "league": "ncaa",
+    "logo": "/images/teams/5897.png"
+  },
+  "5898": {
+    "name": "Westminster Titans",
+    "league": "ncaa",
+    "logo": "/images/teams/5898.png"
+  },
+  "5899": {
+    "name": "Wilkes Colonels",
+    "league": "ncaa",
+    "logo": "/images/teams/5899.png"
+  },
+  "6197": {
+    "name": "Berea",
+    "league": "ncaa",
+    "logo": "/images/teams/6197.png"
+  },
+  "6199": {
+    "name": "Bloomsburg",
+    "league": "ncaa",
+    "logo": "/images/teams/6199.png"
+  },
+  "6200": {
+    "name": "Bronxville",
+    "league": "ncaa",
+    "logo": "/images/teams/6200.png"
+  },
+  "6201": {
+    "name": "CBS Ambassadors",
+    "league": "ncaa",
+    "logo": "/images/teams/6201.png"
+  },
+  "6204": {
+    "name": "Cheyney Wolves",
+    "league": "ncaa",
+    "logo": "/images/teams/6204.png"
+  },
+  "6207": {
+    "name": "Cleary University",
+    "league": "ncaa",
+    "logo": "/images/teams/6207.png"
+  },
+  "6209": {
+    "name": "Curry",
+    "league": "ncaa",
+    "logo": "/images/teams/6209.png"
+  },
+  "6210": {
+    "name": "Dakota Wesleyan",
+    "league": "ncaa",
+    "logo": "/images/teams/6210.png"
+  },
+  "6215": {
+    "name": "Elms College",
+    "league": "ncaa",
+    "logo": "/images/teams/6215.png"
+  },
+  "6218": {
+    "name": "Gilbert Buccaneers",
+    "league": "ncaa",
+    "logo": "/images/teams/6218.png"
+  },
+  "6224": {
+    "name": "Marywood Pacers",
+    "league": "ncaa",
+    "logo": "/images/teams/6224.png"
+  },
+  "6227": {
+    "name": "New College (FL)",
+    "league": "ncaa",
+    "logo": "/images/teams/6227.png"
+  },
+  "6228": {
+    "name": "Notre Dame MD",
+    "league": "ncaa",
+    "logo": "/images/teams/6228.png"
+  },
+  "6230": {
+    "name": "Ozark Christian",
+    "league": "ncaa",
+    "logo": "/images/teams/6230.png"
+  },
+  "6231": {
+    "name": "Penn State Brandywine",
+    "league": "ncaa",
+    "logo": "/images/teams/6231.png"
+  },
+  "6233": {
+    "name": "Plattsburgh",
+    "league": "ncaa",
+    "logo": "/images/teams/6233.png"
+  },
+  "6236": {
+    "name": "Roberts Wesleyan",
+    "league": "ncaa",
+    "logo": "/images/teams/6236.png"
+  },
+  "6243": {
+    "name": "Stanton",
+    "league": "ncaa",
+    "logo": "/images/teams/6243.png"
+  },
+  "6246": {
+    "name": "Tiffin",
+    "league": "ncaa",
+    "logo": "/images/teams/6246.png"
+  },
+  "6250": {
+    "name": "Washington & Lee",
+    "league": "ncaa",
+    "logo": "/images/teams/6250.png"
+  },
+  "6254": {
+    "name": "Worcester State",
+    "league": "ncaa",
+    "logo": "/images/teams/6254.png"
+  },
+  "6276": {
+    "name": "Angelo State",
+    "league": "ncaa",
+    "logo": "/images/teams/6276.png"
+  },
+  "6290": {
+    "name": "Elizabeth City",
+    "league": "ncaa",
+    "logo": "/images/teams/6290.png"
+  },
+  "6291": {
+    "name": "McPherson",
+    "league": "ncaa",
+    "logo": "/images/teams/6291.png"
+  },
+  "6293": {
+    "name": "Southwest Mustangs",
+    "league": "ncaa",
+    "logo": "/images/teams/6293.png"
+  },
+  "6298": {
+    "name": "Hawaii Pacific",
+    "league": "ncaa",
+    "logo": "/images/teams/6298.png"
+  },
+  "6326": {
+    "name": "University of the Cumberlands (KY)",
+    "league": "ncaa",
+    "logo": "/images/teams/6326.png"
+  },
+  "6632": {
+    "name": "Albany Great Danes",
+    "league": "ncaa",
+    "logo": "/images/teams/6632.png"
+  },
+  "6646": {
+    "name": "Jacksonville Dolphins",
+    "league": "ncaa",
+    "logo": "/images/teams/6646.png"
+  },
+  "6663": {
+    "name": "New Hampshire Wildcats",
+    "league": "ncaa",
+    "logo": "/images/teams/6663.png"
+  }
+}

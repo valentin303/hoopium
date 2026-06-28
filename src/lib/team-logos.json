@@ -1,5 +1,18 @@
 {
-  "bos": "https://media.api-sports.io/basketball/teams/133.png",
-  "den": "https://media.api-sports.io/basketball/teams/139.png",
-  "lal": "https://media.api-sports.io/basketball/teams/145.png"
+  "bos": "/images/teams/133.png",
+  "den": "/images/teams/139.png",
+  "lal": "/images/teams/145.png",
+  "phx": "/images/teams/155.png",
+  "mia": "/images/teams/147.png",
+  "chi": "/images/teams/136.png",
+  "gsw": "/images/teams/141.png",
+  "mil": "/images/teams/148.png",
+  "phi": "/images/teams/154.png",
+  "nyk": "/images/teams/151.png",
+  "ny-lib": "/images/teams/170.png",
+  "lv-aces": "/images/teams/167.png",
+  "rma": "/images/teams/2338.png",
+  "bar": "/images/teams/2329.png",
+  "duke": "/images/teams/1890.png",
+  "ku": "/images/teams/1959.png"
 }
