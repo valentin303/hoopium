@@ -59,6 +59,8 @@ export interface TeamSnapshot {
   turnoversPerGame: number;
   /** 'w'/'l' du plus ancien au plus récent, les 5 derniers matchs max */
   recentForm: ('w' | 'l')[];
+  /** points marqués match par match, du plus ancien au plus récent — pour les graphiques de tendance */
+  recentPointsTrend: number[];
   /** % de victoires sur les matchs joués à domicile uniquement */
   homeWinPct: number;
   lastGameDate: string | null;
@@ -106,6 +108,7 @@ export function buildTeamSnapshot(games: GameForTeam[]): TeamSnapshot {
       assistsPerGame: 0,
       turnoversPerGame: 0,
       recentForm: [],
+      recentPointsTrend: [],
       homeWinPct: 0,
       lastGameDate: null,
     };
@@ -139,6 +142,7 @@ export function buildTeamSnapshot(games: GameForTeam[]): TeamSnapshot {
     assistsPerGame: average(games.map((g) => g.own.assists)),
     turnoversPerGame: average(games.map((g) => g.own.turnovers)),
     recentForm: games.slice(-5).map((g) => (g.won ? 'w' : 'l')),
+    recentPointsTrend: points,
     homeWinPct: homeGames.length > 0 ? (100 * homeGames.filter((g) => g.won).length) / homeGames.length : 0,
     lastGameDate: games[games.length - 1].date,
   };
@@ -202,4 +206,52 @@ export function computeRestDays(lastGameDate: string | null, referenceDate: Date
   const last = new Date(lastGameDate);
   const diffMs = referenceDate.getTime() - last.getTime();
   return Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
+}
+
+// ===== Profil radar (6 axes, pour le graphique "Tendance offensive & Profil") =====
+
+/**
+ * Bornes utilisées pour normaliser chaque statistique sur une échelle 0-100.
+ * Ce sont des plages plausibles pour le basketball pro (pas des constantes
+ * officielles) — à recalibrer une fois qu'on aura assez de matchs réels
+ * passés en base pour calculer de vraies bornes par ligue.
+ */
+const RADAR_BOUNDS = {
+  offensiveRating: [100, 125] as const,
+  defensiveRating: [100, 125] as const, // inversé : plus bas = meilleure défense
+  rebounds: [36, 50] as const,
+  assists: [18, 32] as const,
+};
+
+function normalize(value: number, [min, max]: readonly [number, number], invert = false): number {
+  const clamped = Math.min(max, Math.max(min, value));
+  const pct = ((clamped - min) / (max - min)) * 100;
+  return Math.round(invert ? 100 - pct : pct);
+}
+
+export function buildRadarProfile(home: TeamSnapshot, away: TeamSnapshot) {
+  const winPct = (snapshot: TeamSnapshot) =>
+    snapshot.recentForm.length > 0
+      ? (100 * snapshot.recentForm.filter((r) => r === 'w').length) / snapshot.recentForm.length
+      : 0;
+
+  return {
+    labels: ['Attaque', 'Défense', 'Rebonds', 'Passes', 'Forme', 'Domicile'],
+    homeValues: [
+      normalize(home.offensiveRating, RADAR_BOUNDS.offensiveRating),
+      normalize(home.defensiveRating, RADAR_BOUNDS.defensiveRating, true),
+      normalize(home.reboundsPerGame, RADAR_BOUNDS.rebounds),
+      normalize(home.assistsPerGame, RADAR_BOUNDS.assists),
+      Math.round(winPct(home)),
+      Math.round(home.homeWinPct),
+    ],
+    awayValues: [
+      normalize(away.offensiveRating, RADAR_BOUNDS.offensiveRating),
+      normalize(away.defensiveRating, RADAR_BOUNDS.defensiveRating, true),
+      normalize(away.reboundsPerGame, RADAR_BOUNDS.rebounds),
+      normalize(away.assistsPerGame, RADAR_BOUNDS.assists),
+      Math.round(winPct(away)),
+      Math.round(away.homeWinPct),
+    ],
+  };
 }

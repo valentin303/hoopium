@@ -8,7 +8,7 @@
  */
 
 import assert from 'node:assert/strict';
-import { computeGamePoints, estimatePossessions, buildTeamSnapshot, predictMatch, computeRestDays } from '../src/lib/stats-engine';
+import { computeGamePoints, estimatePossessions, buildTeamSnapshot, predictMatch, computeRestDays, buildRadarProfile } from '../src/lib/stats-engine';
 import type { RawTeamGameStats, GameForTeam } from '../src/lib/stats-engine';
 
 let passed = 0;
@@ -152,6 +152,37 @@ test('computeRestDays calcule correctement un écart de jours', () => {
 
 test('computeRestDays renvoie 0 si pas de match précédent', () => {
   assert.equal(computeRestDays(null, new Date()), 0);
+});
+
+test('buildTeamSnapshot expose recentPointsTrend dans le bon ordre chronologique', () => {
+  const gameA: GameForTeam = { date: '2023-10-05T16:00:00Z', isHome: true, own: minnesotaStats, opponentPoints: 99, won: true };
+  const gameB: GameForTeam = { date: '2023-10-08T16:00:00Z', isHome: false, own: dallasStats, opponentPoints: 111, won: false };
+  const snapshot = buildTeamSnapshot([gameA, gameB]);
+  assert.deepEqual(snapshot.recentPointsTrend, [111, 99]);
+});
+
+test('buildRadarProfile reste borné entre 0 et 100', () => {
+  const games: GameForTeam[] = Array.from({ length: 10 }, (_, i) => ({
+    date: `2023-10-${10 + i}T16:00:00Z`,
+    isHome: true,
+    own: minnesotaStats,
+    opponentPoints: 99,
+    won: true,
+  }));
+  const snapshot = buildTeamSnapshot(games);
+  const radar = buildRadarProfile(snapshot, snapshot);
+  for (const v of [...radar.homeValues, ...radar.awayValues]) {
+    assert.ok(v >= 0 && v <= 100, `valeur radar hors bornes : ${v}`);
+  }
+});
+
+test('buildRadarProfile retourne les 6 axes attendus', () => {
+  const games: GameForTeam[] = [{ date: '2023-10-05T16:00:00Z', isHome: true, own: minnesotaStats, opponentPoints: 99, won: true }];
+  const snapshot = buildTeamSnapshot(games);
+  const radar = buildRadarProfile(snapshot, snapshot);
+  assert.deepEqual(radar.labels, ['Attaque', 'Défense', 'Rebonds', 'Passes', 'Forme', 'Domicile']);
+  assert.equal(radar.homeValues.length, 6);
+  assert.equal(radar.awayValues.length, 6);
 });
 
 console.log(`\n${passed}/${passed} tests passés.`);

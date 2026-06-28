@@ -85,6 +85,7 @@ interface RawGame {
   date: string;
   time: string;
   timestamp: number;
+  venue?: string;
   status: { long: string; short: string };
   league: { id: number; name: string; season: string };
   teams: { home: RawTeam; away: RawTeam };
@@ -246,9 +247,10 @@ export async function buildTeamSnapshotFromApi(
   teamId: string,
   league: League,
   referenceDate: Date,
-  maxGames = 10
+  maxGames = 10,
+  seasonOverride?: string
 ): Promise<TeamSnapshot> {
-  const allGames = await fetchAllSeasonGames(league);
+  const allGames = await fetchAllSeasonGames(league, seasonOverride);
   const recentGames = extractRecentGamesForTeam(allGames, teamId, referenceDate, maxGames);
 
   const withStats: GameForTeam[] = await Promise.all(
@@ -274,6 +276,39 @@ export async function buildTeamSnapshotFromApi(
 export async function fetchGameStatistics(gameId: number) {
   const data = await apiNbaFetch<RawGameTeamStats>('/games/statistics/teams', { id: gameId });
   return data.response;
+}
+
+/**
+ * Confrontations directes réelles entre deux équipes sur une saison —
+ * filtre côté code sur la liste de matchs déjà récupérée (pas de paramètre
+ * d'API h2h supposé, on ne fait confiance qu'à ce qu'on a vérifié).
+ * Peut renvoyer moins de matchs que demandé (parfois 1 à 4 par saison en
+ * NBA) — jamais complété par des données inventées.
+ */
+export function extractHeadToHead(
+  allGames: RawGame[],
+  teamAId: string,
+  teamBId: string,
+  beforeDate: Date,
+  maxGames = 10
+) {
+  const matches = allGames.filter((g) => {
+    if (g.status.short !== 'FT' && g.status.short !== 'AOT') return false;
+    if (new Date(g.timestamp * 1000) >= beforeDate) return false;
+    const home = String(g.teams.home.id);
+    const away = String(g.teams.away.id);
+    return (home === teamAId && away === teamBId) || (home === teamBId && away === teamAId);
+  });
+
+  matches.sort((a, b) => b.timestamp - a.timestamp); // plus récent d'abord
+
+  return matches.slice(0, maxGames).map((g) => ({
+    date: new Date(g.timestamp * 1000).toISOString(),
+    homeScore: g.scores.home.total ?? 0,
+    awayScore: g.scores.away.total ?? 0,
+    homeTeamWasTeamA: String(g.teams.home.id) === teamAId,
+    venue: g.venue ?? '',
+  }));
 }
 
 export async function fetchApiStatus() {

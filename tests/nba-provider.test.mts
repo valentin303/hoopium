@@ -5,7 +5,7 @@
  */
 
 import assert from 'node:assert/strict';
-import { extractRecentGamesForTeam } from '../src/lib/nba-provider';
+import { extractRecentGamesForTeam, extractHeadToHead } from '../src/lib/nba-provider';
 
 let passed = 0;
 function test(name: string, fn: () => void) {
@@ -115,6 +115,33 @@ test('détecte correctement isHome et le résultat (won) selon le côté', () =>
 
 test('renvoie un tableau vide si aucun match ne correspond, sans planter', () => {
   const result = extractRecentGamesForTeam([], TEAM_A, referenceDate, 10);
+  assert.deepEqual(result, []);
+});
+
+console.log('\nextractHeadToHead — tests\n');
+
+test('extractHeadToHead ne garde que les confrontations entre les deux équipes données', () => {
+  const games = [
+    fakeGame({ id: 1, timestamp: 1696000000, homeId: TEAM_A, awayId: TEAM_B, homeScore: 110, awayScore: 100 }),
+    fakeGame({ id: 2, timestamp: 1696100000, homeId: TEAM_A, awayId: TEAM_C, homeScore: 90, awayScore: 95 }),
+    fakeGame({ id: 3, timestamp: 1696200000, homeId: TEAM_B, awayId: TEAM_A, homeScore: 105, awayScore: 108 }),
+  ];
+  const result = extractHeadToHead(games, TEAM_A, TEAM_B, referenceDate, 10);
+  assert.equal(result.length, 2);
+});
+
+test('extractHeadToHead trie du plus récent au plus ancien', () => {
+  const games = [
+    fakeGame({ id: 1, timestamp: 1696000000, homeId: TEAM_A, awayId: TEAM_B }),
+    fakeGame({ id: 2, timestamp: 1696200000, homeId: TEAM_A, awayId: TEAM_B }),
+  ];
+  const result = extractHeadToHead(games, TEAM_A, TEAM_B, referenceDate, 10);
+  assert.ok(new Date(result[0].date).getTime() > new Date(result[1].date).getTime());
+});
+
+test("extractHeadToHead n'invente jamais de matchs : 0 confrontation réelle -> tableau vide", () => {
+  const games = [fakeGame({ id: 1, timestamp: 1696000000, homeId: TEAM_A, awayId: TEAM_C })];
+  const result = extractHeadToHead(games, TEAM_A, TEAM_B, referenceDate, 10);
   assert.deepEqual(result, []);
 });
 

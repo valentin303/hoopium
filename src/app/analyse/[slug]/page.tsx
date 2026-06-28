@@ -2,13 +2,18 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { AnalysisUnlock } from '@/components/AnalysisUnlock';
 import { MOCK_ANALYSIS, MOCK_UPCOMING_MATCHES } from '@/lib/mock-data';
+import { buildRealMatchAnalysis } from '@/lib/real-analysis';
 import type { Match } from '@/types';
 
-function buildAnalysisForMatch(match: Match) {
-  // Pour l'instant, toutes les analyses réutilisent les mêmes graphiques/facteurs
-  // de démonstration (MOCK_ANALYSIS), seules les infos d'en-tête changent.
-  // À remplacer par un vrai calcul une fois le modèle d'analyse construit.
-  return { ...MOCK_ANALYSIS, match };
+async function buildAnalysisForMatch(match: Match) {
+  try {
+    return await buildRealMatchAnalysis(match);
+  } catch (err) {
+    // Repli sur le mock si la récupération réelle échoue (réseau, id manquant...)
+    // — jamais d'écran cassé, mais on logue pour ne pas rater le problème.
+    console.warn('[analyse] Repli sur le mock pour', match.id, ':', err);
+    return { ...MOCK_ANALYSIS, match };
+  }
 }
 
 export default async function AnalysePage({ params }: { params: Promise<{ slug: string }> }) {
@@ -19,7 +24,7 @@ export default async function AnalysePage({ params }: { params: Promise<{ slug: 
     notFound();
   }
 
-  const analysis = buildAnalysisForMatch(match);
+  const analysis = await buildAnalysisForMatch(match);
 
   return (
     <main className="relative flex-1 pt-16">
