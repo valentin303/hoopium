@@ -41,6 +41,11 @@ export default async function AnalysePage({ params }: { params: Promise<{ slug: 
 
   const analysis = buildAnalysisForMatch(match);
 
+  // Score prédit par équipe, dérivé du total + écart déjà calculés
+  // (pas encore de vrai score prédit par équipe — à remplacer avec le vrai modèle).
+  const predictedHome = Math.round((analysis.totalPointsPredicted + analysis.spreadPredicted) / 2);
+  const predictedAway = analysis.totalPointsPredicted - predictedHome;
+
   return (
     <main className="relative flex-1 pt-16">
       <div className="px-6 pt-6 text-xs text-bone-dim md:px-12">
@@ -68,9 +73,11 @@ export default async function AnalysePage({ params }: { params: Promise<{ slug: 
             </>
           ) : (
             <>
-              <span className="font-display text-[11px] tracking-widest text-bone-dim">VS</span>
-              <span className="rounded-full bg-orange-glow px-3 py-1.5 font-display text-xs text-orange">
-                Confiance {match.confidence}%
+              <span className="font-display text-[44px] font-bold leading-none tracking-tight text-orange">
+                {predictedHome} - {predictedAway}
+              </span>
+              <span className="font-display text-[11px] tracking-widest text-bone-dim">
+                Score prédit · Confiance {match.confidence}%
               </span>
               <span className="font-display text-[10px] uppercase tracking-wide text-bone-dim">
                 {new Date(match.startTime).toLocaleString('fr-FR', {
