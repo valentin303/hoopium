@@ -1,4 +1,6 @@
 import type { Match, League } from '@/types';
+import { buildTeamSnapshot } from './stats-engine';
+import type { RawTeamGameStats, GameForTeam, TeamSnapshot } from './stats-engine';
 
 /**
  * Couche d'accès aux données basketball multi-ligues.
@@ -152,8 +154,125 @@ export async function fetchStandings(league: League = 'nba') {
   return data.response;
 }
 
+// ===== Stats de match par équipe (pour le moteur de calcul, src/lib/stats-engine.ts) =====
+
+/** Forme brute exacte renvoyée par /games/statistics/teams — vérifiée manuellement. */
+interface RawGameTeamStats {
+  game: { id: number };
+  team: { id: number };
+  field_goals: { total: number; attempts: number; percentage: number };
+  threepoint_goals: { total: number; attempts: number; percentage: number };
+  freethrows_goals: { total: number; attempts: number; percentage: number };
+  rebounds: { total: number; offence: number; defense: number };
+  assists: number;
+  steals: number;
+  blocks: number;
+  turnovers: number;
+  personal_fouls: number;
+}
+
+/** Convertit la forme brute de l'API vers le type attendu par stats-engine.ts. */
+function mapRawGameTeamStats(raw: RawGameTeamStats): RawTeamGameStats {
+  return {
+    fieldGoalsMade: raw.field_goals.total,
+    fieldGoalsAttempted: raw.field_goals.attempts,
+    threePointsMade: raw.threepoint_goals.total,
+    threePointsAttempted: raw.threepoint_goals.attempts,
+    freeThrowsMade: raw.freethrows_goals.total,
+    freeThrowsAttempted: raw.freethrows_goals.attempts,
+    reboundsOffense: raw.rebounds.offence,
+    reboundsDefense: raw.rebounds.defense,
+    assists: raw.assists,
+    turnovers: raw.turnovers,
+  };
+}
+
+/** Récupère tous les matchs d'une saison (1 requête, quel que soit le nombre de matchs). */
+export async function fetchAllSeasonGames(league: League = 'nba', seasonOverride?: string) {
+  const { id, season } = LEAGUE_CONFIG[league];
+  const data = await apiNbaFetch<RawGame>('/games', { league: id, season: seasonOverride ?? season });
+  return data.response;
+}
+
+export interface RecentGameForTeam {
+  gameId: number;
+  date: string;
+  isHome: boolean;
+  opponentPoints: number;
+  won: boolean;
+}
+
+/**
+ * Sélectionne, parmi tous les matchs d'une saison, les `maxGames` plus
+ * récents joués par `teamId` avant `beforeDate` — fonction pure, testable
+ * sans réseau (voir tests/nba-provider.test.mts).
+ */
+export function extractRecentGamesForTeam(
+  allGames: RawGame[],
+  teamId: string,
+  beforeDate: Date,
+  maxGames: number
+): RecentGameForTeam[] {
+  const finished = allGames.filter((g) => {
+    if (g.status.short !== 'FT' && g.status.short !== 'AOT') return false;
+    if (new Date(g.timestamp * 1000) >= beforeDate) return false;
+    return String(g.teams.home.id) === teamId || String(g.teams.away.id) === teamId;
+  });
+
+  finished.sort((a, b) => a.timestamp - b.timestamp);
+
+  return finished.slice(-maxGames).map((g) => {
+    const isHome = String(g.teams.home.id) === teamId;
+    const ownScore = isHome ? g.scores.home.total : g.scores.away.total;
+    const oppScore = isHome ? g.scores.away.total : g.scores.home.total;
+    return {
+      gameId: g.id,
+      date: new Date(g.timestamp * 1000).toISOString(),
+      isHome,
+      opponentPoints: oppScore ?? 0,
+      won: (ownScore ?? 0) > (oppScore ?? 0),
+    };
+  });
+}
+
+/**
+ * Construit le profil agrégé réel d'une équipe : récupère ses derniers
+ * matchs de la saison, puis le box-score détaillé de chacun (1 requête par
+ * match — c'est la partie coûteuse de cette fonction), et agrège tout via
+ * stats-engine.ts. À mettre en cache par équipe (pas par visiteur) côté
+ * appelant, conformément aux points de rafraîchissement définis.
+ */
+export async function buildTeamSnapshotFromApi(
+  teamId: string,
+  league: League,
+  referenceDate: Date,
+  maxGames = 10
+): Promise<TeamSnapshot> {
+  const allGames = await fetchAllSeasonGames(league);
+  const recentGames = extractRecentGamesForTeam(allGames, teamId, referenceDate, maxGames);
+
+  const withStats: GameForTeam[] = await Promise.all(
+    recentGames.map(async (rg) => {
+      const statsResponse = await apiNbaFetch<RawGameTeamStats>('/games/statistics/teams', { id: rg.gameId });
+      const ownStats = statsResponse.response.find((s) => String(s.team.id) === teamId);
+      if (!ownStats) {
+        throw new Error(`Stats introuvables pour l'équipe ${teamId} dans le match ${rg.gameId}`);
+      }
+      return {
+        date: rg.date,
+        isHome: rg.isHome,
+        own: mapRawGameTeamStats(ownStats),
+        opponentPoints: rg.opponentPoints,
+        won: rg.won,
+      };
+    })
+  );
+
+  return buildTeamSnapshot(withStats);
+}
+
 export async function fetchGameStatistics(gameId: number) {
-  const data = await apiNbaFetch<unknown>('/games/statistics/teams', { id: gameId });
+  const data = await apiNbaFetch<RawGameTeamStats>('/games/statistics/teams', { id: gameId });
   return data.response;
 }
 
