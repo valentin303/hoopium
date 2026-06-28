@@ -1,37 +1,15 @@
-import Image from 'next/image';
 import { TeamLogo } from '@/components/TeamLogo';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { AnalysisUnlock } from '@/components/AnalysisUnlock';
 import { MOCK_ANALYSIS, MOCK_UPCOMING_MATCHES } from '@/lib/mock-data';
-import type { Match, Team } from '@/types';
+import type { Match } from '@/types';
 
 function buildAnalysisForMatch(match: Match) {
   // Pour l'instant, toutes les analyses réutilisent les mêmes graphiques/facteurs
   // de démonstration (MOCK_ANALYSIS), seules les infos d'en-tête changent.
   // À remplacer par un vrai calcul une fois le modèle d'analyse construit.
   return { ...MOCK_ANALYSIS, match };
-}
-
-function TeamBadge({ team, size = 56 }: { team: Team; size?: number }) {
-  if (team.logoUrl) {
-    return (
-      <div
-        className="flex items-center justify-center rounded-2xl border border-surface-line bg-surface p-2"
-        style={{ width: size, height: size }}
-      >
-        <Image src={team.logoUrl} alt={team.name} width={size - 16} height={size - 16} className="object-contain" />
-      </div>
-    );
-  }
-  return (
-    <div
-      className="flex items-center justify-center rounded-2xl border border-surface-line bg-surface font-display text-sm font-bold text-orange"
-      style={{ width: size, height: size }}
-    >
-      {team.abbreviation}
-    </div>
-  );
 }
 
 function FormDots({ form }: { form: Match['homeTeam']['form'] }) {
@@ -74,28 +52,39 @@ export default async function AnalysePage({ params }: { params: Promise<{ slug: 
 
       <div className="flex flex-wrap items-center justify-center gap-10 border-b border-surface-line px-6 py-8 md:px-12">
         <div className="flex flex-col items-center gap-2 text-center">
-          <TeamLogo team={match.homeTeam} size={56} shape="circle" />
+          <TeamLogo team={match.homeTeam} size={96} shape="circle" />
           <span className="text-xl font-bold tracking-tight">{match.homeTeam.name}</span>
           <span className="font-display text-xs text-bone-dim">{match.homeTeam.record}</span>
           <FormDots form={match.homeTeam.form} />
         </div>
 
         <div className="flex flex-col items-center gap-2">
-          <span className="font-display text-[11px] tracking-widest text-bone-dim">VS</span>
-          <span className="rounded-full bg-orange-glow px-3 py-1.5 font-display text-xs text-orange">
-            Confiance {match.confidence}%
-          </span>
-          <span className="font-display text-[10px] uppercase tracking-wide text-bone-dim">
-            {new Date(match.startTime).toLocaleString('fr-FR', {
-              weekday: 'short',
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
-          </span>
+          {match.status === 'finished' && match.finalScore ? (
+            <>
+              <span className="font-display text-[44px] font-bold leading-none tracking-tight text-orange">
+                {match.finalScore.home} - {match.finalScore.away}
+              </span>
+              <span className="font-display text-[11px] tracking-widest text-bone-dim">FINAL</span>
+            </>
+          ) : (
+            <>
+              <span className="font-display text-[11px] tracking-widest text-bone-dim">VS</span>
+              <span className="rounded-full bg-orange-glow px-3 py-1.5 font-display text-xs text-orange">
+                Confiance {match.confidence}%
+              </span>
+              <span className="font-display text-[10px] uppercase tracking-wide text-bone-dim">
+                {new Date(match.startTime).toLocaleString('fr-FR', {
+                  weekday: 'short',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
+              </span>
+            </>
+          )}
         </div>
 
         <div className="flex flex-col items-center gap-2 text-center">
-          <TeamLogo team={match.awayTeam} size={56} shape="circle" />
+          <TeamLogo team={match.awayTeam} size={96} shape="circle" />
           <span className="text-xl font-bold tracking-tight">{match.awayTeam.name}</span>
           <span className="font-display text-xs text-bone-dim">{match.awayTeam.record}</span>
           <FormDots form={match.awayTeam.form} />
