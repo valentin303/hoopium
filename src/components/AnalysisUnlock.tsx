@@ -297,7 +297,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
 
             <KeyPlayersSection players={analysis.keyPlayers} match={match} />
 
-            <BettingMarketsSection markets={analysis.bettingMarkets} />
+            <BettingMarketsSection markets={analysis.bettingMarkets} match={match} />
 
             <section>
               <h3 className="mb-1 font-display text-xs uppercase tracking-wider text-orange">

@@ -404,23 +404,23 @@ export const MOCK_ANALYSIS: MatchAnalysis = {
       teaser: 'Tendance au-dessus sur 7 des 10 derniers face-à-face.',
       detail: {
         trend: { labels: ['M-5', 'M-4', 'M-3', 'M-2', 'Dernier'], values: [218, 233, 209, 227, 224] },
-        explanation: 'Le rythme de jeu combiné des deux équipes (100.2 possessions/match en moyenne) et l\'absence d\'un pivot titulaire côté visiteur orientent vers un total élevé. Les 3 dernières confrontations directes ont toutes dépassé 220 points combinés.',
+        explanation: 'Le rythme de jeu combiné des deux équipes (100.2 possessions/match en moyenne) et l\'absence d\'un pivot titulaire côté {away} orientent vers un total élevé. Les 3 dernières confrontations directes ont toutes dépassé 220 points combinés.',
       },
     },
     {
-      id: 'bm-spread', label: 'Écart (Spread)', line: 'Domicile -6.5', confidence: 64,
-      teaser: 'L\'équipe à domicile couvre l\'écart dans 6 des 9 derniers matchs joués chez elle.',
+      id: 'bm-spread', label: 'Écart (Spread)', line: '{home} -6.5', confidence: 64,
+      teaser: 'Les {home} couvrent l\'écart dans 6 des 9 derniers matchs joués chez eux.',
       detail: {
         trend: { labels: ['M-5', 'M-4', 'M-3', 'M-2', 'Dernier'], values: [-9, -2, -14, 4, -11] },
-        explanation: 'Le facteur back-to-back côté visiteur et l\'avantage défensif marqué à domicile (108.4 de rating défensif, top 3 ligue) soutiennent un écart favorable à l\'équipe recevante.',
+        explanation: 'Le facteur back-to-back côté {away} et l\'avantage défensif marqué à domicile (108.4 de rating défensif, top 3 ligue) soutiennent un écart favorable aux {home}.',
       },
     },
     {
-      id: 'bm-1h', label: 'Mi-temps (1ère période)', line: 'Domicile -3.5', confidence: 58,
-      teaser: 'Démarrages rapides à domicile sur les 5 dernières réceptions.',
+      id: 'bm-1h', label: 'Mi-temps (1ère période)', line: '{home} -3.5', confidence: 58,
+      teaser: 'Démarrages rapides des {home} sur leurs 5 dernières réceptions.',
       detail: {
         trend: { labels: ['M-5', 'M-4', 'M-3', 'M-2', 'Dernier'], values: [2, -6, -1, -9, -4] },
-        explanation: 'L\'équipe à domicile démarre généralement plus fort, avec un écart moyen de -4.4 points à la mi-temps sur ses 5 derniers matchs joués chez elle.',
+        explanation: 'Les {home} démarrent généralement plus fort, avec un écart moyen de -4.4 points à la mi-temps sur leurs 5 derniers matchs joués chez eux.',
       },
     },
   ],

@@ -5,16 +5,20 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts';
 import { AnalysisOverlay } from './AnalysisOverlay';
-import type { BettingMarket } from '@/types';
+import { personalizeText } from '@/lib/personalize';
+import type { BettingMarket, Match } from '@/types';
 
-export function BettingMarketsSection({ markets }: { markets: BettingMarket[] }) {
+export function BettingMarketsSection({ markets, match }: { markets: BettingMarket[]; match: Match }) {
   const [selected, setSelected] = useState<BettingMarket | null>(null);
 
   return (
     <section>
-      <h3 className="mb-4 font-display text-xs uppercase tracking-wider text-orange">
+      <h3 className="mb-1 font-display text-xs uppercase tracking-wider text-orange">
         — Marchés analysés
       </h3>
+      <p className="mb-4 text-xs text-bone-dim">
+        Lignes courantes et tendance HOOPIUM pour chaque marché — clique pour le détail.
+      </p>
       <div className="grid gap-3 md:grid-cols-3">
         {markets.map((m) => (
           <button
@@ -23,8 +27,8 @@ export function BettingMarketsSection({ markets }: { markets: BettingMarket[] })
             className="flex flex-col gap-2 rounded-xl border border-surface-line bg-night-soft/80 p-4 text-left transition hover:border-orange-dim hover:bg-surface"
           >
             <span className="text-xs uppercase tracking-wide text-bone-dim">{m.label}</span>
-            <span className="font-display text-xl font-bold">{m.line}</span>
-            <span className="text-[12px] leading-snug text-bone-dim">{m.teaser}</span>
+            <span className="font-display text-xl font-bold">{personalizeText(m.line, match)}</span>
+            <span className="text-[12px] leading-snug text-bone-dim">{personalizeText(m.teaser, match)}</span>
             <div className="mt-1 flex items-center gap-2">
               <div className="h-1.5 flex-1 overflow-hidden rounded bg-surface-line">
                 <div className="h-full rounded bg-orange" style={{ width: `${m.confidence}%` }} />
@@ -49,7 +53,9 @@ export function BettingMarketsSection({ markets }: { markets: BettingMarket[] })
                 </LineChart>
               </ResponsiveContainer>
             </div>
-            <p className="text-sm leading-relaxed text-bone-dim">{selected.detail.explanation}</p>
+            <p className="text-sm leading-relaxed text-bone-dim">
+              {personalizeText(selected.detail.explanation, match)}
+            </p>
           </div>
         )}
       </AnalysisOverlay>
