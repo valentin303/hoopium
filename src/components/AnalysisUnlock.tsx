@@ -6,6 +6,7 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts';
 import { TeamLogo } from './TeamLogo';
+import { personalizeText } from '@/lib/personalize';
 import type { Match, MatchAnalysis } from '@/types';
 import { KeyPlayersSection } from './KeyPlayersSection';
 import { BettingMarketsSection } from './BettingMarketsSection';
@@ -273,9 +274,12 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
         >
           <div className="flex flex-col gap-10 px-6 py-8 md:px-10">
             <section>
-              <h3 className="mb-4 font-display text-xs uppercase tracking-wider text-orange">
+              <h3 className="mb-1 font-display text-xs uppercase tracking-wider text-orange">
                 — Comparaison statistique
               </h3>
+              <p className="mb-4 text-xs text-bone-dim">
+                Moyennes de la saison régulière, équipe par équipe.
+              </p>
               <div className="rounded-xl border border-surface-line bg-night-soft/80 p-4">
                 <ResponsiveContainer width="100%" height={220}>
                   <BarChart data={statsData}>
@@ -296,9 +300,13 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
             <BettingMarketsSection markets={analysis.bettingMarkets} />
 
             <section>
-              <h3 className="mb-4 font-display text-xs uppercase tracking-wider text-orange">
+              <h3 className="mb-1 font-display text-xs uppercase tracking-wider text-orange">
                 — Tendance offensive & Profil
               </h3>
+              <p className="mb-4 text-xs text-bone-dim">
+                À gauche : points marqués sur les 10 derniers matchs. À droite : profil de jeu
+                global (attaque, défense, rebonds, passes, forme du moment, solidité à domicile).
+              </p>
               <div className="grid gap-3 md:grid-cols-2">
                 <div className="rounded-xl border border-surface-line bg-night-soft/80 p-4">
                   <ResponsiveContainer width="100%" height={200}>
@@ -307,6 +315,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
                       <XAxis dataKey="label" tick={{ fill: '#6b6b68', fontSize: 10 }} />
                       <YAxis tick={{ fill: '#6b6b68', fontSize: 10 }} />
                       <Tooltip contentStyle={{ background: '#161616', border: '1px solid #232323' }} />
+                      <Legend verticalAlign="top" align="left" wrapperStyle={{ fontSize: 11, paddingBottom: 6 }} />
                       <Line type="monotone" dataKey={match.homeTeam.name} stroke="#FF6B1A" strokeWidth={2} dot={{ r: 3 }} />
                       <Line type="monotone" dataKey={match.awayTeam.name} stroke="#6b6b68" strokeWidth={2} dot={{ r: 3 }} />
                     </LineChart>
@@ -317,6 +326,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
                     <RadarChart data={radarData}>
                       <PolarGrid stroke="#232323" />
                       <PolarAngleAxis dataKey="label" tick={{ fill: '#6b6b68', fontSize: 10 }} />
+                      <Legend verticalAlign="top" align="left" wrapperStyle={{ fontSize: 11, paddingBottom: 6 }} />
                       <Radar dataKey={match.homeTeam.name} stroke="#FF6B1A" fill="#FF6B1A" fillOpacity={0.15} />
                       <Radar dataKey={match.awayTeam.name} stroke="#6b6b68" fill="#6b6b68" fillOpacity={0.08} />
                     </RadarChart>
@@ -327,7 +337,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
 
             <HeadToHeadSection games={analysis.headToHeadDetailed} match={match} />
 
-            <ContextSection factors={analysis.contextFactors} />
+            <ContextSection factors={analysis.contextFactors} match={match} />
 
             <section>
               <h3 className="mb-4 font-display text-xs uppercase tracking-wider text-orange">
@@ -341,7 +351,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
                     >
                       {STRENGTH_LABELS[factor.strength]}
                     </span>
-                    <p className="text-[14px] leading-relaxed text-bone">{factor.text}</p>
+                    <p className="text-[14px] leading-relaxed text-bone">{personalizeText(factor.text, match)}</p>
                   </div>
                 ))}
               </div>
@@ -362,7 +372,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
               <p className="mb-3 font-display text-[11px] uppercase tracking-widest text-orange">
                 Verdict HOOPIUM
               </p>
-              <p className="text-[15px] leading-relaxed">{analysis.verdict}</p>
+              <p className="text-[15px] leading-relaxed">{personalizeText(analysis.verdict, match)}</p>
             </section>
 
             <section className="rounded-2xl border border-orange-dim bg-gradient-to-br from-orange-glow to-transparent px-8 py-7 text-center">

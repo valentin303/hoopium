@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { AnalysisOverlay } from './AnalysisOverlay';
-import type { ContextFactor } from '@/types';
+import { personalizeText } from '@/lib/personalize';
+import type { ContextFactor, Match } from '@/types';
 
 const ICONS: Record<ContextFactor['icon'], string> = {
   rest: '🛌',
@@ -11,14 +12,18 @@ const ICONS: Record<ContextFactor['icon'], string> = {
   streak: '🔥',
 };
 
-export function ContextSection({ factors }: { factors: ContextFactor[] }) {
+export function ContextSection({ factors, match }: { factors: ContextFactor[]; match: Match }) {
   const [selected, setSelected] = useState<ContextFactor | null>(null);
 
   return (
     <section>
-      <h3 className="mb-4 font-display text-xs uppercase tracking-wider text-orange">
+      <h3 className="mb-1 font-display text-xs uppercase tracking-wider text-orange">
         — Contexte du match
       </h3>
+      <p className="mb-4 text-xs text-bone-dim">
+        Facteurs externes au jeu pur (repos, voyage, enjeu, dynamique) — clique sur une carte pour
+        le détail.
+      </p>
       <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-4">
         {factors.map((f) => (
           <button
@@ -34,7 +39,11 @@ export function ContextSection({ factors }: { factors: ContextFactor[] }) {
       </div>
 
       <AnalysisOverlay open={!!selected} onClose={() => setSelected(null)} title={selected?.label ?? ''}>
-        {selected && <p className="text-sm leading-relaxed text-bone-dim">{selected.explanation}</p>}
+        {selected && (
+          <p className="text-sm leading-relaxed text-bone-dim">
+            {personalizeText(selected.explanation, match)}
+          </p>
+        )}
       </AnalysisOverlay>
     </section>
   );

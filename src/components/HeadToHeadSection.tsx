@@ -10,13 +10,17 @@ export function HeadToHeadSection({ games, match }: { games: HeadToHeedGame[]; m
 
   return (
     <section>
-      <h3 className="mb-4 font-display text-xs uppercase tracking-wider text-orange">
+      <h3 className="mb-1 font-display text-xs uppercase tracking-wider text-orange">
         — Historique des confrontations
       </h3>
+      <p className="mb-4 text-xs text-bone-dim">
+        Bilan de {match.homeTeam.name} sur les confrontations directes (à domicile comme à
+        l&apos;extérieur).
+      </p>
       <div className="flex items-center justify-between rounded-xl border border-surface-line bg-night-soft/80 p-4">
         <div>
           <span className="font-display text-lg font-bold">
-            {homeWins}V — {games.length - homeWins}D
+            {match.homeTeam.name} : {homeWins}V — {games.length - homeWins}D
           </span>
           <span className="ml-2 text-xs text-bone-dim">sur les {games.length} dernières rencontres</span>
         </div>

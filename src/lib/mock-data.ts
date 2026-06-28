@@ -427,29 +427,29 @@ export const MOCK_ANALYSIS: MatchAnalysis = {
   contextFactors: [
     {
       id: 'cf-rest', icon: 'rest', label: 'Repos', value: '2 jours vs 0 jour',
-      explanation: 'L\'équipe à domicile arrive sur 2 jours de repos complet, contre un enchaînement back-to-back pour l\'équipe visiteuse — facteur de fraîcheur physique significatif en fin de match.',
+      explanation: 'Les {home} arrivent sur 2 jours de repos complet, contre un enchaînement back-to-back pour les {away} — facteur de fraîcheur physique significatif en fin de match.',
     },
     {
       id: 'cf-travel', icon: 'travel', label: 'Déplacement', value: '+2 fuseaux horaires',
-      explanation: 'L\'équipe visiteuse a parcouru plus de 3 500 km et traversé 2 fuseaux horaires avant ce match, un facteur statistiquement associé à une légère baisse d\'efficacité offensive en début de rencontre.',
+      explanation: 'Les {away} ont parcouru plus de 3 500 km et traversé 2 fuseaux horaires avant ce match, un facteur statistiquement associé à une légère baisse d\'efficacité offensive en début de rencontre.',
     },
     {
       id: 'cf-standing', icon: 'standing', label: 'Enjeu classement', value: 'Place de tête en jeu',
-      explanation: 'Les deux équipes se disputent actuellement la 1ère place de leur conférence — historiquement, ce type de match à enjeu produit une intensité défensive accrue par rapport à la moyenne de saison.',
+      explanation: 'Les {home} et les {away} se disputent actuellement la 1ère place de leur conférence — historiquement, ce type de match à enjeu produit une intensité défensive accrue par rapport à la moyenne de saison.',
     },
     {
       id: 'cf-streak', icon: 'streak', label: 'Série en cours', value: '7 victoires à domicile',
-      explanation: 'L\'équipe à domicile reste sur 7 victoires consécutives dans sa salle, sa plus longue série depuis le début de la saison.',
+      explanation: 'Les {home} restent sur 7 victoires consécutives dans leur salle, leur plus longue série depuis le début de la saison.',
     },
   ],
   factors: [
-    { strength: 'strong', text: '7 victoires consécutives à domicile — efficacité défensive top 3 NBA (108.4).' },
-    { strength: 'strong', text: 'Back-to-back visiteur — fatigue estimée à +12% sur l\'efficacité offensive.' },
-    { strength: 'strong', text: '+18% tentatives à 3 pts vs moyenne ligue, converties à 38.2%.' },
-    { strength: 'variable', text: 'Duel entre meneurs — avantage marqué sur les 5 dernières confrontations.' },
-    { strength: 'uncertain', text: 'Retour de blessure possible pour un titulaire visiteur — non confirmé.' },
+    { strength: 'strong', text: '7 victoires consécutives à domicile pour les {home} — efficacité défensive top 3 NBA (108.4).' },
+    { strength: 'strong', text: 'Back-to-back pour les {away} — fatigue estimée à +12% sur l\'efficacité offensive.' },
+    { strength: 'strong', text: '+18% tentatives à 3 pts vs moyenne ligue pour les {home}, converties à 38.2%.' },
+    { strength: 'variable', text: 'Duel entre meneurs — avantage marqué pour les {home} sur les 5 dernières confrontations.' },
+    { strength: 'uncertain', text: 'Retour de blessure possible pour un titulaire des {away} — non confirmé.' },
   ],
   winProbabilities: { homeWinPct: 68, closeGamePct: 18, awayWinPct: 14 },
   verdict:
-    "Les modèles convergent vers une victoire nette de l'équipe à domicile. Le facteur back-to-back de l'équipe visiteuse crée un différentiel de fraîcheur significatif. Le total devrait rester élevé. Gagnant prédit avec une confiance forte.",
+    'Les modèles convergent vers une victoire nette des {home}. Le facteur back-to-back des {away} crée un différentiel de fraîcheur significatif. Le total devrait rester élevé. Gagnant prédit avec une confiance forte.',
 };
