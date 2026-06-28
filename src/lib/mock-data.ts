@@ -1,4 +1,5 @@
 import type { Match, MatchAnalysis, SiteStats, Team } from '@/types';
+import teamLogos from './team-logos.json';
 
 /**
  * Données de démonstration.
@@ -8,13 +9,21 @@ import type { Match, MatchAnalysis, SiteStats, Team } from '@/types';
  * pour garder une cohérence visuelle pendant la migration.
  */
 
+/**
+ * Logos résolus via scripts/fetch-team-logos.mjs (voir src/lib/team-logos.json).
+ * Une équipe absente de ce mapping retombe simplement sur les initiales —
+ * géré nativement par le composant TeamLogo, jamais de logo halluciné.
+ */
+const logos: Record<string, string> = teamLogos;
+const logoFor = (id: string): string | undefined => logos[id];
+
 const lakers: Team = {
   id: 'lal',
   name: 'Lakers',
   abbreviation: 'LAL',
   record: '12V — 3D cette saison',
   form: { results: ['w', 'w', 'l', 'w', 'w'] },
-  logoUrl: 'https://media.api-sports.io/basketball/teams/145.png',
+  logoUrl: logoFor('lal'),
 };
 
 const celtics: Team = {
@@ -23,7 +32,7 @@ const celtics: Team = {
   abbreviation: 'BOS',
   record: '9V — 6D cette saison',
   form: { results: ['l', 'w', 'l', 'l', 'w'] },
-  logoUrl: 'https://media.api-sports.io/basketball/teams/133.png',
+  logoUrl: logoFor('bos'),
 };
 
 const nuggets: Team = {
@@ -32,6 +41,7 @@ const nuggets: Team = {
   abbreviation: 'DEN',
   record: '13V — 2D cette saison',
   form: { results: ['w', 'w', 'w', 'l', 'w'] },
+  logoUrl: logoFor('den'),
 };
 
 const suns: Team = {
@@ -40,6 +50,7 @@ const suns: Team = {
   abbreviation: 'PHX',
   record: '7V — 8D cette saison',
   form: { results: ['l', 'l', 'w', 'l', 'w'] },
+  logoUrl: logoFor('phx'),
 };
 
 const heat: Team = {
@@ -48,6 +59,7 @@ const heat: Team = {
   abbreviation: 'MIA',
   record: '10V — 5D cette saison',
   form: { results: ['w', 'w', 'l', 'w', 'l'] },
+  logoUrl: logoFor('mia'),
 };
 
 const bulls: Team = {
@@ -56,6 +68,7 @@ const bulls: Team = {
   abbreviation: 'CHI',
   record: '6V — 9D cette saison',
   form: { results: ['l', 'l', 'w', 'l', 'l'] },
+  logoUrl: logoFor('chi'),
 };
 
 const warriors: Team = {
@@ -64,6 +77,7 @@ const warriors: Team = {
   abbreviation: 'GSW',
   record: '9V — 6D cette saison',
   form: { results: ['w', 'l', 'w', 'w', 'l'] },
+  logoUrl: logoFor('gsw'),
 };
 
 const bucks: Team = {
@@ -72,6 +86,7 @@ const bucks: Team = {
   abbreviation: 'MIL',
   record: '11V — 4D cette saison',
   form: { results: ['w', 'w', 'w', 'l', 'w'] },
+  logoUrl: logoFor('mil'),
 };
 
 const sixers: Team = {
@@ -80,6 +95,7 @@ const sixers: Team = {
   abbreviation: 'PHI',
   record: '8V — 7D cette saison',
   form: { results: ['l', 'w', 'l', 'w', 'l'] },
+  logoUrl: logoFor('phi'),
 };
 
 const knicks: Team = {
@@ -88,6 +104,7 @@ const knicks: Team = {
   abbreviation: 'NYK',
   record: '10V — 5D cette saison',
   form: { results: ['w', 'l', 'w', 'w', 'w'] },
+  logoUrl: logoFor('nyk'),
 };
 
 const liberty: Team = {
@@ -96,6 +113,7 @@ const liberty: Team = {
   abbreviation: 'NY',
   record: '14V — 4D cette saison',
   form: { results: ['w', 'w', 'w', 'l', 'w'] },
+  logoUrl: logoFor('ny-lib'),
 };
 
 const aces: Team = {
@@ -104,6 +122,7 @@ const aces: Team = {
   abbreviation: 'LV',
   record: '13V — 5D cette saison',
   form: { results: ['w', 'l', 'w', 'w', 'l'] },
+  logoUrl: logoFor('lv-aces'),
 };
 
 const realMadrid: Team = {
@@ -112,6 +131,7 @@ const realMadrid: Team = {
   abbreviation: 'RMA',
   record: '21V — 6D cette saison',
   form: { results: ['w', 'w', 'w', 'w', 'l'] },
+  logoUrl: logoFor('rma'),
 };
 
 const barcelone: Team = {
@@ -120,6 +140,7 @@ const barcelone: Team = {
   abbreviation: 'BAR',
   record: '19V — 8D cette saison',
   form: { results: ['w', 'l', 'w', 'l', 'w'] },
+  logoUrl: logoFor('bar'),
 };
 
 const duke: Team = {
@@ -128,6 +149,7 @@ const duke: Team = {
   abbreviation: 'DUKE',
   record: '24V — 5D cette saison',
   form: { results: ['w', 'w', 'l', 'w', 'w'] },
+  logoUrl: logoFor('duke'),
 };
 
 const kansas: Team = {
@@ -136,6 +158,7 @@ const kansas: Team = {
   abbreviation: 'KU',
   record: '21V — 8D cette saison',
   form: { results: ['l', 'w', 'w', 'l', 'w'] },
+  logoUrl: logoFor('ku'),
 };
 
 export const MOCK_UPCOMING_MATCHES: Match[] = [
