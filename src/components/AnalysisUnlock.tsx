@@ -7,6 +7,7 @@ import {
 } from 'recharts';
 import { TeamLogo } from './TeamLogo';
 import { personalizeText } from '@/lib/personalize';
+import { homeTeamColor, awayTeamColor } from '@/lib/team-colors';
 import type { Match, MatchAnalysis } from '@/types';
 import { KeyPlayersSection } from './KeyPlayersSection';
 import { BettingMarketsSection } from './BettingMarketsSection';
@@ -60,6 +61,9 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
   // ailleurs en clair avant le déblocage (cf. grille de stats plus bas).
   const predictedHome = Math.round((analysis.totalPointsPredicted + analysis.spreadPredicted) / 2);
   const predictedAway = analysis.totalPointsPredicted - predictedHome;
+
+  const homeColor = homeTeamColor(match.homeTeam.id);
+  const awayColor = awayTeamColor(match.awayTeam.id);
 
   function handleUnlock() {
     setPhase('processing');
@@ -188,8 +192,8 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
                     <YAxis tick={{ fill: '#6b6b68', fontSize: 11 }} />
                     <Tooltip contentStyle={{ background: '#161616', border: '1px solid #232323' }} />
                     <Legend verticalAlign="top" align="left" wrapperStyle={{ fontSize: 12, paddingBottom: 8 }} />
-                    <Bar dataKey={match.homeTeam.name} fill="#FF6B1A" radius={[4, 4, 0, 0]} />
-                    <Bar dataKey={match.awayTeam.name} fill="#ffffff1f" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey={match.homeTeam.name} fill={homeColor} radius={[4, 4, 0, 0]} />
+                    <Bar dataKey={match.awayTeam.name} fill={awayColor} radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -216,8 +220,8 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
                       <YAxis tick={{ fill: '#6b6b68', fontSize: 10 }} />
                       <Tooltip contentStyle={{ background: '#161616', border: '1px solid #232323' }} />
                       <Legend verticalAlign="top" align="left" wrapperStyle={{ fontSize: 11, paddingBottom: 6 }} />
-                      <Line type="monotone" dataKey={match.homeTeam.name} stroke="#FF6B1A" strokeWidth={2} dot={{ r: 3 }} />
-                      <Line type="monotone" dataKey={match.awayTeam.name} stroke="#6b6b68" strokeWidth={2} dot={{ r: 3 }} />
+                      <Line type="monotone" dataKey={match.homeTeam.name} stroke={homeColor} strokeWidth={2} dot={{ r: 3 }} />
+                      <Line type="monotone" dataKey={match.awayTeam.name} stroke={awayColor} strokeWidth={2} dot={{ r: 3 }} />
                     </LineChart>
                   </ResponsiveContainer>
                 </div>
@@ -227,8 +231,8 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
                       <PolarGrid stroke="#232323" />
                       <PolarAngleAxis dataKey="label" tick={{ fill: '#6b6b68', fontSize: 10 }} />
                       <Legend verticalAlign="top" align="left" wrapperStyle={{ fontSize: 11, paddingBottom: 6 }} />
-                      <Radar dataKey={match.homeTeam.name} stroke="#FF6B1A" fill="#FF6B1A" fillOpacity={0.15} />
-                      <Radar dataKey={match.awayTeam.name} stroke="#6b6b68" fill="#6b6b68" fillOpacity={0.08} />
+                      <Radar dataKey={match.homeTeam.name} stroke={homeColor} fill={homeColor} fillOpacity={0.2} />
+                      <Radar dataKey={match.awayTeam.name} stroke={awayColor} fill={awayColor} fillOpacity={0.35} />
                     </RadarChart>
                   </ResponsiveContainer>
                 </div>
