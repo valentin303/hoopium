@@ -144,7 +144,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
 
       <div className="grid grid-cols-2 border-b border-surface-line md:grid-cols-4">
         <QuickStat value={unlocked ? analysis.totalPointsPredicted : '🔒'} label="Total pts prédit" />
-        <QuickStat value={unlocked ? `+${analysis.spreadPredicted}` : '🔒'} label="Écart prédit" />
+        <QuickStat value={unlocked ? `${analysis.spreadPredicted >= 0 ? '+' : ''}${analysis.spreadPredicted}` : '🔒'} label="Écart prédit" />
         <QuickStat value={`${match.confidence}%`} label="Indice IA" />
         <QuickStat value={analysis.variablesUsed} label="Variables" />
       </div>
