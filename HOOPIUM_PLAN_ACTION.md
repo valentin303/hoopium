@@ -16,7 +16,7 @@
 **Pas fait — et c'est le plus important :**
 - **Étape 1 du modèle (calcul statistique) : faite et fonctionnelle** (29 juin). `src/lib/stats-engine.ts` calcule confiance, score prédit, écart, probabilités, profil radar à partir de vraies données API-Basketball (saison de test 2023-2024, le plan gratuit ne donnant pas accès à la saison en cours). 23 tests automatisés (`npm test`), validés contre un vrai match (Minnesota-Dallas, 05/10/2023). Branché en direct sur la page Analyse (`src/lib/real-analysis.ts`), avec repli silencieux sur le mock si la récupération échoue.
 - **Étape 2 du modèle (narration IA) : pas commencée.** Le verdict et les facteurs affichés aujourd'hui sont des phrases factuelles simples générées par template (pas par IA) — fonctionnels mais pas le rendu naturel visé.
-- `keyPlayers`, `bettingMarkets` et `contextFactors` restent des données du mock — pas couverts par les endpoints API vérifiés à ce stade (nécessitent stats joueurs, blessures, cotes).
+- `keyPlayers` et `bettingMarkets` restent des données du mock — pas couverts par des endpoints vérifiés à ce stade (l'API a des stats joueurs mais aucun endpoint blessures ; "odds" existe mais sa forme n'est pas encore vérifiée). `contextFactors` est réel depuis le 29 juin (repos, classement, série, fuseau horaire).
 - Aucun paiement réel (Stripe), aucune authentification utilisateur
 - Aucun test sur mobile
 - Aucune marque déposée (décision : repoussé tant qu'il n'y a pas de traction)
@@ -47,6 +47,7 @@ Chaque rafraîchissement recalcule l'étape 1. L'étape 2 (l'appel IA, qui coût
 
 **Coûts associés (ordres de grandeur) :**
 - Requêtes API-Basketball : ~8 matchs NBA/soir × 2-4 appels = 20-30 requêtes/jour pour toute la NBA — sans rapport avec le nombre de visiteurs (cache partagé), largement sous le quota même gratuit. Le volume n'est pas le facteur limitant ; seule la restriction de saison (voir plus haut) l'est.
+- **Le cache des matchs terminés est permanent** (un match joué ne change plus jamais ses stats) — donc le coût ne dépend pas du nombre de rafraîchissements ni du nombre de matchs à analyser, mais uniquement du nombre de *nouveaux* matchs joués depuis le dernier passage. Sur 10 matchs suivis par équipe, 9 sont presque toujours déjà en cache ; un seul appel réseau réel par équipe et par soirée, même avec plusieurs rafraîchissements/jour. Confirmé viable à l'échelle d'une vraie soirée NBA complète (10-15 matchs) avec le plan Pro (300 req/min, 7500/jour).
 - Appels IA : un par match (pas par visiteur), uniquement quand l'étape 1 change significativement — même logique d'économie que le cache HTTP actuel.
 
 ---
@@ -57,9 +58,9 @@ L'objectif n'est pas "plus de fonctionnalités", c'est "un produit qui dit vrai 
 
 1. **Étape 2 du modèle (narration IA)** — brancher Claude pour rédiger verdict/facteurs en langage naturel à partir des chiffres déjà calculés (étape 1 terminée). Ne jamais laisser l'IA recalculer les chiffres, seulement les mettre en mots.
    - Décider du périmètre de couverture réelle : NBA seule au lancement, ou les 4 ligues d'un coup ?
-   - Brancher `keyPlayers`, `bettingMarkets`, `contextFactors` sur de vraies données (encore mock aujourd'hui)
+   - Brancher `keyPlayers` et `bettingMarkets` sur de vraies données (`contextFactors` fait depuis le 29 juin)
    - Republier le taux de réussite (66%) seulement une fois qu'il provient de vraies prédictions, pas du chiffre de démonstration actuel
-2. **S'abonner au plan Pro API-Basketball (15€/mois)** avant le besoin réel (septembre/octobre) pour lever la restriction de saison sur `/games`, puis revérifier avec le même test qu'aujourd'hui
+2. **S'abonner au plan Pro API-Basketball (15€/mois)** avant le besoin réel (septembre/octobre) pour lever la restriction de saison sur `/games`, puis revérifier avec le même test qu'aujourd'hui. **Ne pas oublier** : mettre à jour `MIN_INTERVAL_MS` dans `src/lib/nba-provider.ts` (actuellement 6500ms, calé sur la limite gratuite de 10 req/min) vers ~200ms (limite Pro : 300 req/min) — sinon le site continue à se brider lui-même au rythme gratuit sans profiter du plan payé.
 3. **Corriger le bug d'abréviation** dans `nba-provider.ts` avant que les vrais matchs remplacent le mock
 4. **Stripe** — paiement à l'unité (0,99€) et abonnement (9,99€)
 5. **Authentification** — comptes abonnés
