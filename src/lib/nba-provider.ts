@@ -266,27 +266,35 @@ export async function buildTeamSnapshotFromApi(
   const allGames = await fetchAllSeasonGames(league, seasonOverride);
   const recentGames = extractRecentGamesForTeam(allGames, teamId, referenceDate, maxGames);
 
-  const withStatsOrNull: (GameForTeam | null)[] = await Promise.all(
-    recentGames.map(async (rg) => {
+  // Séquentiel + petit délai entre chaque appel, plutôt que tout en parallèle :
+  // envoyer 10 requêtes d'un coup (×2 équipes = 20) déclenche la limite de
+  // requêtes/minute du plan gratuit, qui faisait échouer tout le profil.
+  const withStats: GameForTeam[] = [];
+  for (const rg of recentGames) {
+    try {
       const statsResponse = await apiNbaFetch<RawGameTeamStats>('/games/statistics/teams', { id: rg.gameId });
       const ownStats = statsResponse.response.find((s) => String(s.team.id) === teamId);
       if (!ownStats) {
         // Match sans box-score détaillé disponible (rare mais arrive) — on
         // l'ignore plutôt que de faire échouer tout le profil de l'équipe.
         console.warn(`[nba-provider] Stats absentes pour l'équipe ${teamId} dans le match ${rg.gameId} — ignoré.`);
-        return null;
+        continue;
       }
-      return {
+      withStats.push({
         date: rg.date,
         isHome: rg.isHome,
         own: mapRawGameTeamStats(ownStats),
         opponentPoints: rg.opponentPoints,
         won: rg.won,
-      };
-    })
-  );
-
-  const withStats: GameForTeam[] = withStatsOrNull.filter((g): g is GameForTeam => g !== null);
+      });
+    } catch (err) {
+      // N'importe quel échec (limite de débit, réseau...) sur UN match ne
+      // doit jamais faire échouer tout le profil — on l'ignore et on continue.
+      console.warn(`[nba-provider] Échec pour le match ${rg.gameId} (équipe ${teamId}) — ignoré :`, err);
+      continue;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 150)); // ménage la limite de requêtes/minute
+  }
 
   return buildTeamSnapshot(withStats);
 }
