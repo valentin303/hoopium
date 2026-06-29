@@ -36,6 +36,30 @@ interface ApiNbaResponse<T> {
   response: T[];
 }
 
+// ===== File d'attente globale =====
+//
+// Tous les appels API-Basketball passent par une seule file, un par un,
+// espacés d'au moins MIN_INTERVAL_MS. Ça corrige deux problèmes constatés :
+//   1. Plusieurs appels en parallèle (ex. profil domicile + extérieur en
+//      même temps) dépassaient la limite de requêtes/minute du plan gratuit.
+//   2. Sans file, deux appels identiques lancés au même instant (ex. la
+//      liste de la saison demandée 3 fois pour domicile/extérieur/confrontations)
+//      partaient tous les deux vers le réseau avant que le premier ait eu le
+//      temps d'écrire dans le cache — la vérification du cache doit donc se
+//      faire À L'INTÉRIEUR de la file, pas avant.
+const MIN_INTERVAL_MS = 1200;
+let queueTail: Promise<unknown> = Promise.resolve();
+let lastNetworkCallAt = 0;
+
+function enqueue<T>(task: () => Promise<T>): Promise<T> {
+  const run = queueTail.then(task, task);
+  queueTail = run.then(
+    () => undefined,
+    () => undefined
+  );
+  return run;
+}
+
 async function apiNbaFetch<T>(
   endpoint: string,
   params: Record<string, string | number> = {}
@@ -48,29 +72,39 @@ async function apiNbaFetch<T>(
   Object.entries(params).forEach(([key, value]) => {
     url.searchParams.set(key, String(value));
   });
-
   const cacheKey = url.toString();
-  const cached = await readCache<ApiNbaResponse<T>>(cacheKey);
-  if (cached) return cached;
 
-  const res = await fetch(url.toString(), {
-    headers: { 'x-apisports-key': API_KEY },
-    next: { revalidate: 900 },
+  return enqueue(async () => {
+    // Vérifié à l'intérieur de la file : si un appel identique vient juste
+    // d'écrire le cache, celui-ci le voit avant de partir vers le réseau.
+    const cached = await readCache<ApiNbaResponse<T>>(cacheKey);
+    if (cached) return cached;
+
+    const elapsed = Date.now() - lastNetworkCallAt;
+    if (elapsed < MIN_INTERVAL_MS) {
+      await new Promise((resolve) => setTimeout(resolve, MIN_INTERVAL_MS - elapsed));
+    }
+    lastNetworkCallAt = Date.now();
+
+    const res = await fetch(url.toString(), {
+      headers: { 'x-apisports-key': API_KEY },
+      next: { revalidate: 900 },
+    });
+
+    if (!res.ok) {
+      throw new Error(`API-Basketball a répondu ${res.status} pour ${endpoint}`);
+    }
+
+    const data = (await res.json()) as ApiNbaResponse<T>;
+
+    const hasErrors = Array.isArray(data.errors) ? data.errors.length > 0 : Boolean(data.errors) && Object.keys(data.errors).length > 0;
+    if (hasErrors) {
+      throw new Error(`API-Basketball erreur pour ${endpoint} : ${JSON.stringify(data.errors)}`);
+    }
+
+    await writeCache(cacheKey, data);
+    return data;
   });
-
-  if (!res.ok) {
-    throw new Error(`API-Basketball a répondu ${res.status} pour ${endpoint}`);
-  }
-
-  const data = (await res.json()) as ApiNbaResponse<T>;
-
-  const hasErrors = Array.isArray(data.errors) ? data.errors.length > 0 : Boolean(data.errors) && Object.keys(data.errors).length > 0;
-  if (hasErrors) {
-    throw new Error(`API-Basketball erreur pour ${endpoint} : ${JSON.stringify(data.errors)}`);
-  }
-
-  await writeCache(cacheKey, data);
-  return data;
 }
 
 /**
@@ -266,9 +300,8 @@ export async function buildTeamSnapshotFromApi(
   const allGames = await fetchAllSeasonGames(league, seasonOverride);
   const recentGames = extractRecentGamesForTeam(allGames, teamId, referenceDate, maxGames);
 
-  // Séquentiel + petit délai entre chaque appel, plutôt que tout en parallèle :
-  // envoyer 10 requêtes d'un coup (×2 équipes = 20) déclenche la limite de
-  // requêtes/minute du plan gratuit, qui faisait échouer tout le profil.
+  // Séquentiel : chaque appel passe par la file d'attente globale
+  // d'apiNbaFetch (voir plus haut), qui gère déjà l'espacement.
   const withStats: GameForTeam[] = [];
   for (const rg of recentGames) {
     try {
@@ -293,7 +326,6 @@ export async function buildTeamSnapshotFromApi(
       console.warn(`[nba-provider] Échec pour le match ${rg.gameId} (équipe ${teamId}) — ignoré :`, err);
       continue;
     }
-    await new Promise((resolve) => setTimeout(resolve, 150)); // ménage la limite de requêtes/minute
   }
 
   return buildTeamSnapshot(withStats);
