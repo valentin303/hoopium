@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "tsx tests/stats-engine.test.mts && tsx tests/nba-provider.test.mts && tsx tests/ai-narration.test.mts && tsx tests/api-cache.test.mts && tsx tests/rate-limit-queue.test.mts"
+    "test": "tsx tests/stats-engine.test.mts && tsx tests/nba-provider.test.mts && tsx tests/ai-narration.test.mts && tsx tests/api-cache.test.mts && tsx tests/rate-limit-queue.test.mts && tsx tests/real-context.test.mts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.106.0",

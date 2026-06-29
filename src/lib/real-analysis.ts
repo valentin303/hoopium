@@ -12,13 +12,14 @@
  * et TESTING_REFERENCE_DATE ci-dessous (ou de les rendre dynamiques).
  */
 
-import { buildTeamSnapshotFromApi, fetchAllSeasonGames, extractHeadToHead } from './nba-provider';
-import { predictMatch, buildRadarProfile } from './stats-engine';
+import { buildTeamSnapshotFromApi, fetchAllSeasonGames, extractHeadToHead, fetchStandings, findTeamStanding } from './nba-provider';
+import { predictMatch, buildRadarProfile, computeRestDays } from './stats-engine';
 import type { TeamSnapshot } from './stats-engine';
 import { TEAM_API_IDS } from './team-api-ids';
+import { TEAM_LOCATIONS } from './team-locations';
 import { MOCK_ANALYSIS } from './mock-data';
 import { narrateAnalysis } from './ai-narration';
-import type { Match, MatchAnalysis, StatComparisonRow, HeadToHeedGame, ConfidenceLevel } from '@/types';
+import type { Match, MatchAnalysis, StatComparisonRow, HeadToHeedGame, ConfidenceLevel, ContextFactor } from '@/types';
 
 const TESTING_SEASON = '2023-2024';
 const TESTING_REFERENCE_DATE = new Date('2024-04-14T00:00:00Z'); // fin de saison régulière 2023-2024
@@ -73,6 +74,102 @@ function formLabel(snapshot: TeamSnapshot): string {
   return snapshot.recentForm.map((r) => (r === 'w' ? 'V' : 'D')).join('');
 }
 
+/** Plus longue série en cours (en partant du match le plus récent). */
+export function computeStreak(form: ('w' | 'l')[]): { count: number; type: 'w' | 'l' } | null {
+  if (form.length === 0) return null;
+  const last = form[form.length - 1];
+  let count = 0;
+  for (let i = form.length - 1; i >= 0; i--) {
+    if (form[i] !== last) break;
+    count++;
+  }
+  return { count, type: last };
+}
+
+/**
+ * Contexte du match à partir de données réelles : repos (calculé), enjeu
+ * classement (/standings), série en cours (forme récente), déplacement
+ * (écart de fuseau horaire entre les villes des deux équipes — fait
+ * factuel, jamais une affirmation de fatigue qu'on ne peut pas vérifier).
+ * Chaque facteur est indépendant : si l'un échoue (classement introuvable,
+ * ville absente de la table), on l'omet plutôt que d'en inventer un.
+ */
+async function buildRealContextFactors(
+  match: Match,
+  home: TeamSnapshot,
+  away: TeamSnapshot,
+  homeApiId: number,
+  awayApiId: number
+): Promise<ContextFactor[]> {
+  const factors: ContextFactor[] = [];
+
+  // Repos
+  const homeRest = computeRestDays(home.lastGameDate, TESTING_REFERENCE_DATE);
+  const awayRest = computeRestDays(away.lastGameDate, TESTING_REFERENCE_DATE);
+  if (home.lastGameDate && away.lastGameDate) {
+    factors.push({
+      id: 'cf-rest',
+      icon: 'rest',
+      label: 'Repos',
+      value: `${homeRest} jour${homeRest === 1 ? '' : 's'} vs ${awayRest} jour${awayRest === 1 ? '' : 's'}`,
+      explanation: `{home} arrive sur ${homeRest} jour${homeRest === 1 ? '' : 's'} de repos depuis son dernier match, {away} sur ${awayRest} jour${awayRest === 1 ? '' : 's'}.`,
+    });
+  }
+
+  // Déplacement (écart de fuseau horaire entre les deux villes)
+  const homeLoc = TEAM_LOCATIONS[match.homeTeam.id];
+  const awayLoc = TEAM_LOCATIONS[match.awayTeam.id];
+  if (homeLoc && awayLoc) {
+    const diff = Math.abs(homeLoc.utcOffset - awayLoc.utcOffset);
+    factors.push({
+      id: 'cf-travel',
+      icon: 'travel',
+      label: 'Déplacement',
+      value: diff === 0 ? 'Même fuseau horaire' : `${diff}h de décalage`,
+      explanation:
+        diff === 0
+          ? `{home} (${homeLoc.city}) et {away} (${awayLoc.city}) sont dans le même fuseau horaire.`
+          : `{away} (${awayLoc.city}) évolue avec ${diff}h de décalage horaire par rapport à {home} (${homeLoc.city}).`,
+    });
+  }
+
+  // Enjeu classement
+  try {
+    const standings = await fetchStandings(match.league, TESTING_SEASON);
+    const homeStanding = findTeamStanding(standings, String(homeApiId));
+    const awayStanding = findTeamStanding(standings, String(awayApiId));
+    if (homeStanding && awayStanding) {
+      factors.push({
+        id: 'cf-standing',
+        icon: 'standing',
+        label: 'Enjeu classement',
+        value: `${homeStanding.position}e vs ${awayStanding.position}e`,
+        explanation: `{home} est ${homeStanding.position}e de ${homeStanding.group.name} (${homeStanding.games.win.total}V-${homeStanding.games.lose.total}D), {away} est ${awayStanding.position}e de ${awayStanding.group.name} (${awayStanding.games.win.total}V-${awayStanding.games.lose.total}D).`,
+      });
+    }
+  } catch (err) {
+    console.warn('[real-analysis] Classement indisponible pour le contexte :', err);
+  }
+
+  // Série en cours — on met en avant la plus notable des deux.
+  const homeStreak = computeStreak(home.recentForm);
+  const awayStreak = computeStreak(away.recentForm);
+  if (homeStreak && awayStreak) {
+    const featured = homeStreak.count >= awayStreak.count ? { side: 'home' as const, streak: homeStreak } : { side: 'away' as const, streak: awayStreak };
+    const resultWord = featured.streak.type === 'w' ? 'victoire' : 'défaite';
+    const plural = featured.streak.count > 1 ? 's' : '';
+    factors.push({
+      id: 'cf-streak',
+      icon: 'streak',
+      label: 'Série en cours',
+      value: `${featured.streak.count} ${resultWord}${plural} de suite`,
+      explanation: `${featured.side === 'home' ? '{home}' : '{away}'} est sur une série de ${featured.streak.count} ${resultWord}${plural} de suite sur ses ${RECENT_GAMES_COUNT} derniers matchs disponibles.`,
+    });
+  }
+
+  return factors;
+}
+
 /** Repli si la narration IA échoue : texte factuel simple, pas de prose, mais jamais inventé. */
 function buildFallbackFactorsAndVerdict(home: TeamSnapshot, away: TeamSnapshot, predictedHomeScore: number, predictedAwayScore: number, confidence: number) {
   const netDiff = home.netRating - away.netRating;
@@ -102,9 +199,10 @@ function buildFallbackFactorsAndVerdict(home: TeamSnapshot, away: TeamSnapshot, 
 /**
  * Construit une analyse complète et réelle pour un match du mock, en
  * remplaçant les deux équipes par leurs vraies données API-Basketball.
- * `keyPlayers`, `bettingMarkets` et `contextFactors` restent ceux du mock
- * (non couverts par les endpoints vérifiés à ce stade) — jamais présentés
- * comme réels ailleurs dans ce fichier.
+ * `keyPlayers` et `bettingMarkets` restent ceux du mock (non couverts par
+ * des endpoints vérifiés à ce stade) — jamais présentés comme réels
+ * ailleurs dans ce fichier. `contextFactors` est réel (repos, classement,
+ * série, fuseau horaire).
  */
 export async function buildRealMatchAnalysis(match: Match): Promise<MatchAnalysis> {
   const homeApiId = TEAM_API_IDS[match.homeTeam.id];
@@ -150,6 +248,12 @@ export async function buildRealMatchAnalysis(match: Match): Promise<MatchAnalysi
     console.warn('[real-analysis] Narration IA indisponible, repli sur le texte factuel :', err);
   }
 
+  let contextFactors = await buildRealContextFactors(match, homeSnapshot, awaySnapshot, homeApiId, awayApiId);
+  if (contextFactors.length === 0) {
+    console.warn('[real-analysis] Aucun facteur de contexte réel disponible, repli sur le mock.');
+    contextFactors = MOCK_ANALYSIS.contextFactors;
+  }
+
   return {
     match: { ...match, confidence: prediction.confidence, confidenceLevel: confidenceLevelFor(prediction.confidence) },
     totalPointsPredicted: prediction.totalPointsPredicted,
@@ -162,7 +266,7 @@ export async function buildRealMatchAnalysis(match: Match): Promise<MatchAnalysi
     headToHeadDetailed: headToHeadDetailed.length > 0 ? headToHeadDetailed : MOCK_ANALYSIS.headToHeadDetailed,
     keyPlayers: MOCK_ANALYSIS.keyPlayers, // pas encore de données réelles joueurs/blessures
     bettingMarkets: MOCK_ANALYSIS.bettingMarkets, // pas encore de données réelles de marchés
-    contextFactors: MOCK_ANALYSIS.contextFactors, // repos/déplacement réels à calculer séparément
+    contextFactors,
     factors,
     winProbabilities: prediction.winProbabilities,
     verdict,

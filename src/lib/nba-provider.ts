@@ -202,10 +202,32 @@ export async function fetchTeamsByLeague(league: League) {
   return data.response;
 }
 
-export async function fetchStandings(league: League = 'nba') {
+/** Forme brute vérifiée sur une vraie réponse /standings (saison 2023-2024). */
+export interface RawStanding {
+  position: number;
+  stage: string;
+  group: { name: string; points: number };
+  team: { id: number; name: string; logo: string };
+  league: { id: number; name: string; season: string };
+  games: { played: number; win: { total: number; percentage: string }; lose: { total: number; percentage: string } };
+  points: { for: number; against: number };
+  form: string | null;
+  description: string | null;
+}
+
+/**
+ * /standings renvoie un tableau de groupes (ex. conférences), chacun étant
+ * lui-même un tableau de classements — d'où le double tableau en sortie.
+ */
+export async function fetchStandings(league: League = 'nba', seasonOverride?: string) {
   const { id, season } = LEAGUE_CONFIG[league];
-  const data = await apiNbaFetch<unknown>('/standings', { league: id, season });
+  const data = await apiNbaFetch<RawStanding[]>('/standings', { league: id, season: seasonOverride ?? season });
   return data.response;
+}
+
+/** Trouve le classement d'une équipe précise, quel que soit son groupe. */
+export function findTeamStanding(standings: RawStanding[][], teamId: string): RawStanding | undefined {
+  return standings.flat().find((s) => String(s.team.id) === teamId);
 }
 
 // ===== Stats de match par équipe (pour le moteur de calcul, src/lib/stats-engine.ts) =====
