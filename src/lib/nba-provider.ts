@@ -1,6 +1,7 @@
 import type { Match, League } from '@/types';
 import { buildTeamSnapshot } from './stats-engine';
 import type { RawTeamGameStats, GameForTeam, TeamSnapshot } from './stats-engine';
+import { readCache, writeCache } from './api-cache';
 
 /**
  * Couche d'accès aux données basketball multi-ligues.
@@ -48,6 +49,10 @@ async function apiNbaFetch<T>(
     url.searchParams.set(key, String(value));
   });
 
+  const cacheKey = url.toString();
+  const cached = await readCache<ApiNbaResponse<T>>(cacheKey);
+  if (cached) return cached;
+
   const res = await fetch(url.toString(), {
     headers: { 'x-apisports-key': API_KEY },
     next: { revalidate: 900 },
@@ -57,7 +62,15 @@ async function apiNbaFetch<T>(
     throw new Error(`API-Basketball a répondu ${res.status} pour ${endpoint}`);
   }
 
-  return res.json() as Promise<ApiNbaResponse<T>>;
+  const data = (await res.json()) as ApiNbaResponse<T>;
+
+  const hasErrors = Array.isArray(data.errors) ? data.errors.length > 0 : Boolean(data.errors) && Object.keys(data.errors).length > 0;
+  if (hasErrors) {
+    throw new Error(`API-Basketball erreur pour ${endpoint} : ${JSON.stringify(data.errors)}`);
+  }
+
+  await writeCache(cacheKey, data);
+  return data;
 }
 
 /**
