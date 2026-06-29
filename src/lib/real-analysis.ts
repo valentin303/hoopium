@@ -17,6 +17,7 @@ import { predictMatch, buildRadarProfile } from './stats-engine';
 import type { TeamSnapshot } from './stats-engine';
 import { TEAM_API_IDS } from './team-api-ids';
 import { MOCK_ANALYSIS } from './mock-data';
+import { narrateAnalysis } from './ai-narration';
 import type { Match, MatchAnalysis, StatComparisonRow, HeadToHeedGame, ConfidenceLevel } from '@/types';
 
 const TESTING_SEASON = '2023-2024';
@@ -72,7 +73,8 @@ function formLabel(snapshot: TeamSnapshot): string {
   return snapshot.recentForm.map((r) => (r === 'w' ? 'V' : 'D')).join('');
 }
 
-function buildFactorsAndVerdict(home: TeamSnapshot, away: TeamSnapshot, predictedHomeScore: number, predictedAwayScore: number, confidence: number) {
+/** Repli si la narration IA échoue : texte factuel simple, pas de prose, mais jamais inventé. */
+function buildFallbackFactorsAndVerdict(home: TeamSnapshot, away: TeamSnapshot, predictedHomeScore: number, predictedAwayScore: number, confidence: number) {
   const netDiff = home.netRating - away.netRating;
   const factors = [
     {
@@ -129,13 +131,24 @@ export async function buildRealMatchAnalysis(match: Match): Promise<MatchAnalysi
     return { date: g.date, homeScore, awayScore, homeTeamWon: homeScore > awayScore, venue: g.venue };
   });
 
-  const { factors, verdict } = buildFactorsAndVerdict(
+  const { factors: fallbackFactors, verdict: fallbackVerdict } = buildFallbackFactorsAndVerdict(
     homeSnapshot,
     awaySnapshot,
     prediction.predictedHomeScore,
     prediction.predictedAwayScore,
     prediction.confidence
   );
+
+  let factors: { strength: 'strong' | 'variable' | 'uncertain'; text: string }[] = fallbackFactors;
+  let verdict: string = fallbackVerdict;
+
+  try {
+    const narration = await narrateAnalysis(match, homeSnapshot, awaySnapshot, prediction);
+    factors = narration.factors;
+    verdict = narration.verdict;
+  } catch (err) {
+    console.warn('[real-analysis] Narration IA indisponible, repli sur le texte factuel :', err);
+  }
 
   return {
     match: { ...match, confidence: prediction.confidence, confidenceLevel: confidenceLevelFor(prediction.confidence) },
