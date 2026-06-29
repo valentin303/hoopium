@@ -14,7 +14,9 @@
 - Identité de marque posée (couleurs, typo, ton honnête vs concurrence)
 
 **Pas fait — et c'est le plus important :**
-- **Aucun vrai modèle d'analyse.** Tout ce qui ressemble à une prédiction (confiance %, score prédit, facteurs, verdict) est aujourd'hui une donnée de démonstration statique, recopiée à l'identique pour chaque match. Le produit n'a pas encore d'intelligence — il a une interface qui sait très bien afficher une intelligence qui n'existe pas encore.
+- **Étape 1 du modèle (calcul statistique) : faite et fonctionnelle** (29 juin). `src/lib/stats-engine.ts` calcule confiance, score prédit, écart, probabilités, profil radar à partir de vraies données API-Basketball (saison de test 2023-2024, le plan gratuit ne donnant pas accès à la saison en cours). 23 tests automatisés (`npm test`), validés contre un vrai match (Minnesota-Dallas, 05/10/2023). Branché en direct sur la page Analyse (`src/lib/real-analysis.ts`), avec repli silencieux sur le mock si la récupération échoue.
+- **Étape 2 du modèle (narration IA) : pas commencée.** Le verdict et les facteurs affichés aujourd'hui sont des phrases factuelles simples générées par template (pas par IA) — fonctionnels mais pas le rendu naturel visé.
+- `keyPlayers`, `bettingMarkets` et `contextFactors` restent des données du mock — pas couverts par les endpoints API vérifiés à ce stade (nécessitent stats joueurs, blessures, cotes).
 - Aucun paiement réel (Stripe), aucune authentification utilisateur
 - Aucun test sur mobile
 - Aucune marque déposée (décision : repoussé tant qu'il n'y a pas de traction)
@@ -53,8 +55,9 @@ Chaque rafraîchissement recalcule l'étape 1. L'étape 2 (l'appel IA, qui coût
 
 L'objectif n'est pas "plus de fonctionnalités", c'est "un produit qui dit vrai sur ce qu'il vend". Tout le reste est secondaire si le modèle d'analyse n'existe pas.
 
-1. **Construire le vrai modèle d'analyse (priorité absolue)** — spec verrouillée ci-dessus (pipeline calcul + narration IA, rafraîchissements, accès option A)
-   - Décider du périmètre v1 : NBA seule au lancement, ou les 4 ligues d'un coup ? (Le mock couvre les 4, mais un vrai modèle pour 4 ligues hétérogènes est 4x le travail.)
+1. **Étape 2 du modèle (narration IA)** — brancher Claude pour rédiger verdict/facteurs en langage naturel à partir des chiffres déjà calculés (étape 1 terminée). Ne jamais laisser l'IA recalculer les chiffres, seulement les mettre en mots.
+   - Décider du périmètre de couverture réelle : NBA seule au lancement, ou les 4 ligues d'un coup ?
+   - Brancher `keyPlayers`, `bettingMarkets`, `contextFactors` sur de vraies données (encore mock aujourd'hui)
    - Republier le taux de réussite (66%) seulement une fois qu'il provient de vraies prédictions, pas du chiffre de démonstration actuel
 2. **S'abonner au plan Pro API-Basketball (15€/mois)** avant le besoin réel (septembre/octobre) pour lever la restriction de saison sur `/games`, puis revérifier avec le même test qu'aujourd'hui
 3. **Corriger le bug d'abréviation** dans `nba-provider.ts` avant que les vrais matchs remplacent le mock
