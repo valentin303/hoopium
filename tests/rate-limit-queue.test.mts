@@ -18,7 +18,7 @@ globalThis.fetch = (async () => {
     ok: true,
     json: async () => ({ get: 'x', parameters: {}, errors: [], results: 1, response: [] }),
   };
-}) as typeof fetch;
+}) as unknown as typeof fetch;
 
 const { fetchGameStatistics } = await import('../src/lib/nba-provider');
 
@@ -36,7 +36,7 @@ async function test(name: string, fn: () => Promise<void> | void) {
 
 console.log('File d\'attente globale (apiNbaFetch) — tests\n');
 
-await test('trois appels distincts sont espacés d\'au moins ~1.2s (pas envoyés en rafale)', async () => {
+await test('trois appels distincts sont espacés d\'au moins ~6.5s (pas envoyés en rafale)', async () => {
   callTimestamps.length = 0;
   await Promise.all([fetchGameStatistics(900001), fetchGameStatistics(900002), fetchGameStatistics(900003)]);
 
@@ -45,8 +45,8 @@ await test('trois appels distincts sont espacés d\'au moins ~1.2s (pas envoyés
   }
   const gaps = [callTimestamps[1] - callTimestamps[0], callTimestamps[2] - callTimestamps[1]];
   for (const gap of gaps) {
-    if (gap < 1100) {
-      throw new Error(`Écart trop court entre deux appels : ${gap}ms (attendu ~1200ms)`);
+    if (gap < 6300) {
+      throw new Error(`Écart trop court entre deux appels : ${gap}ms (attendu ~6500ms)`);
     }
   }
 });

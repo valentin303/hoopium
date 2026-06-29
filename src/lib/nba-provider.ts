@@ -47,7 +47,13 @@ interface ApiNbaResponse<T> {
 //      partaient tous les deux vers le réseau avant que le premier ait eu le
 //      temps d'écrire dans le cache — la vérification du cache doit donc se
 //      faire À L'INTÉRIEUR de la file, pas avant.
-const MIN_INTERVAL_MS = 1200;
+//
+// La limite réelle du plan gratuit est publiée par le fournisseur : 10
+// requêtes/minute (https://www.api-football.com/news/post/how-ratelimit-works,
+// même infrastructure que l'API basketball). 60000/10 = 6000ms minimum entre
+// deux appels ; on prend une marge de sécurité à 6500ms plutôt que de coller
+// exactement à la limite.
+const MIN_INTERVAL_MS = 6500;
 let queueTail: Promise<unknown> = Promise.resolve();
 let lastNetworkCallAt = 0;
 
