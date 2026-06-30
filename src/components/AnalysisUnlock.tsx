@@ -93,62 +93,93 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
   }));
 
   return (
-    <>
-      <div className="flex items-center justify-between px-4 pb-1 pt-5">
-        <span className="truncate font-display text-base font-extrabold uppercase tracking-tight">
-          {match.homeTeam.name}
-        </span>
-        <span className="flex-shrink-0 px-2 font-display text-[10px] uppercase tracking-widest text-bone-dim">
-          {match.status === 'finished' ? 'Final' : unlocked ? 'Prédiction' : 'VS'}
-        </span>
-        <span className="truncate text-right font-display text-base font-extrabold uppercase tracking-tight">
-          {match.awayTeam.name}
-        </span>
+    <div className="mx-auto w-full max-w-md overflow-hidden rounded-3xl border-2 border-orange bg-night text-bone shadow-2xl shadow-black/40">
+      {/* En-tête catégorie */}
+      <div className="border-b border-surface-line px-4 pb-2 pt-4 text-center font-display text-[11px] uppercase tracking-widest text-bone-dim">
+        Analyse — {match.league.toUpperCase()}
       </div>
 
-      <div className="flex items-center justify-between px-4 pb-3">
+      {/* Scoreboard */}
+      <div className="mx-4 mt-4 flex items-center justify-between rounded-2xl border border-surface-line bg-surface p-4">
+        <div className="flex flex-1 flex-col items-center gap-1">
+          <TeamLogo team={match.homeTeam} size={48} shape="circle" />
+          <span className="text-center text-[10px] font-bold uppercase tracking-wide">{match.homeTeam.name}</span>
+          <span className="text-[9px] uppercase text-bone-dim">Domicile</span>
+        </div>
+
+        <div className="flex flex-col items-center justify-center px-3">
+          {match.status === 'finished' && match.finalScore ? (
+            <>
+              <span className="font-display text-4xl font-black tracking-tighter">
+                {match.finalScore.home} - {match.finalScore.away}
+              </span>
+              <span className="mt-1 text-[9px] uppercase tracking-widest text-bone-dim">Final</span>
+            </>
+          ) : unlocked ? (
+            <>
+              <span className="font-display text-4xl font-black tracking-tighter text-orange">
+                {predictedHome} - {predictedAway}
+              </span>
+              <span className="mt-1 text-[9px] uppercase tracking-widest text-bone-dim">Score prédit</span>
+            </>
+          ) : (
+            <>
+              <span className="font-display text-3xl font-black tracking-tighter text-bone-dim">VS</span>
+              <span className="mt-1 text-[9px] uppercase tracking-widest text-bone-dim">À venir</span>
+            </>
+          )}
+        </div>
+
+        <div className="flex flex-1 flex-col items-center gap-1">
+          <TeamLogo team={match.awayTeam} size={48} shape="circle" />
+          <span className="text-center text-[10px] font-bold uppercase tracking-wide">{match.awayTeam.name}</span>
+          <span className="text-[9px] uppercase text-bone-dim">Extérieur</span>
+        </div>
+      </div>
+
+      <div className="mx-4 mt-2 flex items-center justify-between">
         <FormDots form={match.homeTeam.form} />
         <FormDots form={match.awayTeam.form} />
       </div>
 
-      <div className="flex items-center justify-center gap-3 px-4 pb-5">
-        <div className="flex items-center gap-3 rounded-full border border-surface-line bg-night-soft/60 px-4 py-2.5">
-          <TeamLogo team={match.homeTeam} size={36} shape="circle" />
-          <span className="font-display text-lg font-bold text-bone-dim">VS</span>
-          <TeamLogo team={match.awayTeam} size={36} shape="circle" />
-        </div>
-      </div>
-
-      <div className="px-4 pb-2">
-        <div className="rounded-3xl border border-orange-dim bg-gradient-to-br from-orange-glow to-transparent px-4 py-4">
-          <div className="flex items-center gap-3">
-            <TeamLogo team={match.confidence >= 50 ? match.homeTeam : match.awayTeam} size={48} shape="circle" />
-            <div className="flex-1">
-              <p className="font-display text-[13px] font-bold uppercase tracking-wide">Taux de réussite</p>
-              <div className="mt-1 flex items-end justify-between gap-3">
-                <div>
-                  <span className="font-display text-[10px] uppercase tracking-widest text-bone-dim">Confiance</span>
-                  <p className="font-display text-2xl font-bold leading-none text-orange">{match.confidence}%</p>
-                </div>
-                <div className="text-right">
-                  <span className="font-display text-[10px] uppercase tracking-widest text-bone-dim">Véracité</span>
-                  <p className="font-display text-base font-bold leading-none text-bone">{MOCK_SITE_STATS.successRate}%</p>
-                </div>
-              </div>
+      {/* Bannière taux de réussite */}
+      <div className="relative mx-4 mt-4 overflow-hidden rounded-2xl border border-surface-line bg-gradient-to-b from-surface to-night-soft p-4">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          style={{ backgroundImage: 'radial-gradient(var(--orange) 1px, transparent 1px)', backgroundSize: '16px 16px' }}
+        />
+        <div className="relative z-10 flex flex-col items-center">
+          <p className="mb-2 font-display text-[13px] font-bold uppercase tracking-widest">Taux de réussite</p>
+          <div className="mb-1 flex w-full items-center justify-between text-[10px] uppercase tracking-wide text-bone-dim">
+            <span>Confiance</span>
+            <span>Véracité vérifiée — {MOCK_SITE_STATS.successRate}%</span>
+          </div>
+          <div className="flex w-full items-center gap-3">
+            <span className="font-display text-3xl font-black text-orange">{match.confidence}%</span>
+            <div className="h-3 flex-1 overflow-hidden rounded-full bg-surface-line">
+              <div className="h-full rounded-full bg-orange transition-all" style={{ width: `${match.confidence}%` }} />
             </div>
           </div>
-          <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-night/60">
-            <div className="h-full rounded-full bg-orange transition-all" style={{ width: `${match.confidence}%` }} />
-          </div>
-          {unlocked && (
-            <p className="mt-3 text-center font-display text-sm font-semibold text-bone">
-              Score prédit : {predictedHome} - {predictedAway}
-            </p>
-          )}
         </div>
       </div>
 
-      <div className="flex items-center justify-around border-y border-surface-line px-4 py-3 text-[10px] uppercase tracking-wide text-bone-dim">
+      {/* Contexte du match — pastilles */}
+      <div className="mx-4 mt-4 rounded-2xl border border-surface-line bg-surface p-4">
+        <p className="mb-3 font-display text-xs font-bold uppercase tracking-wider text-bone-dim">Contexte du match</p>
+        <div className="flex flex-wrap gap-2">
+          {analysis.contextFactors.slice(0, 3).map((f) => (
+            <span
+              key={f.id}
+              className="rounded-full border border-orange-dim bg-orange-glow px-3 py-1 text-[10px] font-bold uppercase text-orange"
+            >
+              {f.label} · {f.value}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Navigation basse */}
+      <div className="mt-4 flex items-center justify-around border-y border-surface-line px-4 py-3 text-[10px] uppercase tracking-wide text-bone-dim">
         <Link href="/matchs" className="flex flex-col items-center gap-1 hover:text-orange">
           <span>📋</span>
           <span>Matchs</span>
@@ -167,7 +198,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
         </Link>
       </div>
 
-      <div className="relative mx-3 mb-6 mt-2 rounded-3xl border border-surface-line">
+      <div className="relative mb-2 mt-2">
         {(phase === 'locked' || phase === 'processing') && (
           <div className="absolute inset-0 z-10 flex items-center justify-center">
             <div className="mx-4 max-w-sm rounded-2xl border border-white/10 bg-night/95 p-7 text-center">
@@ -318,7 +349,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
