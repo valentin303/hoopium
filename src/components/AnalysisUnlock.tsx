@@ -93,139 +93,147 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
   }));
 
   return (
-    <div className="mx-auto w-full max-w-md overflow-hidden rounded-3xl border-2 border-orange bg-night text-bone shadow-2xl shadow-black/40">
-      {/* En-tête catégorie */}
-      <div className="border-b border-surface-line px-4 pb-2 pt-4 text-center font-display text-[11px] uppercase tracking-widest text-bone-dim">
-        Analyse — {match.league.toUpperCase()}
-      </div>
-
-      {/* Scoreboard */}
-      <div className="mx-4 mt-4 flex items-center justify-between rounded-2xl border border-surface-line bg-surface p-4">
-        <div className="flex flex-1 flex-col items-center gap-1">
-          <TeamLogo team={match.homeTeam} size={48} shape="circle" />
-          <span className="text-center text-[10px] font-bold uppercase tracking-wide">{match.homeTeam.name}</span>
-          <span className="text-[9px] uppercase text-bone-dim">Domicile</span>
-        </div>
-
-        <div className="flex flex-col items-center justify-center px-3">
-          {match.status === 'finished' && match.finalScore ? (
-            <>
-              <span className="font-display text-4xl font-black tracking-tighter">
-                {match.finalScore.home} - {match.finalScore.away}
-              </span>
-              <span className="mt-1 text-[9px] uppercase tracking-widest text-bone-dim">Final</span>
-            </>
-          ) : unlocked ? (
-            <>
-              <span className="font-display text-4xl font-black tracking-tighter text-orange">
-                {predictedHome} - {predictedAway}
-              </span>
-              <span className="mt-1 text-[9px] uppercase tracking-widest text-bone-dim">Score prédit</span>
-            </>
-          ) : (
-            <>
-              <span className="font-display text-3xl font-black tracking-tighter text-bone-dim">VS</span>
-              <span className="mt-1 text-[9px] uppercase tracking-widest text-bone-dim">À venir</span>
-            </>
-          )}
-        </div>
-
-        <div className="flex flex-1 flex-col items-center gap-1">
-          <TeamLogo team={match.awayTeam} size={48} shape="circle" />
-          <span className="text-center text-[10px] font-bold uppercase tracking-wide">{match.awayTeam.name}</span>
-          <span className="text-[9px] uppercase text-bone-dim">Extérieur</span>
-        </div>
-      </div>
-
-      <div className="mx-4 mt-2 flex items-center justify-between">
-        <FormDots form={match.homeTeam.form} />
-        <FormDots form={match.awayTeam.form} />
-      </div>
-
-      {/* Bannière taux de réussite */}
-      <div className="relative mx-4 mt-4 overflow-hidden rounded-2xl border border-surface-line bg-gradient-to-b from-surface to-night-soft p-4">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.07]"
-          style={{ backgroundImage: 'radial-gradient(var(--orange) 1px, transparent 1px)', backgroundSize: '16px 16px' }}
-        />
-        <div className="relative z-10 flex flex-col items-center">
-          <p className="mb-2 font-display text-[13px] font-bold uppercase tracking-widest">Taux de réussite</p>
-          <div className="mb-1 flex w-full items-center justify-between text-[10px] uppercase tracking-wide text-bone-dim">
-            <span>Confiance</span>
-            <span>Véracité vérifiée — {MOCK_SITE_STATS.successRate}%</span>
+    <div className="mx-auto w-full max-w-md lg:max-w-5xl">
+      <div className="lg:grid lg:grid-cols-[360px_1fr] lg:items-start lg:gap-6">
+        {/* Colonne fixe (scoreboard, confiance, contexte) — sticky sur desktop */}
+        <div className="overflow-hidden rounded-[32px] border border-[#FF6B1A]/60 bg-[#0a0a0a] shadow-md shadow-black/50 lg:sticky lg:top-20">
+          {/* En-tête catégorie */}
+          <div className="border-b border-zinc-800/80 px-4 pb-2 pt-4 text-center font-display text-[11px] uppercase tracking-widest text-bone-dim">
+            Analyse — {match.league.toUpperCase()}
           </div>
-          <div className="flex w-full items-center gap-3">
-            <span className="font-display text-3xl font-black text-orange">{match.confidence}%</span>
-            <div className="h-3 flex-1 overflow-hidden rounded-full bg-surface-line">
-              <div className="h-full rounded-full bg-orange transition-all" style={{ width: `${match.confidence}%` }} />
+
+          {/* Scoreboard */}
+          <div className="mx-4 mt-4 flex items-center justify-between rounded-2xl border border-zinc-800/80 bg-[#111111] p-4 shadow-md shadow-black/50">
+            <div className="flex flex-1 flex-col items-center gap-1">
+              <TeamLogo team={match.homeTeam} size={48} shape="circle" />
+              <span className="text-center text-[10px] font-bold uppercase tracking-wide">{match.homeTeam.name}</span>
+              <span className="text-[9px] uppercase text-bone-dim">Domicile</span>
+            </div>
+
+            <div className="flex flex-col items-center justify-center px-3">
+              {match.status === 'finished' && match.finalScore ? (
+                <>
+                  <span className="font-display text-4xl font-black tracking-tighter">
+                    {match.finalScore.home} - {match.finalScore.away}
+                  </span>
+                  <span className="mt-1 text-[9px] uppercase tracking-widest text-bone-dim">Final</span>
+                </>
+              ) : unlocked ? (
+                <>
+                  <span className="font-display text-4xl font-black tracking-tighter text-orange">
+                    {predictedHome} - {predictedAway}
+                  </span>
+                  <span className="mt-1 text-[9px] uppercase tracking-widest text-bone-dim">Score prédit</span>
+                </>
+              ) : (
+                <>
+                  <span className="font-display text-3xl font-black tracking-tighter text-bone-dim">VS</span>
+                  <span className="mt-1 text-[9px] uppercase tracking-widest text-bone-dim">À venir</span>
+                </>
+              )}
+            </div>
+
+            <div className="flex flex-1 flex-col items-center gap-1">
+              <TeamLogo team={match.awayTeam} size={48} shape="circle" />
+              <span className="text-center text-[10px] font-bold uppercase tracking-wide">{match.awayTeam.name}</span>
+              <span className="text-[9px] uppercase text-bone-dim">Extérieur</span>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Contexte du match — pastilles */}
-      <div className="mx-4 mt-4 rounded-2xl border border-surface-line bg-surface p-4">
-        <p className="mb-3 font-display text-xs font-bold uppercase tracking-wider text-bone-dim">Contexte du match</p>
-        <div className="flex flex-wrap gap-2">
-          {analysis.contextFactors.slice(0, 3).map((f) => (
-            <span
-              key={f.id}
-              className="rounded-full border border-orange-dim bg-orange-glow px-3 py-1 text-[10px] font-bold uppercase text-orange"
-            >
-              {f.label} · {f.value}
+          <div className="mx-4 mt-2 flex items-center justify-between">
+            <FormDots form={match.homeTeam.form} />
+            <FormDots form={match.awayTeam.form} />
+          </div>
+
+          {/* Bannière taux de réussite */}
+          <div className="relative mx-4 mt-4 overflow-hidden rounded-2xl border border-zinc-800/80 bg-[#111111] p-4 shadow-md shadow-black/50">
+            <div
+              className="pointer-events-none absolute inset-0 opacity-[0.07]"
+              style={{ backgroundImage: 'radial-gradient(var(--orange) 1px, transparent 1px)', backgroundSize: '16px 16px' }}
+            />
+            <div className="relative z-10 flex flex-col items-center">
+              <p className="mb-2 font-display text-sm font-bold uppercase tracking-widest">Taux de réussite</p>
+              <div className="mb-1 flex w-full items-center justify-between text-[10px] uppercase tracking-wide text-bone-dim">
+                <span>Confiance</span>
+                <span>Véracité vérifiée — {MOCK_SITE_STATS.successRate}%</span>
+              </div>
+              <div className="flex w-full items-center gap-3">
+                <span className="font-display text-3xl font-black text-orange">{match.confidence}%</span>
+                <div className="h-3 flex-1 overflow-hidden rounded-full bg-black/60">
+                  <div
+                    className="h-full rounded-full bg-orange shadow-[0_0_10px_rgba(255,107,26,0.5)] transition-all"
+                    style={{ width: `${match.confidence}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Contexte du match — pastilles compactes */}
+          <div className="mx-4 mt-4 rounded-2xl border border-zinc-800/80 bg-[#111111] p-4 shadow-md shadow-black/50">
+            <p className="mb-3 font-display text-xs font-bold uppercase tracking-wider text-bone-dim">Contexte du match</p>
+            <div className="flex flex-wrap gap-1.5">
+              {analysis.contextFactors.slice(0, 3).map((f) => (
+                <span
+                  key={f.id}
+                  className="rounded-full border border-[#FF6B1A]/30 bg-[#FF6B1A]/10 px-2.5 py-1 text-[10px] font-bold text-orange"
+                >
+                  {f.label} · {f.value}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Navigation basse */}
+          <div className="mt-4 flex items-center justify-around border-y border-zinc-800/80 px-4 py-3 text-[10px] uppercase tracking-wide">
+            <Link href="/matchs" className="flex flex-col items-center gap-1 text-zinc-500 transition hover:text-bone">
+              <span>📋</span>
+              <span>Matchs</span>
+            </Link>
+            <span className="flex flex-col items-center gap-1 text-orange">
+              <span>📊</span>
+              <span>Analyse</span>
             </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Navigation basse */}
-      <div className="mt-4 flex items-center justify-around border-y border-surface-line px-4 py-3 text-[10px] uppercase tracking-wide text-bone-dim">
-        <Link href="/matchs" className="flex flex-col items-center gap-1 hover:text-orange">
-          <span>📋</span>
-          <span>Matchs</span>
-        </Link>
-        <span className="flex flex-col items-center gap-1 text-orange">
-          <span>📊</span>
-          <span>Analyse</span>
-        </span>
-        <Link href="/historique" className="flex flex-col items-center gap-1 hover:text-orange">
-          <span>🕒</span>
-          <span>Historique</span>
-        </Link>
-        <Link href="/tarifs" className="flex flex-col items-center gap-1 hover:text-orange">
-          <span>⚙️</span>
-          <span>Paramètres</span>
-        </Link>
-      </div>
-
-      <div className="relative mb-2 mt-2">
-        {(phase === 'locked' || phase === 'processing') && (
-          <div className="absolute inset-0 z-10 flex items-center justify-center">
-            <div className="mx-4 max-w-sm rounded-2xl border border-white/10 bg-night/95 p-7 text-center">
-              <p className="mb-2 text-[15px] font-bold">
-                Tu n&apos;as accès qu&apos;à <strong className="text-orange">15%</strong> de
-                l&apos;analyse
-              </p>
-              <p className="mb-5 text-xs text-bone-dim">
-                Score prédit, statistiques, graphiques et gagnant prédit
-              </p>
-              <button
-                onClick={handleUnlock}
-                disabled={unlocking}
-                className="rounded-full bg-bone px-11 py-3 text-base font-bold text-night transition hover:bg-orange disabled:opacity-70"
-              >
-                {unlocking ? 'Analyse en cours...' : 'Débloquer'}
-              </button>
-            </div>
+            <Link href="/historique" className="flex flex-col items-center gap-1 text-zinc-500 transition hover:text-bone">
+              <span>🕒</span>
+              <span>Historique</span>
+            </Link>
+            <Link href="/tarifs" className="flex flex-col items-center gap-1 text-zinc-500 transition hover:text-bone">
+              <span>⚙️</span>
+              <span>Paramètres</span>
+            </Link>
           </div>
-        )}
+        </div>
 
-        <div
-          className={`relative overflow-hidden transition-[filter] duration-700 ${
-            unlocked ? '' : 'pointer-events-none max-h-[900px] blur-[2.5px] brightness-[0.8]'
-          }`}
-        >
-          <div className="flex flex-col gap-10 px-4 py-6">
+        {/* Colonne contenu détaillé — pleine largeur sur desktop, empilée sur mobile */}
+        <div className="relative mt-4 lg:mt-0">
+          {(phase === 'locked' || phase === 'processing') && (
+            <div className="absolute inset-0 z-10 flex items-center justify-center">
+              <div className="mx-4 max-w-sm rounded-2xl border border-white/10 bg-night/95 p-7 text-center">
+                <p className="mb-2 text-[15px] font-bold">
+                  Tu n&apos;as accès qu&apos;à <strong className="text-orange">15%</strong> de
+                  l&apos;analyse
+                </p>
+                <p className="mb-5 text-xs text-bone-dim">
+                  Score prédit, statistiques, graphiques et gagnant prédit
+                </p>
+                <button
+                  onClick={handleUnlock}
+                  disabled={unlocking}
+                  className="rounded-full bg-bone px-11 py-3 text-base font-bold text-night transition hover:bg-orange disabled:opacity-70"
+                >
+                  {unlocking ? 'Analyse en cours...' : 'Débloquer'}
+                </button>
+              </div>
+            </div>
+          )}
+
+          <div
+            className={`relative overflow-hidden rounded-[32px] border border-zinc-800/80 bg-[#0a0a0a] shadow-md shadow-black/50 transition-[filter] duration-700 ${
+              unlocked ? '' : 'pointer-events-none max-h-[900px] blur-[2.5px] brightness-[0.8]'
+            }`}
+          >
+            <div className="flex flex-col gap-10 px-4 py-6">
             <section>
               <h3 className="mb-1 font-display text-xs uppercase tracking-wider text-orange">
                 — Comparaison statistique
@@ -350,6 +358,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
         </div>
       </div>
     </div>
+  </div>
   );
 }
 
