@@ -8,6 +8,7 @@ import {
 import { TeamLogo } from './TeamLogo';
 import { personalizeText } from '@/lib/personalize';
 import { homeTeamColor, awayTeamColor } from '@/lib/team-colors';
+import { MOCK_SITE_STATS } from '@/lib/mock-data';
 import type { Match, MatchAnalysis } from '@/types';
 import { KeyPlayersSection } from './KeyPlayersSection';
 import { BettingMarketsSection } from './BettingMarketsSection';
@@ -146,14 +147,38 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 border-b border-surface-line md:grid-cols-4">
+      <div className="px-4 pb-2 sm:px-6 md:px-12">
+        <div className="rounded-3xl border border-orange-dim bg-gradient-to-br from-orange-glow to-transparent px-6 py-5 sm:px-8 sm:py-6">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <p className="font-display text-[10px] uppercase tracking-widest text-bone-dim">
+                Indice de confiance HOOPIUM
+              </p>
+              <p className="font-display text-[36px] font-bold leading-none tracking-tight text-orange sm:text-[44px]">
+                {match.confidence}%
+              </p>
+            </div>
+            <div className="flex flex-col items-end gap-1 text-right">
+              <span className="font-display text-[10px] uppercase tracking-widest text-bone-dim">
+                Taux de réussite vérifié
+              </span>
+              <span className="font-display text-lg font-bold text-bone">{MOCK_SITE_STATS.successRate}%</span>
+            </div>
+          </div>
+          <div className="mt-4 h-2.5 w-full overflow-hidden rounded-full bg-night/60">
+            <div className="h-full rounded-full bg-orange transition-all" style={{ width: `${match.confidence}%` }} />
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3 px-4 pb-6 pt-4 sm:px-6 md:grid-cols-4 md:px-12">
         <QuickStat value={unlocked ? analysis.totalPointsPredicted : '🔒'} label="Total pts prédit" />
         <QuickStat value={unlocked ? `${analysis.spreadPredicted >= 0 ? '+' : ''}${analysis.spreadPredicted}` : '🔒'} label="Écart prédit" />
         <QuickStat value={`${match.confidence}%`} label="Indice IA" />
         <QuickStat value={analysis.variablesUsed} label="Variables" />
       </div>
 
-      <div className="relative mx-6 mb-10 mt-8 rounded-2xl border border-surface-line md:mx-12">
+      <div className="relative mx-4 mb-10 mt-2 rounded-3xl border border-surface-line sm:mx-6 md:mx-12">
         {(phase === 'locked' || phase === 'processing') && (
           <div className="absolute inset-0 z-10 flex items-center justify-center">
             <div className="mx-4 max-w-sm rounded-2xl border border-white/10 bg-night/95 p-7 text-center">
@@ -188,7 +213,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
               <p className="mb-4 text-xs text-bone-dim">
                 Moyennes de la saison régulière, équipe par équipe.
               </p>
-              <div className="rounded-xl border border-surface-line bg-night-soft/80 p-4">
+              <div className="rounded-2xl border border-surface-line bg-night-soft/80 p-4">
                 <ResponsiveContainer width="100%" height={240}>
                   <BarChart data={statsData} margin={{ bottom: 24 }}>
                     <CartesianGrid stroke="#232323" />
@@ -223,7 +248,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
                 global (attaque, défense, rebonds, passes, forme du moment, solidité à domicile).
               </p>
               <div className="grid gap-3 md:grid-cols-2">
-                <div className="rounded-xl border border-surface-line bg-night-soft/80 p-4">
+                <div className="rounded-2xl border border-surface-line bg-night-soft/80 p-4">
                   <ResponsiveContainer width="100%" height={200}>
                     <LineChart data={trendData}>
                       <CartesianGrid stroke="#232323" />
@@ -236,7 +261,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
                     </LineChart>
                   </ResponsiveContainer>
                 </div>
-                <div className="rounded-xl border border-surface-line bg-night-soft/80 p-4">
+                <div className="rounded-2xl border border-surface-line bg-night-soft/80 p-4">
                   <ResponsiveContainer width="100%" height={200}>
                     <RadarChart data={radarData}>
                       <PolarGrid stroke="#232323" />
@@ -283,14 +308,14 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
               </div>
             </section>
 
-            <section className="rounded-2xl border-l-[3px] border-orange bg-surface px-7 py-6">
+            <section className="rounded-3xl border-l-[3px] border-orange bg-surface px-7 py-6">
               <p className="mb-3 font-display text-[11px] uppercase tracking-widest text-orange">
                 Verdict HOOPIUM
               </p>
               <p className="text-[15px] leading-relaxed">{personalizeText(analysis.verdict, match)}</p>
             </section>
 
-            <section className="rounded-2xl border border-orange-dim bg-gradient-to-br from-orange-glow to-transparent px-8 py-7 text-center">
+            <section className="rounded-3xl border border-orange-dim bg-gradient-to-br from-orange-glow to-transparent px-8 py-7 text-center">
               <p className="mb-2 font-display text-[10px] uppercase tracking-widest text-orange">
                 Gagnant prédit
               </p>
@@ -310,7 +335,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
 
 function QuickStat({ value, label }: { value: string | number; label: string }) {
   return (
-    <div className="border-r border-surface-line px-4 py-6 text-center last:border-none">
+    <div className="rounded-2xl border border-surface-line bg-night-soft/60 px-3 py-5 text-center transition hover:border-orange-dim sm:px-4">
       <div className="font-display text-2xl font-bold text-orange">{value}</div>
       <div className="mt-1.5 text-[10px] uppercase tracking-wider text-bone-dim">{label}</div>
     </div>
