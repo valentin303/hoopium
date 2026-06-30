@@ -17,9 +17,9 @@ import { HeadToHeadSection } from './HeadToHeadSection';
 import { ContextSection } from './ContextSection';
 
 const STRENGTH_STYLES = {
-  strong: 'bg-green/10 text-green',
-  variable: 'bg-orange-glow text-orange',
-  uncertain: 'bg-red/10 text-red',
+  strong: 'bg-green-500/10 text-green-400',
+  variable: 'bg-orange-500/10 text-orange-400',
+  uncertain: 'bg-red-500/10 text-red-400',
 } as const;
 
 const STRENGTH_LABELS = {
@@ -29,24 +29,43 @@ const STRENGTH_LABELS = {
 } as const;
 
 const PROCESSING_MS = 900;
-
 type Phase = 'locked' | 'processing' | 'done';
 
 function FormDots({ form }: { form: Match['homeTeam']['form'] }) {
   return (
-    <div className="flex gap-1.5">
+    <div className="flex gap-1">
       {form.results.map((r, i) => (
         <span
           key={i}
           className={
             r === 'w'
-              ? 'flex h-7 w-7 items-center justify-center rounded-lg bg-green/15 text-[11px] font-bold text-green'
-              : 'flex h-7 w-7 items-center justify-center rounded-lg border border-red/25 bg-red/10 text-[11px] font-bold text-red'
+              ? 'flex h-6 w-6 items-center justify-center rounded-md bg-green-500/20 text-[10px] font-black text-green-400'
+              : 'flex h-6 w-6 items-center justify-center rounded-md bg-red-500/15 text-[10px] font-black text-red-400'
           }
         >
           {r === 'w' ? 'V' : 'D'}
         </span>
       ))}
+    </div>
+  );
+}
+
+function SectionTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <h2 className="mb-4 font-black uppercase tracking-tight text-white" style={{ fontSize: 'clamp(1.25rem, 5vw, 1.75rem)', lineHeight: 1.1 }}>
+      {children}
+    </h2>
+  );
+}
+
+function ProbRow({ label, pct, color }: { label: string; pct: number; color: string }) {
+  return (
+    <div className="flex items-center gap-3">
+      <span className="w-36 flex-shrink-0 text-xs leading-tight text-zinc-400">{label}</span>
+      <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-zinc-800">
+        <div className={`h-full rounded-full ${color} transition-all duration-700`} style={{ width: `${pct}%` }} />
+      </div>
+      <span className="w-9 flex-shrink-0 text-right text-sm font-bold text-white">{pct}%</span>
     </div>
   );
 }
@@ -58,9 +77,6 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
   const unlocking = phase === 'processing';
   const unlocked = phase === 'done';
 
-  // Score prédit par équipe, dérivé du total + écart — c'est précisément ce
-  // qu'on verrouille, donc ces deux chiffres ne doivent jamais apparaître
-  // ailleurs en clair avant le déblocage (cf. grille de stats plus bas).
   const predictedHome = Math.round((analysis.totalPointsPredicted + analysis.spreadPredicted) / 2);
   const predictedAway = analysis.totalPointsPredicted - predictedHome;
 
@@ -69,8 +85,6 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
 
   function handleUnlock() {
     setPhase('processing');
-    // Le vrai déblocage (vérification d'abonnement ou paiement Stripe) sera
-    // branché ici. Pour l'instant, on simule le temps de traitement.
     setTimeout(() => setPhase('done'), PROCESSING_MS);
   }
 
@@ -93,283 +107,253 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
   }));
 
   return (
-    <div className="mx-auto w-full max-w-md lg:max-w-5xl">
-      <div className="lg:grid lg:grid-cols-[360px_1fr] lg:items-start lg:gap-6">
-        {/* Colonne fixe (scoreboard, confiance, contexte) — sticky sur desktop */}
-        <div className="overflow-hidden rounded-[32px] border border-[#FF6B1A]/60 bg-[#0a0a0a] shadow-md shadow-black/50 lg:sticky lg:top-20">
-          {/* En-tête catégorie */}
-          <div className="border-b border-zinc-800/80 px-4 pb-2 pt-4 text-center font-display text-[11px] uppercase tracking-widest text-bone-dim">
-            Analyse — {match.league.toUpperCase()}
-          </div>
+    <div className="relative min-h-screen bg-[#080808] pb-24">
 
-          {/* Scoreboard */}
-          <div className="mx-4 mt-4 flex items-center justify-between rounded-2xl border border-zinc-800/80 bg-[#111111] p-4 shadow-md shadow-black/50">
-            <div className="flex flex-1 flex-col items-center gap-1">
-              <TeamLogo team={match.homeTeam} size={48} shape="circle" />
-              <span className="text-center text-[10px] font-bold uppercase tracking-wide">{match.homeTeam.name}</span>
-              <span className="text-[9px] uppercase text-bone-dim">Domicile</span>
+      {/* HERO */}
+      <div className="relative overflow-hidden" style={{ minHeight: 200 }}>
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/arena-bg.jpg'), radial-gradient(ellipse at 50% 0%, #1a1a1a 0%, #080808 100%)" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-[#080808]" />
+        <div className="pointer-events-none absolute -left-20 top-0 h-48 w-48 rounded-full opacity-20 blur-3xl" style={{ background: homeColor }} />
+        <div className="pointer-events-none absolute -right-20 top-0 h-48 w-48 rounded-full opacity-20 blur-3xl" style={{ background: awayColor }} />
+
+        <div className="relative z-10 px-4 pb-6 pt-4">
+          <p className="mb-4 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-zinc-500">
+            {match.league.toUpperCase()} · {match.status === 'finished' ? 'HISTORICAL — FINAL' : match.status === 'live' ? 'EN DIRECT' : 'À VENIR'}
+          </p>
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex flex-1 flex-col items-center gap-2">
+              <TeamLogo team={match.homeTeam} size={56} shape="circle" />
+              <div className="text-center">
+                <p className="text-[11px] font-black uppercase tracking-wider text-white">{match.homeTeam.name}</p>
+                <p className="text-[9px] uppercase tracking-widest text-zinc-500">Domicile</p>
+              </div>
+              <FormDots form={match.homeTeam.form} />
             </div>
 
-            <div className="flex flex-col items-center justify-center px-3">
+            <div className="flex flex-col items-center gap-1">
               {match.status === 'finished' && match.finalScore ? (
                 <>
-                  <span className="font-display text-4xl font-black tracking-tighter">
-                    {match.finalScore.home} - {match.finalScore.away}
+                  <span className="font-black tabular-nums text-white" style={{ fontSize: 'clamp(2rem, 10vw, 3rem)', lineHeight: 1 }}>
+                    {match.finalScore.home}<span className="mx-1 text-zinc-600">-</span>{match.finalScore.away}
                   </span>
-                  <span className="mt-1 text-[9px] uppercase tracking-widest text-bone-dim">Final</span>
+                  <span className="text-[9px] uppercase tracking-widest text-zinc-500">Score final</span>
                 </>
               ) : unlocked ? (
                 <>
-                  <span className="font-display text-4xl font-black tracking-tighter text-orange">
-                    {predictedHome} - {predictedAway}
+                  <span className="font-black tabular-nums" style={{ fontSize: 'clamp(2rem, 10vw, 3rem)', lineHeight: 1, color: homeColor }}>
+                    {predictedHome}<span className="mx-1 text-zinc-600">-</span>{predictedAway}
                   </span>
-                  <span className="mt-1 text-[9px] uppercase tracking-widest text-bone-dim">Score prédit</span>
+                  <span className="text-[9px] uppercase tracking-widest text-zinc-500">Score prédit</span>
                 </>
               ) : (
                 <>
-                  <span className="font-display text-3xl font-black tracking-tighter text-bone-dim">VS</span>
-                  <span className="mt-1 text-[9px] uppercase tracking-widest text-bone-dim">À venir</span>
+                  <span className="font-black text-zinc-600" style={{ fontSize: 'clamp(1.5rem, 8vw, 2.5rem)' }}>VS</span>
+                  <span className="text-[9px] uppercase tracking-widest text-zinc-600">Prédiction</span>
                 </>
               )}
             </div>
 
-            <div className="flex flex-1 flex-col items-center gap-1">
-              <TeamLogo team={match.awayTeam} size={48} shape="circle" />
-              <span className="text-center text-[10px] font-bold uppercase tracking-wide">{match.awayTeam.name}</span>
-              <span className="text-[9px] uppercase text-bone-dim">Extérieur</span>
+            <div className="flex flex-1 flex-col items-center gap-2">
+              <TeamLogo team={match.awayTeam} size={56} shape="circle" />
+              <div className="text-center">
+                <p className="text-[11px] font-black uppercase tracking-wider text-white">{match.awayTeam.name}</p>
+                <p className="text-[9px] uppercase tracking-widest text-zinc-500">Extérieur</p>
+              </div>
+              <FormDots form={match.awayTeam.form} />
             </div>
           </div>
+        </div>
+      </div>
 
-          <div className="mx-4 mt-2 flex items-center justify-between">
-            <FormDots form={match.homeTeam.form} />
-            <FormDots form={match.awayTeam.form} />
+      {/* TAUX DE REUSSITE */}
+      <div className="mx-4 mt-3 overflow-hidden rounded-2xl border border-zinc-800 bg-[#0f0f0f]">
+        <div className="flex items-center gap-4 p-4">
+          <TeamLogo team={match.homeTeam} size={52} shape="circle" className="flex-shrink-0" />
+          <div className="flex-1">
+            <p className="mb-0.5 font-black uppercase tracking-widest text-white" style={{ fontSize: 'clamp(0.85rem, 3.5vw, 1.1rem)' }}>
+              Taux de réussite
+            </p>
+            <div className="mb-1.5 flex items-center justify-between text-[10px] uppercase tracking-wide text-zinc-500">
+              <span>Confiance</span>
+              <span>Véracité · {MOCK_SITE_STATS.successRate}%</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-black text-2xl tabular-nums" style={{ color: homeColor }}>{match.confidence}%</span>
+              <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-zinc-800">
+                <div
+                  className="h-full rounded-full transition-all duration-700"
+                  style={{ width: `${match.confidence}%`, background: homeColor, boxShadow: `0 0 8px ${homeColor}80` }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* CONTENU VERROUILLE */}
+      <div className="relative mt-4">
+        {(phase === 'locked' || phase === 'processing') && (
+          <div className="absolute inset-0 z-20 flex items-start justify-center pt-16">
+            <div className="mx-4 w-full max-w-sm rounded-2xl border border-white/10 bg-[#0f0f0f]/95 p-7 text-center shadow-2xl">
+              <p className="mb-2 text-[15px] font-bold text-white">
+                Tu n&apos;as accès qu&apos;à <span className="text-orange-400">15%</span> de l&apos;analyse
+              </p>
+              <p className="mb-5 text-xs text-zinc-500">Score prédit, statistiques, graphiques et gagnant prédit</p>
+              <button
+                onClick={handleUnlock}
+                disabled={unlocking}
+                className="w-full rounded-full bg-white py-3 text-sm font-black uppercase tracking-wider text-black transition hover:bg-orange-400 hover:text-white disabled:opacity-60"
+              >
+                {unlocking ? 'Analyse en cours…' : 'Débloquer l\'analyse'}
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div className={`transition-[filter] duration-700 ${unlocked ? '' : 'pointer-events-none select-none blur-[3px] brightness-50'}`}>
+
+          {/* STATISTIQUES AVANCEES */}
+          <div className="mx-4 mt-2 rounded-2xl border border-zinc-800 bg-[#0f0f0f] p-4">
+            <SectionTitle>Statistiques avancées</SectionTitle>
+            <ResponsiveContainer width="100%" height={220}>
+              <BarChart data={statsData} margin={{ bottom: 28 }}>
+                <CartesianGrid stroke="#1f1f1f" vertical={false} />
+                <XAxis dataKey="label" tick={{ fill: '#52525b', fontSize: 10 }} angle={-30} textAnchor="end" height={48} interval={0} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: '#52525b', fontSize: 10 }} axisLine={false} tickLine={false} />
+                <Tooltip contentStyle={{ background: '#111', border: '1px solid #222', borderRadius: 8 }} labelStyle={{ color: '#fff', fontWeight: 700 }} />
+                <Legend verticalAlign="top" align="left" wrapperStyle={{ fontSize: 11, paddingBottom: 8, color: '#a1a1aa' }} />
+                <Bar dataKey={match.homeTeam.name} fill={homeColor} radius={[4, 4, 0, 0]} maxBarSize={28} />
+                <Bar dataKey={match.awayTeam.name} fill={awayColor} radius={[4, 4, 0, 0]} maxBarSize={28} />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
 
-          {/* Bannière taux de réussite */}
-          <div className="relative mx-4 mt-4 overflow-hidden rounded-2xl border border-zinc-800/80 bg-[#111111] p-4 shadow-md shadow-black/50">
-            <div
-              className="pointer-events-none absolute inset-0 opacity-[0.07]"
-              style={{ backgroundImage: 'radial-gradient(var(--orange) 1px, transparent 1px)', backgroundSize: '16px 16px' }}
-            />
-            <div className="relative z-10 flex flex-col items-center">
-              <p className="mb-2 font-display text-sm font-bold uppercase tracking-widest">Taux de réussite</p>
-              <div className="mb-1 flex w-full items-center justify-between text-[10px] uppercase tracking-wide text-bone-dim">
-                <span>Confiance</span>
-                <span>Véracité vérifiée — {MOCK_SITE_STATS.successRate}%</span>
-              </div>
-              <div className="flex w-full items-center gap-3">
-                <span className="font-display text-3xl font-black text-orange">{match.confidence}%</span>
-                <div className="h-3 flex-1 overflow-hidden rounded-full bg-black/60">
-                  <div
-                    className="h-full rounded-full bg-orange shadow-[0_0_10px_rgba(255,107,26,0.5)] transition-all"
-                    style={{ width: `${match.confidence}%` }}
-                  />
+          {/* FACTEURS */}
+          <div className="mx-4 mt-4 rounded-2xl border border-zinc-800 bg-[#0f0f0f] p-4">
+            <SectionTitle>Avantage {match.homeTeam.name}</SectionTitle>
+            <div className="flex flex-col divide-y divide-zinc-800">
+              {analysis.factors.map((factor, i) => (
+                <div key={i} className="flex gap-3 py-3.5 first:pt-0 last:pb-0">
+                  <span className={`mt-0.5 flex-shrink-0 rounded-full px-2.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wide ${STRENGTH_STYLES[factor.strength]}`}>
+                    {STRENGTH_LABELS[factor.strength]}
+                  </span>
+                  <p className="text-sm leading-relaxed text-zinc-300">{personalizeText(factor.text, match)}</p>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Contexte du match — pastilles compactes */}
-          <div className="mx-4 mt-4 rounded-2xl border border-zinc-800/80 bg-[#111111] p-4 shadow-md shadow-black/50">
-            <p className="mb-3 font-display text-xs font-bold uppercase tracking-wider text-bone-dim">Contexte du match</p>
-            <div className="flex flex-wrap gap-1.5">
-              {analysis.contextFactors.slice(0, 3).map((f) => (
-                <span
-                  key={f.id}
-                  className="rounded-full border border-[#FF6B1A]/30 bg-[#FF6B1A]/10 px-2.5 py-1 text-[10px] font-bold text-orange"
-                >
-                  {f.label} · {f.value}
-                </span>
               ))}
             </div>
           </div>
 
-          {/* Navigation basse */}
-          <div className="mt-4 flex items-center justify-around border-y border-zinc-800/80 px-4 py-3 text-[10px] uppercase tracking-wide">
-            <Link href="/matchs" className="flex flex-col items-center gap-1 text-zinc-500 transition hover:text-bone">
-              <span>📋</span>
-              <span>Matchs</span>
-            </Link>
-            <span className="flex flex-col items-center gap-1 text-orange">
-              <span>📊</span>
-              <span>Analyse</span>
-            </span>
-            <Link href="/historique" className="flex flex-col items-center gap-1 text-zinc-500 transition hover:text-bone">
-              <span>🕒</span>
-              <span>Historique</span>
-            </Link>
-            <Link href="/tarifs" className="flex flex-col items-center gap-1 text-zinc-500 transition hover:text-bone">
-              <span>⚙️</span>
-              <span>Paramètres</span>
-            </Link>
-          </div>
-        </div>
-
-        {/* Colonne contenu détaillé — pleine largeur sur desktop, empilée sur mobile */}
-        <div className="relative mt-4 lg:mt-0">
-          {(phase === 'locked' || phase === 'processing') && (
-            <div className="absolute inset-0 z-10 flex items-center justify-center">
-              <div className="mx-4 max-w-sm rounded-2xl border border-white/10 bg-night/95 p-7 text-center">
-                <p className="mb-2 text-[15px] font-bold">
-                  Tu n&apos;as accès qu&apos;à <strong className="text-orange">15%</strong> de
-                  l&apos;analyse
-                </p>
-                <p className="mb-5 text-xs text-bone-dim">
-                  Score prédit, statistiques, graphiques et gagnant prédit
-                </p>
-                <button
-                  onClick={handleUnlock}
-                  disabled={unlocking}
-                  className="rounded-full bg-bone px-11 py-3 text-base font-bold text-night transition hover:bg-orange disabled:opacity-70"
-                >
-                  {unlocking ? 'Analyse en cours...' : 'Débloquer'}
-                </button>
-              </div>
-            </div>
-          )}
-
-          <div
-            className={`relative overflow-hidden rounded-[32px] border border-zinc-800/80 bg-[#0a0a0a] shadow-md shadow-black/50 transition-[filter] duration-700 ${
-              unlocked ? '' : 'pointer-events-none max-h-[900px] blur-[2.5px] brightness-[0.8]'
-            }`}
-          >
-            <div className="flex flex-col gap-10 px-4 py-6">
-            <section>
-              <h3 className="mb-1 font-display text-xs uppercase tracking-wider text-orange">
-                — Comparaison statistique
-              </h3>
-              <p className="mb-4 text-xs text-bone-dim">
-                Moyennes de la saison régulière, équipe par équipe.
-              </p>
-              <div className="rounded-2xl border border-surface-line bg-night-soft/80 p-4">
-                <ResponsiveContainer width="100%" height={240}>
-                  <BarChart data={statsData} margin={{ bottom: 24 }}>
-                    <CartesianGrid stroke="#232323" />
-                    <XAxis
-                      dataKey="label"
-                      tick={{ fill: '#6b6b68', fontSize: 10 }}
-                      angle={-35}
-                      textAnchor="end"
-                      height={50}
-                      interval={0}
-                    />
-                    <YAxis tick={{ fill: '#6b6b68', fontSize: 11 }} />
-                    <Tooltip contentStyle={{ background: '#161616', border: '1px solid #232323' }} />
-                    <Legend verticalAlign="top" align="left" wrapperStyle={{ fontSize: 12, paddingBottom: 8 }} />
-                    <Bar dataKey={match.homeTeam.name} fill={homeColor} radius={[4, 4, 0, 0]} />
-                    <Bar dataKey={match.awayTeam.name} fill={awayColor} radius={[4, 4, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </section>
-
+          {/* JOUEURS CLES */}
+          <div className="mx-4 mt-4">
+            <SectionTitle>Joueurs clés</SectionTitle>
             <KeyPlayersSection players={analysis.keyPlayers} match={match} />
-
-            <BettingMarketsSection markets={analysis.bettingMarkets} match={match} />
-
-            <section>
-              <h3 className="mb-1 font-display text-xs uppercase tracking-wider text-orange">
-                — Tendance offensive & Profil
-              </h3>
-              <p className="mb-4 text-xs text-bone-dim">
-                À gauche : points marqués sur les 10 derniers matchs. À droite : profil de jeu
-                global (attaque, défense, rebonds, passes, forme du moment, solidité à domicile).
-              </p>
-              <div className="grid gap-3">
-                <div className="rounded-2xl border border-surface-line bg-night-soft/80 p-4">
-                  <ResponsiveContainer width="100%" height={200}>
-                    <LineChart data={trendData}>
-                      <CartesianGrid stroke="#232323" />
-                      <XAxis dataKey="label" tick={{ fill: '#6b6b68', fontSize: 10 }} />
-                      <YAxis tick={{ fill: '#6b6b68', fontSize: 10 }} />
-                      <Tooltip contentStyle={{ background: '#161616', border: '1px solid #232323' }} />
-                      <Legend verticalAlign="top" align="left" wrapperStyle={{ fontSize: 11, paddingBottom: 6 }} />
-                      <Line type="monotone" dataKey={match.homeTeam.name} stroke={homeColor} strokeWidth={2} dot={{ r: 3 }} />
-                      <Line type="monotone" dataKey={match.awayTeam.name} stroke={awayColor} strokeWidth={2} dot={{ r: 3 }} />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-                <div className="rounded-2xl border border-surface-line bg-night-soft/80 p-4">
-                  <ResponsiveContainer width="100%" height={200}>
-                    <RadarChart data={radarData}>
-                      <PolarGrid stroke="#232323" />
-                      <PolarAngleAxis dataKey="label" tick={{ fill: '#6b6b68', fontSize: 10 }} />
-                      <Legend verticalAlign="top" align="left" wrapperStyle={{ fontSize: 11, paddingBottom: 6 }} />
-                      <Radar dataKey={match.homeTeam.name} stroke={homeColor} fill={homeColor} fillOpacity={0.2} />
-                      <Radar dataKey={match.awayTeam.name} stroke={awayColor} fill={awayColor} fillOpacity={0.35} />
-                    </RadarChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-            </section>
-
-            <HeadToHeadSection games={analysis.headToHeadDetailed} match={match} />
-
-            <ContextSection factors={analysis.contextFactors} match={match} />
-
-            <section>
-              <h3 className="mb-4 font-display text-xs uppercase tracking-wider text-orange">
-                — Facteurs déterminants
-              </h3>
-              <div className="flex flex-col">
-                {analysis.factors.map((factor, i) => (
-                  <div key={i} className="flex gap-4 border-b border-surface-line py-4 last:border-none">
-                    <span
-                      className={`flex-shrink-0 rounded-full px-2.5 py-1 font-display text-[10px] font-semibold uppercase tracking-wide ${STRENGTH_STYLES[factor.strength]}`}
-                    >
-                      {STRENGTH_LABELS[factor.strength]}
-                    </span>
-                    <p className="text-[14px] leading-relaxed text-bone">{personalizeText(factor.text, match)}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            <section>
-              <h3 className="mb-4 font-display text-xs uppercase tracking-wider text-orange">
-                — Probabilités de victoire
-              </h3>
-              <div className="flex flex-col gap-3">
-                <ProbRow label={`Victoire ${match.homeTeam.name}`} pct={analysis.winProbabilities.homeWinPct} color="bg-orange" />
-                <ProbRow label="Match serré" pct={analysis.winProbabilities.closeGamePct} color="bg-bone-dim" />
-                <ProbRow label={`Victoire ${match.awayTeam.name}`} pct={analysis.winProbabilities.awayWinPct} color="bg-red/60" />
-              </div>
-            </section>
-
-            <section className="rounded-3xl border-l-[3px] border-orange bg-surface px-7 py-6">
-              <p className="mb-3 font-display text-[11px] uppercase tracking-widest text-orange">
-                Verdict HOOPIUM
-              </p>
-              <p className="text-[15px] leading-relaxed">{personalizeText(analysis.verdict, match)}</p>
-            </section>
-
-            <section className="rounded-3xl border border-orange-dim bg-gradient-to-br from-orange-glow to-transparent px-8 py-7 text-center">
-              <p className="mb-2 font-display text-[10px] uppercase tracking-widest text-orange">
-                Gagnant prédit
-              </p>
-              <p className="mb-1 text-[34px] font-bold tracking-tight">
-                {analysis.winProbabilities.homeWinPct > analysis.winProbabilities.awayWinPct
-                  ? match.homeTeam.name
-                  : match.awayTeam.name}
-              </p>
-              <p className="font-display text-xs text-bone-dim">Confiance · {match.confidence}%</p>
-            </section>
           </div>
+
+          {/* TENDANCE OFFENSIVE */}
+          <div className="mx-4 mt-4 rounded-2xl border border-zinc-800 bg-[#0f0f0f] p-4">
+            <SectionTitle>Tendance offensive</SectionTitle>
+            <p className="mb-3 text-xs text-zinc-500">Points marqués sur les 10 derniers matchs.</p>
+            <ResponsiveContainer width="100%" height={180}>
+              <LineChart data={trendData}>
+                <CartesianGrid stroke="#1f1f1f" vertical={false} />
+                <XAxis dataKey="label" tick={{ fill: '#52525b', fontSize: 10 }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: '#52525b', fontSize: 10 }} axisLine={false} tickLine={false} />
+                <Tooltip contentStyle={{ background: '#111', border: '1px solid #222', borderRadius: 8 }} />
+                <Legend verticalAlign="top" align="left" wrapperStyle={{ fontSize: 11, paddingBottom: 6, color: '#a1a1aa' }} />
+                <Line type="monotone" dataKey={match.homeTeam.name} stroke={homeColor} strokeWidth={2.5} dot={{ r: 3, fill: homeColor }} />
+                <Line type="monotone" dataKey={match.awayTeam.name} stroke={awayColor} strokeWidth={2.5} dot={{ r: 3, fill: awayColor }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* PROFIL RADAR */}
+          <div className="mx-4 mt-4 rounded-2xl border border-zinc-800 bg-[#0f0f0f] p-4">
+            <SectionTitle>Profil de jeu</SectionTitle>
+            <p className="mb-3 text-xs text-zinc-500">Attaque · Défense · Rebonds · Passes · Forme · Domicile</p>
+            <ResponsiveContainer width="100%" height={200}>
+              <RadarChart data={radarData}>
+                <PolarGrid stroke="#1f1f1f" />
+                <PolarAngleAxis dataKey="label" tick={{ fill: '#52525b', fontSize: 10 }} />
+                <Legend verticalAlign="top" align="left" wrapperStyle={{ fontSize: 11, paddingBottom: 6, color: '#a1a1aa' }} />
+                <Radar dataKey={match.homeTeam.name} stroke={homeColor} fill={homeColor} fillOpacity={0.2} strokeWidth={2} />
+                <Radar dataKey={match.awayTeam.name} stroke={awayColor} fill={awayColor} fillOpacity={0.25} strokeWidth={2} />
+              </RadarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* PARIS */}
+          <div className="mx-4 mt-4">
+            <SectionTitle>Marchés paris</SectionTitle>
+            <BettingMarketsSection markets={analysis.bettingMarkets} match={match} />
+          </div>
+
+          {/* FACE A FACE */}
+          <div className="mx-4 mt-4">
+            <SectionTitle>Face-à-face</SectionTitle>
+            <HeadToHeadSection games={analysis.headToHeadDetailed} match={match} />
+          </div>
+
+          {/* CONTEXTE */}
+          <div className="mx-4 mt-4">
+            <SectionTitle>Contexte du match</SectionTitle>
+            <ContextSection factors={analysis.contextFactors} match={match} />
+          </div>
+
+          {/* PROBABILITES */}
+          <div className="mx-4 mt-4 rounded-2xl border border-zinc-800 bg-[#0f0f0f] p-4">
+            <SectionTitle>Probabilités de victoire</SectionTitle>
+            <div className="flex flex-col gap-3.5">
+              <ProbRow label={`Victoire ${match.homeTeam.name}`} pct={analysis.winProbabilities.homeWinPct} color="bg-green-500" />
+              <ProbRow label="Match serré" pct={analysis.winProbabilities.closeGamePct} color="bg-zinc-500" />
+              <ProbRow label={`Victoire ${match.awayTeam.name}`} pct={analysis.winProbabilities.awayWinPct} color="bg-red-500" />
+            </div>
+          </div>
+
+          {/* VERDICT */}
+          <div className="mx-4 mt-4 rounded-2xl border-l-4 bg-zinc-900 px-5 py-5" style={{ borderColor: homeColor }}>
+            <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.2em] text-zinc-500">Verdict HOOPIUM</p>
+            <p className="text-sm leading-relaxed text-zinc-200">{personalizeText(analysis.verdict, match)}</p>
+          </div>
+
+          {/* GAGNANT PREDIT */}
+          <div
+            className="mx-4 mt-4 mb-2 rounded-2xl p-6 text-center"
+            style={{ background: `radial-gradient(ellipse at 50% 0%, ${homeColor}22 0%, transparent 70%), #0f0f0f`, border: `1px solid ${homeColor}40` }}
+          >
+            <p className="mb-1 font-mono text-[9px] uppercase tracking-[0.2em] text-zinc-500">Gagnant prédit</p>
+            <p className="font-black uppercase tracking-tight text-white" style={{ fontSize: 'clamp(1.8rem, 8vw, 2.5rem)', lineHeight: 1.05 }}>
+              {analysis.winProbabilities.homeWinPct > analysis.winProbabilities.awayWinPct ? match.homeTeam.name : match.awayTeam.name}
+            </p>
+            <p className="mt-1 font-mono text-xs text-zinc-500">Confiance · {match.confidence}%</p>
+          </div>
+
         </div>
       </div>
-    </div>
-  </div>
-  );
-}
 
-function ProbRow({ label, pct, color }: { label: string; pct: number; color: string }) {
-  return (
-    <div className="flex items-center gap-3 sm:gap-4">
-      <span className="w-24 flex-shrink-0 text-[11px] leading-tight text-bone-dim sm:w-40 sm:text-xs">{label}</span>
-      <div className="h-2 flex-1 overflow-hidden rounded bg-surface-line">
-        <div className={`h-full rounded ${color}`} style={{ width: `${pct}%` }} />
-      </div>
-      <span className="w-9 flex-shrink-0 text-right text-[13px] font-semibold">{pct}%</span>
+      {/* NAV FIXE */}
+      <nav className="fixed bottom-0 left-0 right-0 z-30 border-t border-zinc-800 bg-[#080808]/95 backdrop-blur-md">
+        <div className="flex items-center justify-around px-2 py-2">
+          <Link href="/matchs" className="flex flex-col items-center gap-0.5 px-3 py-1 text-zinc-600 transition hover:text-zinc-300">
+            <span className="text-base leading-none">▦</span>
+            <span className="text-[9px] uppercase tracking-wider">Matchs</span>
+          </Link>
+          <span className="flex flex-col items-center gap-0.5 px-3 py-1" style={{ color: homeColor }}>
+            <span className="text-base leading-none">↑↓</span>
+            <span className="text-[9px] uppercase tracking-wider">Analyse</span>
+          </span>
+          <Link href="/historique" className="flex flex-col items-center gap-0.5 px-3 py-1 text-zinc-600 transition hover:text-zinc-300">
+            <span className="text-base leading-none">↺</span>
+            <span className="text-[9px] uppercase tracking-wider">Historique</span>
+          </Link>
+          <Link href="/tarifs" className="flex flex-col items-center gap-0.5 px-3 py-1 text-zinc-600 transition hover:text-zinc-300">
+            <span className="text-base leading-none">⚙</span>
+            <span className="text-[9px] uppercase tracking-wider">Paramètres</span>
+          </Link>
+        </div>
+      </nav>
     </div>
   );
 }
