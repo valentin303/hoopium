@@ -140,14 +140,12 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
           <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-night/60">
             <div className="h-full rounded-full bg-orange transition-all" style={{ width: `${match.confidence}%` }} />
           </div>
+          {unlocked && (
+            <p className="mt-3 text-center font-display text-sm font-semibold text-bone">
+              Score prédit : {predictedHome} - {predictedAway}
+            </p>
+          )}
         </div>
-      </div>
-
-      <div className="grid grid-cols-2 gap-3 px-4 pb-6 pt-4">
-        <QuickStat value={unlocked ? predictedHome : '🔒'} label={`Score ${match.homeTeam.name}`} />
-        <QuickStat value={unlocked ? predictedAway : '🔒'} label={`Score ${match.awayTeam.name}`} />
-        <QuickStat value={unlocked ? analysis.totalPointsPredicted : '🔒'} label="Total pts" />
-        <QuickStat value={unlocked ? `${analysis.spreadPredicted >= 0 ? '+' : ''}${analysis.spreadPredicted}` : '🔒'} label="Écart" />
       </div>
 
       <div className="flex items-center justify-around border-y border-surface-line px-4 py-3 text-[10px] uppercase tracking-wide text-bone-dim">
@@ -321,15 +319,6 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
         </div>
       </div>
     </>
-  );
-}
-
-function QuickStat({ value, label }: { value: string | number; label: string }) {
-  return (
-    <div className="rounded-2xl border border-surface-line bg-night-soft/60 px-3 py-5 text-center transition hover:border-orange-dim sm:px-4">
-      <div className="font-display text-2xl font-bold text-orange">{value}</div>
-      <div className="mt-1.5 text-[10px] uppercase tracking-wider text-bone-dim">{label}</div>
-    </div>
   );
 }
 
