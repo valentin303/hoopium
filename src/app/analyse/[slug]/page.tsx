@@ -26,13 +26,29 @@ export default async function AnalysePage({ params }: { params: Promise<{ slug: 
 
   const analysis = await buildAnalysisForMatch(match);
 
+  const matchDateLabel = new Date(match.startTime).toLocaleDateString('fr-FR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+
   return (
     <main className="relative flex-1 pt-16">
-      <div className="px-6 pt-6 text-xs text-bone-dim md:px-12">
-        <Link href="/matchs" className="hover:text-orange">
-          Matchs
-        </Link>{' '}
-        / {match.homeTeam.name} vs {match.awayTeam.name}
+      <div className="flex items-center justify-between border-b border-surface-line px-4 py-4 sm:px-6 md:px-12">
+        <div>
+          <Link href="/" className="font-display text-xl font-bold tracking-tight sm:text-2xl">
+            HOOP<span className="text-orange">IUM</span>
+          </Link>
+          <p className="mt-0.5 text-[11px] text-bone-dim">
+            <Link href="/matchs" className="hover:text-orange">
+              Matchs
+            </Link>{' '}
+            / {match.homeTeam.name} vs {match.awayTeam.name}
+          </p>
+        </div>
+        <span className="hidden font-display text-xs uppercase tracking-wide text-bone-dim sm:block">
+          {matchDateLabel}
+        </span>
       </div>
 
       <AnalysisUnlock analysis={analysis} />

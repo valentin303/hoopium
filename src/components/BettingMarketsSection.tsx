@@ -19,22 +19,16 @@ export function BettingMarketsSection({ markets, match }: { markets: BettingMark
       <p className="mb-4 text-xs text-bone-dim">
         Lignes courantes et tendance HOOPIUM pour chaque marché — clique pour le détail.
       </p>
-      <div className="grid gap-3 md:grid-cols-3">
+      <div className="grid grid-cols-3 gap-2 sm:gap-3">
         {markets.map((m) => (
           <button
             key={m.id}
             onClick={() => setSelected(m)}
-            className="flex flex-col gap-2 rounded-xl border border-surface-line bg-night-soft/80 p-4 text-left transition hover:border-orange-dim hover:bg-surface"
+            className="flex flex-col gap-1.5 rounded-2xl border border-surface-line bg-night-soft/80 p-3 text-left transition hover:border-orange-dim hover:bg-surface sm:p-4"
           >
-            <span className="text-xs uppercase tracking-wide text-bone-dim">{m.label}</span>
-            <span className="font-display text-xl font-bold">{personalizeText(m.line, match)}</span>
-            <span className="text-[12px] leading-snug text-bone-dim">{personalizeText(m.teaser, match)}</span>
-            <div className="mt-1 flex items-center gap-2">
-              <div className="h-1.5 flex-1 overflow-hidden rounded bg-surface-line">
-                <div className="h-full rounded bg-orange" style={{ width: `${m.confidence}%` }} />
-              </div>
-              <span className="font-display text-xs font-semibold text-orange">{m.confidence}%</span>
-            </div>
+            <span className="text-[9px] uppercase tracking-wide text-bone-dim sm:text-[10px]">{m.label}</span>
+            <span className="font-display text-base font-bold leading-tight sm:text-xl">{personalizeText(m.line, match)}</span>
+            <span className="font-display text-[10px] font-semibold text-orange">Voir le détail →</span>
           </button>
         ))}
       </div>
@@ -42,6 +36,15 @@ export function BettingMarketsSection({ markets, match }: { markets: BettingMark
       <AnalysisOverlay open={!!selected} onClose={() => setSelected(null)} title={selected?.label ?? ''}>
         {selected && (
           <div className="flex flex-col gap-4">
+            <div>
+              <p className="mb-2 text-sm text-bone-dim">{personalizeText(selected.teaser, match)}</p>
+              <div className="flex items-center gap-2">
+                <div className="h-1.5 flex-1 overflow-hidden rounded bg-surface-line">
+                  <div className="h-full rounded bg-orange" style={{ width: `${selected.confidence}%` }} />
+                </div>
+                <span className="font-display text-xs font-semibold text-orange">{selected.confidence}%</span>
+              </div>
+            </div>
             <div className="rounded-xl border border-surface-line bg-surface p-4">
               <ResponsiveContainer width="100%" height={160}>
                 <LineChart data={selected.detail.trend.labels.map((l, i) => ({ label: l, value: selected.detail.trend.values[i] }))}>
