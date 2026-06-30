@@ -16,12 +16,12 @@
 **Pas fait — et c'est le plus important :**
 - **Étape 1 du modèle (calcul statistique) : faite et fonctionnelle** (29 juin). `src/lib/stats-engine.ts` calcule confiance, score prédit, écart, probabilités, profil radar à partir de vraies données API-Basketball (saison de test 2023-2024, le plan gratuit ne donnant pas accès à la saison en cours). 23 tests automatisés (`npm test`), validés contre un vrai match (Minnesota-Dallas, 05/10/2023). Branché en direct sur la page Analyse (`src/lib/real-analysis.ts`), avec repli silencieux sur le mock si la récupération échoue.
 - **Étape 2 du modèle (narration IA) : pas commencée.** Le verdict et les facteurs affichés aujourd'hui sont des phrases factuelles simples générées par template (pas par IA) — fonctionnels mais pas le rendu naturel visé.
-- `keyPlayers` et `bettingMarkets` restent des données du mock — pas couverts par des endpoints vérifiés à ce stade (l'API a des stats joueurs mais aucun endpoint blessures ; "odds" existe mais sa forme n'est pas encore vérifiée). `contextFactors` est réel depuis le 29 juin (repos, classement, série, fuseau horaire).
+- `keyPlayers` reste mock — pas d'endpoint blessures disponible dans l'API (vérifié). `contextFactors` et `bettingMarkets` sont réels depuis le 29/30 juin (repos, classement, série, fuseau horaire ; total/écart dérivés du score prédit, mi-temps calculée à partir des vrais quart-temps déjà récupérés — jamais de cotes externes, contraire au positionnement du produit).
 - Aucun paiement réel (Stripe), aucune authentification utilisateur
 - Aucun test sur mobile
 - Aucune marque déposée (décision : repoussé tant qu'il n'y a pas de traction)
 - **Confirmé** : `/games` (les vrais matchs) a la même restriction de saison que `/teams` sur le plan gratuit (2022-2024 seulement, jamais la saison en cours). **Solution identifiée** : le plan Pro (15€/mois, 7 500 req/jour) lève cette restriction — abonnement prévu en septembre/octobre, juste avant le besoin réel, pour ne pas payer pour rien pendant l'intersaison.
-- `nba-provider.ts` calcule l'abréviation des équipes en live avec `name.slice(0,3)` — faux pour beaucoup d'équipes (ex. "Los Angeles Lakers" → "LOS"). Sans impact en mode démo, mais à corriger avant que les vrais matchs remplacent le mock.
+- **Corrigé** (30 juin) : `nba-provider.ts` utilise désormais une vraie table d'abréviations officielles NBA (LAL au lieu de LOS), vérifiée via ESPN — plus une formule devinée.
 
 ---
 
@@ -58,18 +58,17 @@ L'objectif n'est pas "plus de fonctionnalités", c'est "un produit qui dit vrai 
 
 1. **Étape 2 du modèle (narration IA)** — brancher Claude pour rédiger verdict/facteurs en langage naturel à partir des chiffres déjà calculés (étape 1 terminée). Ne jamais laisser l'IA recalculer les chiffres, seulement les mettre en mots.
    - Décider du périmètre de couverture réelle : NBA seule au lancement, ou les 4 ligues d'un coup ?
-   - Brancher `keyPlayers` et `bettingMarkets` sur de vraies données (`contextFactors` fait depuis le 29 juin)
+   - Brancher `keyPlayers` sur de vraies données (`contextFactors` et `bettingMarkets` faits depuis le 29-30 juin)
    - Republier le taux de réussite (66%) seulement une fois qu'il provient de vraies prédictions, pas du chiffre de démonstration actuel
 2. **S'abonner au plan Pro API-Basketball (15€/mois)** avant le besoin réel (septembre/octobre) pour lever la restriction de saison sur `/games`, puis revérifier avec le même test qu'aujourd'hui. **Ne pas oublier** : mettre à jour `MIN_INTERVAL_MS` dans `src/lib/nba-provider.ts` (actuellement 6500ms, calé sur la limite gratuite de 10 req/min) vers ~200ms (limite Pro : 300 req/min) — sinon le site continue à se brider lui-même au rythme gratuit sans profiter du plan payé.
-3. **Corriger le bug d'abréviation** dans `nba-provider.ts` avant que les vrais matchs remplacent le mock
-4. **Stripe** — paiement à l'unité (0,99€) et abonnement (9,99€)
-5. **Authentification** — comptes abonnés
-6. **Test mobile sérieux** — jamais fait à ce stade
-7. **Finir la direction artistique** sur les pages encore non traitées (accueil, tarifs)
-8. **Cron de rafraîchissement automatique** des analyses (au-delà du cache HTTP actuel)
-9. **Bases légales** — mentions légales, CGU/CGV, vérifier que le disclaimer jeux d'argent est juridiquement suffisant
-10. **Construire l'audience en parallèle** (le plan initial le prévoyait déjà — ne pas attendre le lancement pour commencer)
-11. **Lancement progressif** — idéalement un test avec un petit nombre d'utilisateurs avant le grand public, pour repérer ce qui casse en conditions réelles
+3. **Stripe** — paiement à l'unité (0,99€) et abonnement (9,99€)
+4. **Authentification** — comptes abonnés
+5. **Test mobile sérieux** — jamais fait à ce stade
+6. **Finir la direction artistique** sur les pages encore non traitées (accueil, tarifs)
+7. **Cron de rafraîchissement automatique** des analyses (au-delà du cache HTTP actuel)
+8. **Bases légales** — mentions légales, CGU/CGV, vérifier que le disclaimer jeux d'argent est juridiquement suffisant
+9. **Construire l'audience en parallèle** (le plan initial le prévoyait déjà — ne pas attendre le lancement pour commencer)
+10. **Lancement progressif** — idéalement un test avec un petit nombre d'utilisateurs avant le grand public, pour repérer ce qui casse en conditions réelles
 
 ---
 
