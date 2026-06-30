@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import {
   BarChart, Bar, LineChart, Line, RadarChart, Radar, PolarGrid, PolarAngleAxis,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
@@ -93,92 +94,82 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
 
   return (
     <>
-      <div className="flex flex-col items-center gap-6 border-b border-surface-line px-4 py-6 sm:px-6 sm:py-8 md:px-12">
-        <div className="flex w-full items-center justify-center gap-4 sm:gap-8 md:gap-10">
-          <div className="flex flex-1 flex-col items-center gap-2 text-center sm:flex-initial">
-            <TeamLogo team={match.homeTeam} size={84} shape="circle" className="sm:hidden" />
-            <TeamLogo team={match.homeTeam} size={132} shape="circle" className="hidden sm:block" />
-            <span className="text-sm font-bold tracking-tight sm:text-xl">{match.homeTeam.name}</span>
-            <span className="font-display text-[10px] text-bone-dim sm:text-xs">{match.homeTeam.record}</span>
-            <FormDots form={match.homeTeam.form} />
-          </div>
+      <div className="flex items-center justify-between px-4 pb-1 pt-5">
+        <span className="truncate font-display text-base font-extrabold uppercase tracking-tight">
+          {match.homeTeam.name}
+        </span>
+        <span className="flex-shrink-0 px-2 font-display text-[10px] uppercase tracking-widest text-bone-dim">
+          {match.status === 'finished' ? 'Final' : unlocked ? 'Prédiction' : 'VS'}
+        </span>
+        <span className="truncate text-right font-display text-base font-extrabold uppercase tracking-tight">
+          {match.awayTeam.name}
+        </span>
+      </div>
 
-          <div className="flex flex-shrink-0 flex-col items-center gap-1.5 sm:gap-2">
-            {match.status === 'finished' && match.finalScore ? (
-              <>
-                <span className="font-display text-[28px] font-bold leading-none tracking-tight text-orange sm:text-[44px]">
-                  {match.finalScore.home} - {match.finalScore.away}
-                </span>
-                <span className="font-display text-[10px] tracking-widest text-bone-dim sm:text-[11px]">FINAL</span>
-              </>
-            ) : unlocked ? (
-              <>
-                <span className="font-display text-[28px] font-bold leading-none tracking-tight text-orange sm:text-[44px]">
-                  {predictedHome} - {predictedAway}
-                </span>
-                <span className="font-display text-[9px] tracking-widest text-bone-dim sm:text-[11px]">
-                  Score prédit · Confiance {match.confidence}%
-                </span>
-              </>
-            ) : (
-              <>
-                <span className="font-display text-[10px] tracking-widest text-bone-dim sm:text-[11px]">VS</span>
-                <span className="rounded-full bg-orange-glow px-2.5 py-1 font-display text-[11px] text-orange sm:px-3 sm:py-1.5 sm:text-xs">
-                  Confiance {match.confidence}%
-                </span>
-                <span className="font-display text-[9px] uppercase tracking-wide text-bone-dim sm:text-[10px]">
-                  {new Date(match.startTime).toLocaleString('fr-FR', {
-                    weekday: 'short',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })}
-                </span>
-              </>
-            )}
-          </div>
+      <div className="flex items-center justify-between px-4 pb-3">
+        <FormDots form={match.homeTeam.form} />
+        <FormDots form={match.awayTeam.form} />
+      </div>
 
-          <div className="flex flex-1 flex-col items-center gap-2 text-center sm:flex-initial">
-            <TeamLogo team={match.awayTeam} size={84} shape="circle" className="sm:hidden" />
-            <TeamLogo team={match.awayTeam} size={132} shape="circle" className="hidden sm:block" />
-            <span className="text-sm font-bold tracking-tight sm:text-xl">{match.awayTeam.name}</span>
-            <span className="font-display text-[10px] text-bone-dim sm:text-xs">{match.awayTeam.record}</span>
-            <FormDots form={match.awayTeam.form} />
-          </div>
+      <div className="flex items-center justify-center gap-3 px-4 pb-5">
+        <div className="flex items-center gap-3 rounded-full border border-surface-line bg-night-soft/60 px-4 py-2.5">
+          <TeamLogo team={match.homeTeam} size={36} shape="circle" />
+          <span className="font-display text-lg font-bold text-bone-dim">VS</span>
+          <TeamLogo team={match.awayTeam} size={36} shape="circle" />
         </div>
       </div>
 
-      <div className="px-4 pb-2 sm:px-6 md:px-12">
-        <div className="rounded-3xl border border-orange-dim bg-gradient-to-br from-orange-glow to-transparent px-6 py-5 sm:px-8 sm:py-6">
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <p className="font-display text-[10px] uppercase tracking-widest text-bone-dim">
-                Indice de confiance HOOPIUM
-              </p>
-              <p className="font-display text-[36px] font-bold leading-none tracking-tight text-orange sm:text-[44px]">
-                {match.confidence}%
-              </p>
-            </div>
-            <div className="flex flex-col items-end gap-1 text-right">
-              <span className="font-display text-[10px] uppercase tracking-widest text-bone-dim">
-                Taux de réussite vérifié
-              </span>
-              <span className="font-display text-lg font-bold text-bone">{MOCK_SITE_STATS.successRate}%</span>
+      <div className="px-4 pb-2">
+        <div className="rounded-3xl border border-orange-dim bg-gradient-to-br from-orange-glow to-transparent px-4 py-4">
+          <div className="flex items-center gap-3">
+            <TeamLogo team={match.confidence >= 50 ? match.homeTeam : match.awayTeam} size={48} shape="circle" />
+            <div className="flex-1">
+              <p className="font-display text-[13px] font-bold uppercase tracking-wide">Taux de réussite</p>
+              <div className="mt-1 flex items-end justify-between gap-3">
+                <div>
+                  <span className="font-display text-[10px] uppercase tracking-widest text-bone-dim">Confiance</span>
+                  <p className="font-display text-2xl font-bold leading-none text-orange">{match.confidence}%</p>
+                </div>
+                <div className="text-right">
+                  <span className="font-display text-[10px] uppercase tracking-widest text-bone-dim">Véracité</span>
+                  <p className="font-display text-base font-bold leading-none text-bone">{MOCK_SITE_STATS.successRate}%</p>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="mt-4 h-2.5 w-full overflow-hidden rounded-full bg-night/60">
+          <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-night/60">
             <div className="h-full rounded-full bg-orange transition-all" style={{ width: `${match.confidence}%` }} />
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 px-4 pb-6 pt-4 sm:px-6 md:grid-cols-4 md:px-12">
-        <QuickStat value={unlocked ? analysis.totalPointsPredicted : '🔒'} label="Total pts prédit" />
-        <QuickStat value={unlocked ? `${analysis.spreadPredicted >= 0 ? '+' : ''}${analysis.spreadPredicted}` : '🔒'} label="Écart prédit" />
-        <QuickStat value={`${match.confidence}%`} label="Indice IA" />
-        <QuickStat value={analysis.variablesUsed} label="Variables" />
+      <div className="grid grid-cols-2 gap-3 px-4 pb-6 pt-4">
+        <QuickStat value={unlocked ? predictedHome : '🔒'} label={`Score ${match.homeTeam.name}`} />
+        <QuickStat value={unlocked ? predictedAway : '🔒'} label={`Score ${match.awayTeam.name}`} />
+        <QuickStat value={unlocked ? analysis.totalPointsPredicted : '🔒'} label="Total pts" />
+        <QuickStat value={unlocked ? `${analysis.spreadPredicted >= 0 ? '+' : ''}${analysis.spreadPredicted}` : '🔒'} label="Écart" />
       </div>
 
-      <div className="relative mx-4 mb-10 mt-2 rounded-3xl border border-surface-line sm:mx-6 md:mx-12">
+      <div className="flex items-center justify-around border-y border-surface-line px-4 py-3 text-[10px] uppercase tracking-wide text-bone-dim">
+        <Link href="/matchs" className="flex flex-col items-center gap-1 hover:text-orange">
+          <span>📋</span>
+          <span>Matchs</span>
+        </Link>
+        <span className="flex flex-col items-center gap-1 text-orange">
+          <span>📊</span>
+          <span>Analyse</span>
+        </span>
+        <Link href="/historique" className="flex flex-col items-center gap-1 hover:text-orange">
+          <span>🕒</span>
+          <span>Historique</span>
+        </Link>
+        <Link href="/tarifs" className="flex flex-col items-center gap-1 hover:text-orange">
+          <span>⚙️</span>
+          <span>Paramètres</span>
+        </Link>
+      </div>
+
+      <div className="relative mx-3 mb-6 mt-2 rounded-3xl border border-surface-line">
         {(phase === 'locked' || phase === 'processing') && (
           <div className="absolute inset-0 z-10 flex items-center justify-center">
             <div className="mx-4 max-w-sm rounded-2xl border border-white/10 bg-night/95 p-7 text-center">
@@ -205,7 +196,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
             unlocked ? '' : 'pointer-events-none max-h-[900px] blur-[2.5px] brightness-[0.8]'
           }`}
         >
-          <div className="flex flex-col gap-10 px-6 py-8 md:px-10">
+          <div className="flex flex-col gap-10 px-4 py-6">
             <section>
               <h3 className="mb-1 font-display text-xs uppercase tracking-wider text-orange">
                 — Comparaison statistique
@@ -247,7 +238,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
                 À gauche : points marqués sur les 10 derniers matchs. À droite : profil de jeu
                 global (attaque, défense, rebonds, passes, forme du moment, solidité à domicile).
               </p>
-              <div className="grid gap-3 md:grid-cols-2">
+              <div className="grid gap-3">
                 <div className="rounded-2xl border border-surface-line bg-night-soft/80 p-4">
                   <ResponsiveContainer width="100%" height={200}>
                     <LineChart data={trendData}>
