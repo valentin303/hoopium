@@ -92,53 +92,57 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
 
   return (
     <>
-      <div className="flex flex-wrap items-center justify-center gap-10 border-b border-surface-line px-6 py-8 md:px-12">
-        <div className="flex flex-col items-center gap-2 text-center">
-          <TeamLogo team={match.homeTeam} size={132} shape="circle" />
-          <span className="text-xl font-bold tracking-tight">{match.homeTeam.name}</span>
-          <span className="font-display text-xs text-bone-dim">{match.homeTeam.record}</span>
-          <FormDots form={match.homeTeam.form} />
-        </div>
+      <div className="flex flex-col items-center gap-6 border-b border-surface-line px-4 py-6 sm:px-6 sm:py-8 md:px-12">
+        <div className="flex w-full items-center justify-center gap-4 sm:gap-8 md:gap-10">
+          <div className="flex flex-1 flex-col items-center gap-2 text-center sm:flex-initial">
+            <TeamLogo team={match.homeTeam} size={84} shape="circle" className="sm:hidden" />
+            <TeamLogo team={match.homeTeam} size={132} shape="circle" className="hidden sm:block" />
+            <span className="text-sm font-bold tracking-tight sm:text-xl">{match.homeTeam.name}</span>
+            <span className="font-display text-[10px] text-bone-dim sm:text-xs">{match.homeTeam.record}</span>
+            <FormDots form={match.homeTeam.form} />
+          </div>
 
-        <div className="flex flex-col items-center gap-2">
-          {match.status === 'finished' && match.finalScore ? (
-            <>
-              <span className="font-display text-[44px] font-bold leading-none tracking-tight text-orange">
-                {match.finalScore.home} - {match.finalScore.away}
-              </span>
-              <span className="font-display text-[11px] tracking-widest text-bone-dim">FINAL</span>
-            </>
-          ) : unlocked ? (
-            <>
-              <span className="font-display text-[44px] font-bold leading-none tracking-tight text-orange">
-                {predictedHome} - {predictedAway}
-              </span>
-              <span className="font-display text-[11px] tracking-widest text-bone-dim">
-                Score prédit · Confiance {match.confidence}%
-              </span>
-            </>
-          ) : (
-            <>
-              <span className="font-display text-[11px] tracking-widest text-bone-dim">VS</span>
-              <span className="rounded-full bg-orange-glow px-3 py-1.5 font-display text-xs text-orange">
-                Confiance {match.confidence}%
-              </span>
-              <span className="font-display text-[10px] uppercase tracking-wide text-bone-dim">
-                {new Date(match.startTime).toLocaleString('fr-FR', {
-                  weekday: 'short',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}
-              </span>
-            </>
-          )}
-        </div>
+          <div className="flex flex-shrink-0 flex-col items-center gap-1.5 sm:gap-2">
+            {match.status === 'finished' && match.finalScore ? (
+              <>
+                <span className="font-display text-[28px] font-bold leading-none tracking-tight text-orange sm:text-[44px]">
+                  {match.finalScore.home} - {match.finalScore.away}
+                </span>
+                <span className="font-display text-[10px] tracking-widest text-bone-dim sm:text-[11px]">FINAL</span>
+              </>
+            ) : unlocked ? (
+              <>
+                <span className="font-display text-[28px] font-bold leading-none tracking-tight text-orange sm:text-[44px]">
+                  {predictedHome} - {predictedAway}
+                </span>
+                <span className="font-display text-[9px] tracking-widest text-bone-dim sm:text-[11px]">
+                  Score prédit · Confiance {match.confidence}%
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="font-display text-[10px] tracking-widest text-bone-dim sm:text-[11px]">VS</span>
+                <span className="rounded-full bg-orange-glow px-2.5 py-1 font-display text-[11px] text-orange sm:px-3 sm:py-1.5 sm:text-xs">
+                  Confiance {match.confidence}%
+                </span>
+                <span className="font-display text-[9px] uppercase tracking-wide text-bone-dim sm:text-[10px]">
+                  {new Date(match.startTime).toLocaleString('fr-FR', {
+                    weekday: 'short',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
+                </span>
+              </>
+            )}
+          </div>
 
-        <div className="flex flex-col items-center gap-2 text-center">
-          <TeamLogo team={match.awayTeam} size={132} shape="circle" />
-          <span className="text-xl font-bold tracking-tight">{match.awayTeam.name}</span>
-          <span className="font-display text-xs text-bone-dim">{match.awayTeam.record}</span>
-          <FormDots form={match.awayTeam.form} />
+          <div className="flex flex-1 flex-col items-center gap-2 text-center sm:flex-initial">
+            <TeamLogo team={match.awayTeam} size={84} shape="circle" className="sm:hidden" />
+            <TeamLogo team={match.awayTeam} size={132} shape="circle" className="hidden sm:block" />
+            <span className="text-sm font-bold tracking-tight sm:text-xl">{match.awayTeam.name}</span>
+            <span className="font-display text-[10px] text-bone-dim sm:text-xs">{match.awayTeam.record}</span>
+            <FormDots form={match.awayTeam.form} />
+          </div>
         </div>
       </div>
 
@@ -185,10 +189,17 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
                 Moyennes de la saison régulière, équipe par équipe.
               </p>
               <div className="rounded-xl border border-surface-line bg-night-soft/80 p-4">
-                <ResponsiveContainer width="100%" height={220}>
-                  <BarChart data={statsData}>
+                <ResponsiveContainer width="100%" height={240}>
+                  <BarChart data={statsData} margin={{ bottom: 24 }}>
                     <CartesianGrid stroke="#232323" />
-                    <XAxis dataKey="label" tick={{ fill: '#6b6b68', fontSize: 11 }} />
+                    <XAxis
+                      dataKey="label"
+                      tick={{ fill: '#6b6b68', fontSize: 10 }}
+                      angle={-35}
+                      textAnchor="end"
+                      height={50}
+                      interval={0}
+                    />
                     <YAxis tick={{ fill: '#6b6b68', fontSize: 11 }} />
                     <Tooltip contentStyle={{ background: '#161616', border: '1px solid #232323' }} />
                     <Legend verticalAlign="top" align="left" wrapperStyle={{ fontSize: 12, paddingBottom: 8 }} />
@@ -308,12 +319,12 @@ function QuickStat({ value, label }: { value: string | number; label: string }) 
 
 function ProbRow({ label, pct, color }: { label: string; pct: number; color: string }) {
   return (
-    <div className="flex items-center gap-4">
-      <span className="w-40 flex-shrink-0 text-xs text-bone-dim">{label}</span>
+    <div className="flex items-center gap-3 sm:gap-4">
+      <span className="w-24 flex-shrink-0 text-[11px] leading-tight text-bone-dim sm:w-40 sm:text-xs">{label}</span>
       <div className="h-2 flex-1 overflow-hidden rounded bg-surface-line">
         <div className={`h-full rounded ${color}`} style={{ width: `${pct}%` }} />
       </div>
-      <span className="w-9 text-right text-[13px] font-semibold">{pct}%</span>
+      <span className="w-9 flex-shrink-0 text-right text-[13px] font-semibold">{pct}%</span>
     </div>
   );
 }
