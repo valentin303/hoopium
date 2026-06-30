@@ -5,7 +5,7 @@
  */
 
 import assert from 'node:assert/strict';
-import { extractRecentGamesForTeam, extractHeadToHead } from '../src/lib/nba-provider';
+import { extractRecentGamesForTeam, extractHeadToHead, extractHalftimePoints } from '../src/lib/nba-provider';
 
 let passed = 0;
 function test(name: string, fn: () => void) {
@@ -27,6 +27,10 @@ function fakeGame(opts: {
   awayId: string;
   homeScore?: number | null;
   awayScore?: number | null;
+  homeQ1?: number | null;
+  homeQ2?: number | null;
+  awayQ1?: number | null;
+  awayQ2?: number | null;
 }) {
   return {
     id: opts.id,
@@ -40,8 +44,8 @@ function fakeGame(opts: {
       away: { id: Number(opts.awayId), name: 'Away', logo: '' },
     },
     scores: {
-      home: { quarter_1: null, quarter_2: null, quarter_3: null, quarter_4: null, total: opts.homeScore ?? 100 },
-      away: { quarter_1: null, quarter_2: null, quarter_3: null, quarter_4: null, total: opts.awayScore ?? 95 },
+      home: { quarter_1: opts.homeQ1 ?? null, quarter_2: opts.homeQ2 ?? null, quarter_3: null, quarter_4: null, total: opts.homeScore ?? 100 },
+      away: { quarter_1: opts.awayQ1 ?? null, quarter_2: opts.awayQ2 ?? null, quarter_3: null, quarter_4: null, total: opts.awayScore ?? 95 },
     },
   };
 }
@@ -142,6 +146,38 @@ test('extractHeadToHead trie du plus récent au plus ancien', () => {
 test("extractHeadToHead n'invente jamais de matchs : 0 confrontation réelle -> tableau vide", () => {
   const games = [fakeGame({ id: 1, timestamp: 1696000000, homeId: TEAM_A, awayId: TEAM_C })];
   const result = extractHeadToHead(games, TEAM_A, TEAM_B, referenceDate, 10);
+  assert.deepEqual(result, []);
+});
+
+console.log('\nextractHalftimePoints — tests\n');
+
+test('calcule q1+q2 pour une équipe à domicile', () => {
+  const games = [
+    fakeGame({ id: 1, timestamp: 1696000000, homeId: TEAM_A, awayId: TEAM_B, homeQ1: 28, homeQ2: 25 }),
+  ];
+  const result = extractHalftimePoints(games, TEAM_A, referenceDate, 10);
+  assert.deepEqual(result, [53]);
+});
+
+test('calcule q1+q2 pour une équipe à l\'extérieur (lit la bonne colonne)', () => {
+  const games = [
+    fakeGame({ id: 1, timestamp: 1696000000, homeId: TEAM_B, awayId: TEAM_A, awayQ1: 22, awayQ2: 30 }),
+  ];
+  const result = extractHalftimePoints(games, TEAM_A, referenceDate, 10);
+  assert.deepEqual(result, [52]);
+});
+
+test('ignore un match sans quart-temps détaillés plutôt que de fausser la moyenne avec un zéro', () => {
+  const games = [
+    fakeGame({ id: 1, timestamp: 1696000000, homeId: TEAM_A, awayId: TEAM_B, homeQ1: 28, homeQ2: 25 }),
+    fakeGame({ id: 2, timestamp: 1696100000, homeId: TEAM_A, awayId: TEAM_B }), // pas de quarter_1/2
+  ];
+  const result = extractHalftimePoints(games, TEAM_A, referenceDate, 10);
+  assert.deepEqual(result, [53]);
+});
+
+test('tableau vide si aucun match ne correspond, sans planter', () => {
+  const result = extractHalftimePoints([], TEAM_A, referenceDate, 10);
   assert.deepEqual(result, []);
 });
 

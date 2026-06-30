@@ -2,6 +2,7 @@ import type { Match, League } from '@/types';
 import { buildTeamSnapshot } from './stats-engine';
 import type { RawTeamGameStats, GameForTeam, TeamSnapshot } from './stats-engine';
 import { readCache, writeCache } from './api-cache';
+import { teamAbbreviation } from './team-abbreviations';
 
 /**
  * Couche d'accès aux données basketball multi-ligues.
@@ -312,6 +313,36 @@ export function extractRecentGamesForTeam(
 }
 
 /**
+ * Points marqués par une équipe à la mi-temps (1er + 2e quart-temps) sur
+ * ses N derniers matchs — déjà présents dans /games, aucun appel réseau
+ * supplémentaire. Un match sans quart-temps détaillés (rare) est ignoré
+ * plutôt que de fausser la moyenne avec un zéro.
+ */
+export function extractHalftimePoints(
+  allGames: RawGame[],
+  teamId: string,
+  beforeDate: Date,
+  maxGames: number
+): number[] {
+  const finished = allGames.filter((g) => {
+    if (g.status.short !== 'FT' && g.status.short !== 'AOT') return false;
+    if (new Date(g.timestamp * 1000) >= beforeDate) return false;
+    return String(g.teams.home.id) === teamId || String(g.teams.away.id) === teamId;
+  });
+
+  finished.sort((a, b) => a.timestamp - b.timestamp);
+
+  const halftimes: number[] = [];
+  for (const g of finished.slice(-maxGames)) {
+    const isHome = String(g.teams.home.id) === teamId;
+    const own = isHome ? g.scores.home : g.scores.away;
+    if (own.quarter_1 == null || own.quarter_2 == null) continue;
+    halftimes.push(own.quarter_1 + own.quarter_2);
+  }
+  return halftimes;
+}
+
+/**
  * Construit le profil agrégé réel d'une équipe : récupère ses derniers
  * matchs de la saison, puis le box-score détaillé de chacun (1 requête par
  * match — c'est la partie coûteuse de cette fonction), et agrège tout via
@@ -430,7 +461,7 @@ export function mapRawGameToMatch(game: RawGame, league: League): Match {
     homeTeam: {
       id: String(game.teams.home.id),
       name: game.teams.home.name,
-      abbreviation: game.teams.home.name.slice(0, 3).toUpperCase(),
+      abbreviation: teamAbbreviation(game.teams.home.name),
       record: '',
       form: { results: [] },
       logoUrl: game.teams.home.logo,
@@ -438,7 +469,7 @@ export function mapRawGameToMatch(game: RawGame, league: League): Match {
     awayTeam: {
       id: String(game.teams.away.id),
       name: game.teams.away.name,
-      abbreviation: game.teams.away.name.slice(0, 3).toUpperCase(),
+      abbreviation: teamAbbreviation(game.teams.away.name),
       record: '',
       form: { results: [] },
       logoUrl: game.teams.away.logo,

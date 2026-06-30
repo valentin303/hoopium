@@ -12,14 +12,14 @@
  * et TESTING_REFERENCE_DATE ci-dessous (ou de les rendre dynamiques).
  */
 
-import { buildTeamSnapshotFromApi, fetchAllSeasonGames, extractHeadToHead, fetchStandings, findTeamStanding } from './nba-provider';
+import { buildTeamSnapshotFromApi, fetchAllSeasonGames, extractHeadToHead, extractHalftimePoints, fetchStandings, findTeamStanding } from './nba-provider';
 import { predictMatch, buildRadarProfile, computeRestDays } from './stats-engine';
-import type { TeamSnapshot } from './stats-engine';
+import type { TeamSnapshot, MatchPrediction } from './stats-engine';
 import { TEAM_API_IDS } from './team-api-ids';
 import { TEAM_LOCATIONS } from './team-locations';
 import { MOCK_ANALYSIS } from './mock-data';
 import { narrateAnalysis } from './ai-narration';
-import type { Match, MatchAnalysis, StatComparisonRow, HeadToHeedGame, ConfidenceLevel, ContextFactor } from '@/types';
+import type { Match, MatchAnalysis, StatComparisonRow, HeadToHeedGame, ConfidenceLevel, ContextFactor, BettingMarket } from '@/types';
 
 const TESTING_SEASON = '2023-2024';
 const TESTING_REFERENCE_DATE = new Date('2024-04-14T00:00:00Z'); // fin de saison régulière 2023-2024
@@ -68,6 +68,78 @@ function buildScoringTrend(home: TeamSnapshot, away: TeamSnapshot) {
   const awayValues = away.recentPointsTrend.slice(-length);
   const labels = homeValues.map((_, i) => (i === length - 1 ? 'Dernier' : `M-${length - 1 - i}`));
   return { labels, homeValues, awayValues };
+}
+
+function average(values: number[]): number {
+  return values.length > 0 ? values.reduce((s, v) => s + v, 0) / values.length : 0;
+}
+
+/**
+ * Marchés analysés calculés à partir de nos propres données — jamais des
+ * cotes externes (HOOPIUM vend sa propre analyse, pas un agrégateur de
+ * bookmakers). Total et écart dérivent du score prédit déjà calculé. La
+ * mi-temps utilise les quart-temps réels déjà présents dans /games — aucun
+ * appel réseau supplémentaire.
+ */
+function buildRealBettingMarkets(
+  match: Match,
+  home: TeamSnapshot,
+  away: TeamSnapshot,
+  prediction: MatchPrediction,
+  homeHalftimes: number[],
+  awayHalftimes: number[]
+): BettingMarket[] {
+  const markets: BettingMarket[] = [];
+
+  const totalTrend = buildScoringTrend(home, away);
+  markets.push({
+    id: 'bm-total',
+    label: 'Total points',
+    line: String(prediction.totalPointsPredicted),
+    confidence: prediction.confidence,
+    teaser: `Calculé sur la moyenne réelle des ${RECENT_GAMES_COUNT} derniers matchs de chaque équipe.`,
+    detail: {
+      trend: {
+        labels: totalTrend.labels,
+        values: totalTrend.homeValues.map((v, i) => v + totalTrend.awayValues[i]),
+      },
+      explanation: `Total combiné estimé à partir des points marqués/concédés réels de {home} (${home.pointsPerGame.toFixed(1)} pts/match) et {away} (${away.pointsPerGame.toFixed(1)} pts/match) sur leurs ${RECENT_GAMES_COUNT} derniers matchs disponibles.`,
+    },
+  });
+
+  markets.push({
+    id: 'bm-spread',
+    label: 'Écart (Spread)',
+    line: `{home} ${prediction.spreadPredicted >= 0 ? '+' : ''}${prediction.spreadPredicted}`,
+    confidence: prediction.confidence,
+    teaser: `Basé sur le rating net réel de chaque équipe sur ses ${RECENT_GAMES_COUNT} derniers matchs.`,
+    detail: {
+      trend: {
+        labels: totalTrend.labels,
+        values: totalTrend.homeValues.map((v, i) => v - totalTrend.awayValues[i]),
+      },
+      explanation: `Écart prédit à partir du rating net réel : {home} ${home.netRating.toFixed(1)} contre {away} ${away.netRating.toFixed(1)}, avantage du terrain inclus.`,
+    },
+  });
+
+  if (homeHalftimes.length > 0 && awayHalftimes.length > 0) {
+    const homeHalf = average(homeHalftimes);
+    const awayHalf = average(awayHalftimes);
+    const halfSpread = Math.round(homeHalf - awayHalf);
+    markets.push({
+      id: 'bm-1h',
+      label: 'Mi-temps (1ère période)',
+      line: `{home} ${halfSpread >= 0 ? '+' : ''}${halfSpread}`,
+      confidence: Math.min(85, 50 + Math.min(homeHalftimes.length, awayHalftimes.length) * 3),
+      teaser: `Calculé sur les ${homeHalftimes.length} dernières mi-temps réelles de {home} et les ${awayHalftimes.length} de {away}.`,
+      detail: {
+        trend: { labels: homeHalftimes.map((_, i) => `M-${homeHalftimes.length - 1 - i}`), values: homeHalftimes },
+        explanation: `{home} marque en moyenne ${homeHalf.toFixed(1)} points en 1ère mi-temps sur ses ${homeHalftimes.length} derniers matchs disponibles, contre ${awayHalf.toFixed(1)} pour {away} sur ${awayHalftimes.length} matchs.`,
+      },
+    });
+  }
+
+  return markets;
 }
 
 function formLabel(snapshot: TeamSnapshot): string {
@@ -199,10 +271,11 @@ function buildFallbackFactorsAndVerdict(home: TeamSnapshot, away: TeamSnapshot, 
 /**
  * Construit une analyse complète et réelle pour un match du mock, en
  * remplaçant les deux équipes par leurs vraies données API-Basketball.
- * `keyPlayers` et `bettingMarkets` restent ceux du mock (non couverts par
- * des endpoints vérifiés à ce stade) — jamais présentés comme réels
- * ailleurs dans ce fichier. `contextFactors` est réel (repos, classement,
- * série, fuseau horaire).
+ * `keyPlayers` reste mock (pas d'endpoint blessures disponible). Tout le
+ * reste est calculé à partir de données réelles : `contextFactors` (repos,
+ * classement, série, fuseau horaire) et `bettingMarkets` (total, écart,
+ * mi-temps — jamais des cotes externes, toujours dérivés de notre propre
+ * calcul).
  */
 export async function buildRealMatchAnalysis(match: Match): Promise<MatchAnalysis> {
   const homeApiId = TEAM_API_IDS[match.homeTeam.id];
@@ -254,6 +327,10 @@ export async function buildRealMatchAnalysis(match: Match): Promise<MatchAnalysi
     contextFactors = MOCK_ANALYSIS.contextFactors;
   }
 
+  const homeHalftimes = extractHalftimePoints(allSeasonGames, String(homeApiId), TESTING_REFERENCE_DATE, RECENT_GAMES_COUNT);
+  const awayHalftimes = extractHalftimePoints(allSeasonGames, String(awayApiId), TESTING_REFERENCE_DATE, RECENT_GAMES_COUNT);
+  const bettingMarkets = buildRealBettingMarkets(match, homeSnapshot, awaySnapshot, prediction, homeHalftimes, awayHalftimes);
+
   return {
     match: { ...match, confidence: prediction.confidence, confidenceLevel: confidenceLevelFor(prediction.confidence) },
     totalPointsPredicted: prediction.totalPointsPredicted,
@@ -265,7 +342,7 @@ export async function buildRealMatchAnalysis(match: Match): Promise<MatchAnalysi
     headToHead: MOCK_ANALYSIS.headToHead, // mini-graphique non encore branché sur le réel
     headToHeadDetailed: headToHeadDetailed.length > 0 ? headToHeadDetailed : MOCK_ANALYSIS.headToHeadDetailed,
     keyPlayers: MOCK_ANALYSIS.keyPlayers, // pas encore de données réelles joueurs/blessures
-    bettingMarkets: MOCK_ANALYSIS.bettingMarkets, // pas encore de données réelles de marchés
+    bettingMarkets, // calculé à partir de nos propres données (jamais de cotes externes)
     contextFactors,
     factors,
     winProbabilities: prediction.winProbabilities,
