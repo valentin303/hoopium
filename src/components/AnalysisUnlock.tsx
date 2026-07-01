@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   BarChart, Bar, LineChart, Line, RadarChart, Radar, PolarGrid, PolarAngleAxis,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
@@ -9,7 +10,7 @@ import {
 import { TeamLogo } from './TeamLogo';
 import { personalizeText } from '@/lib/personalize';
 import { MOCK_SITE_STATS } from '@/lib/mock-data';
-import type { Match, MatchAnalysis } from '@/types';
+import type { Match, MatchAnalysis, Team } from '@/types';
 import { KeyPlayersSection } from './KeyPlayersSection';
 import { BettingMarketsSection } from './BettingMarketsSection';
 import { HeadToHeadSection } from './HeadToHeadSection';
@@ -20,9 +21,7 @@ const STRENGTH_STYLES = {
   variable: 'bg-orange-glow text-orange border border-orange-dim',
   uncertain: 'bg-red/10 text-red border border-red/20',
 } as const;
-
 const STRENGTH_LABELS = { strong: 'Fort', variable: 'Variable', uncertain: 'Incertain' } as const;
-
 const PROCESSING_MS = 900;
 type Phase = 'locked' | 'processing' | 'done';
 
@@ -43,7 +42,7 @@ function FormDots({ form }: { form: Match['homeTeam']['form'] }) {
 function SectionTitle({ children, sub }: { children: React.ReactNode; sub?: string }) {
   return (
     <div className="mb-5">
-      <h2 className="font-display font-black uppercase text-bone" style={{ fontSize: 'clamp(1.4rem, 3vw, 2.2rem)', lineHeight: 1.05, letterSpacing: '-0.01em' }}>
+      <h2 className="font-display font-black uppercase text-bone" style={{ fontSize: 'clamp(1.4rem, 3vw, 2.2rem)', lineHeight: 1.05 }}>
         {children}
       </h2>
       {sub && <p className="mt-1.5 text-[10px] uppercase tracking-[0.2em] text-bone-dim">{sub}</p>}
@@ -63,6 +62,64 @@ function ProbRow({ label, pct, color }: { label: string; pct: number; color: str
   );
 }
 
+/** Arc de cercle (demi-cercle) animé */
+function ArcProgress({ pct }: { pct: number }) {
+  const r = 72;
+  const cx = 100;
+  const cy = 88;
+  const circumference = Math.PI * r;
+  const offset = circumference * (1 - pct / 100);
+
+  return (
+    <svg viewBox="0 0 200 100" className="w-full max-w-[200px]">
+      {/* Piste grise */}
+      <path
+        d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`}
+        fill="none"
+        stroke="#232323"
+        strokeWidth="10"
+        strokeLinecap="round"
+      />
+      {/* Arc orange animé */}
+      <path
+        d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`}
+        fill="none"
+        stroke="#FF6B1A"
+        strokeWidth="10"
+        strokeLinecap="round"
+        strokeDasharray={circumference}
+        strokeDashoffset={offset}
+        style={{ transition: 'stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1)', filter: 'drop-shadow(0 0 6px #FF6B1A80)' }}
+      />
+      {/* Pourcentage centré */}
+      <text x={cx} y={cy - 18} textAnchor="middle" fill="#FF6B1A" fontFamily="Oswald, sans-serif" fontWeight="900" fontSize="28">
+        {pct}%
+      </text>
+      <text x={cx} y={cy - 4} textAnchor="middle" fill="#6b6b68" fontFamily="Space Grotesk, sans-serif" fontSize="9" letterSpacing="2">
+        CONFIANCE
+      </text>
+    </svg>
+  );
+}
+
+/** Logo flouté en fond */
+function BlurredLogo({ team, opacity = 0.18 }: { team: Team; opacity?: number }) {
+  if (!team.logoUrl) return null;
+  return (
+    <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
+      <Image
+        src={team.logoUrl}
+        alt=""
+        width={420}
+        height={420}
+        className="object-contain"
+        style={{ opacity, filter: 'blur(32px)', transform: 'scale(1.4)' }}
+        aria-hidden
+      />
+    </div>
+  );
+}
+
 export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
   const [phase, setPhase] = useState<Phase>('locked');
   const { match } = analysis;
@@ -71,6 +128,8 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
 
   const predictedHome = Math.round((analysis.totalPointsPredicted + analysis.spreadPredicted) / 2);
   const predictedAway = analysis.totalPointsPredicted - predictedHome;
+  const predictedWinner = analysis.winProbabilities.homeWinPct >= analysis.winProbabilities.awayWinPct
+    ? match.homeTeam : match.awayTeam;
 
   function handleUnlock() {
     setPhase('processing');
@@ -82,13 +141,11 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
     [match.homeTeam.name]: analysis.scoringTrend.homeValues[i],
     [match.awayTeam.name]: analysis.scoringTrend.awayValues[i],
   }));
-
   const radarData = analysis.radarProfile.labels.map((label, i) => ({
     label,
     [match.homeTeam.name]: analysis.radarProfile.homeValues[i],
     [match.awayTeam.name]: analysis.radarProfile.awayValues[i],
   }));
-
   const statsData = analysis.statsComparison.map((row) => ({
     label: row.label,
     [match.homeTeam.name]: typeof row.homeValue === 'string' ? parseFloat(row.homeValue) : row.homeValue,
@@ -99,10 +156,15 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
     <div className="relative min-h-screen bg-night pb-24">
 
       {/* ── HERO ── */}
-      <div className="relative overflow-hidden border-b border-surface-line" style={{ minHeight: 220 }}>
+      <div className="relative overflow-hidden border-b border-surface-line transition-all duration-700" style={{ minHeight: 220 }}>
+        {/* Fond arène (toujours) */}
         <div className="absolute inset-0 bg-cover bg-center brightness-40"
           style={{ backgroundImage: "url('/arena-bg.jpg'), radial-gradient(ellipse at 50% 0%, #1a1a1a 0%, #0a0a0a 100%)" }} />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-night" />
+
+        {/* Quand débloqué : logo gagnant flouté en fond */}
+        {unlocked && <BlurredLogo team={predictedWinner} opacity={0.22} />}
+
         <div className="pointer-events-none absolute -left-32 top-0 h-64 w-64 rounded-full opacity-10 blur-3xl bg-orange" />
         <div className="pointer-events-none absolute -right-32 top-0 h-64 w-64 rounded-full opacity-10 blur-3xl bg-orange" />
 
@@ -110,71 +172,72 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
           <p className="mb-6 text-center font-display text-[11px] uppercase tracking-[0.3em] text-bone-dim">
             {match.league.toUpperCase()} · {match.status === 'finished' ? 'HISTORICAL — FINAL' : match.status === 'live' ? 'EN DIRECT' : 'À VENIR'}
           </p>
-          <div className="flex items-center justify-between gap-6">
-            <div className="flex flex-1 flex-col items-center gap-3">
-              <TeamLogo team={match.homeTeam} size={72} shape="circle" />
-              <div className="text-center">
-                <p className="text-sm font-black uppercase tracking-wider text-bone">{match.homeTeam.name}</p>
-                <p className="text-[9px] uppercase tracking-widest text-bone-dim">Domicile</p>
-              </div>
-              <FormDots form={match.homeTeam.form} />
-            </div>
 
-            <div className="flex flex-col items-center gap-2">
-              {match.status === 'finished' && match.finalScore ? (
-                <>
-                  <span className="font-display font-black tabular-nums text-bone" style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', lineHeight: 1 }}>
-                    {match.finalScore.home}<span className="mx-2 text-surface-line">-</span>{match.finalScore.away}
-                  </span>
-                  <span className="text-[9px] uppercase tracking-widest text-bone-dim">Score final</span>
-                </>
-              ) : unlocked ? (
-                <>
-                  <span className="font-display font-black tabular-nums text-orange" style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', lineHeight: 1 }}>
-                    {predictedHome}<span className="mx-2 text-surface-line">-</span>{predictedAway}
-                  </span>
-                  <span className="text-[9px] uppercase tracking-widest text-bone-dim">Score prédit</span>
-                </>
-              ) : (
-                <>
-                  <span className="font-display font-black text-surface-line" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}>VS</span>
-                  <span className="text-[9px] uppercase tracking-widest text-bone-dim">Prédiction</span>
-                </>
-              )}
-            </div>
-
-            <div className="flex flex-1 flex-col items-center gap-3">
-              <TeamLogo team={match.awayTeam} size={72} shape="circle" />
-              <div className="text-center">
-                <p className="text-sm font-black uppercase tracking-wider text-bone">{match.awayTeam.name}</p>
-                <p className="text-[9px] uppercase tracking-widest text-bone-dim">Extérieur</p>
+          {/* Version VERROUILLÉE : deux équipes */}
+          {!unlocked && (
+            <div className="flex items-center justify-between gap-6 transition-opacity duration-500">
+              <div className="flex flex-1 flex-col items-center gap-3">
+                <TeamLogo team={match.homeTeam} size={72} shape="circle" />
+                <div className="text-center">
+                  <p className="text-sm font-black uppercase tracking-wider text-bone">{match.homeTeam.name}</p>
+                  <p className="text-[9px] uppercase tracking-widest text-bone-dim">Domicile</p>
+                </div>
+                <FormDots form={match.homeTeam.form} />
               </div>
-              <FormDots form={match.awayTeam.form} />
+              <div className="flex flex-col items-center gap-2">
+                <span className="font-display font-black text-surface-line" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}>VS</span>
+                <span className="text-[9px] uppercase tracking-widest text-bone-dim">Prédiction</span>
+              </div>
+              <div className="flex flex-1 flex-col items-center gap-3">
+                <TeamLogo team={match.awayTeam} size={72} shape="circle" />
+                <div className="text-center">
+                  <p className="text-sm font-black uppercase tracking-wider text-bone">{match.awayTeam.name}</p>
+                  <p className="text-[9px] uppercase tracking-widest text-bone-dim">Extérieur</p>
+                </div>
+                <FormDots form={match.awayTeam.form} />
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* Version DÉBLOQUÉE : gros logo gagnant + score prédit */}
+          {unlocked && (
+            <div className="flex flex-col items-center gap-4 transition-opacity duration-500">
+              <TeamLogo team={predictedWinner} size={96} shape="circle" />
+              <div className="text-center">
+                <p className="font-display font-black uppercase tracking-wider text-bone" style={{ fontSize: 'clamp(1.2rem, 3vw, 1.8rem)' }}>
+                  {predictedWinner.name}
+                </p>
+                <p className="text-[9px] uppercase tracking-widest text-bone-dim">Gagnant prédit</p>
+              </div>
+              <div className="flex flex-col items-center gap-1">
+                <span className="font-display font-black tabular-nums text-orange" style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', lineHeight: 1 }}>
+                  {predictedHome}<span className="mx-2 text-surface-line">-</span>{predictedAway}
+                </span>
+                <span className="text-[9px] uppercase tracking-widest text-bone-dim">Score prédit</span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
       {/* ── TAUX DE RÉUSSITE ── */}
       <div className="mx-auto max-w-5xl px-6 mt-5">
         <div className="overflow-hidden rounded-2xl border border-surface-line bg-night-soft">
-          <div className="flex items-center gap-5 p-5">
-            <TeamLogo team={match.homeTeam} size={56} shape="circle" className="flex-shrink-0" />
-            <div className="flex-1">
-              <div className="flex items-baseline justify-between mb-2">
-                <p className="font-display font-black uppercase tracking-widest text-bone" style={{ fontSize: 'clamp(1rem, 2vw, 1.3rem)' }}>
-                  Taux de réussite
-                </p>
-                <span className="text-[10px] uppercase tracking-widest text-bone-dim">Véracité · {MOCK_SITE_STATS.successRate}%</span>
-              </div>
-              <p className="mb-2 text-[10px] uppercase tracking-wide text-bone-dim">Confiance</p>
-              <div className="flex items-center gap-3">
-                <span className="font-display font-black text-3xl tabular-nums text-orange">{match.confidence}%</span>
-                <div className="h-3 flex-1 overflow-hidden rounded-full bg-surface-line">
-                  <div className="h-full rounded-full bg-orange transition-all duration-700"
-                    style={{ width: `${match.confidence}%`, boxShadow: '0 0 12px #FF6B1A60' }} />
-                </div>
-              </div>
+          <div className="flex items-center gap-6 p-5">
+            {/* Logo agrandi */}
+            <div className="flex-shrink-0">
+              <TeamLogo team={match.homeTeam} size={72} shape="circle" />
+            </div>
+            {/* Titre + véracité */}
+            <div className="flex flex-1 flex-col gap-1">
+              <p className="font-display font-black uppercase tracking-widest text-bone" style={{ fontSize: 'clamp(1rem, 2vw, 1.3rem)' }}>
+                Taux de réussite
+              </p>
+              <p className="text-[10px] uppercase tracking-wide text-bone-dim">Véracité vérifiée · {MOCK_SITE_STATS.successRate}%</p>
+            </div>
+            {/* Arc de cercle */}
+            <div className="flex-shrink-0 w-40">
+              <ArcProgress pct={match.confidence} />
             </div>
           </div>
         </div>
@@ -199,7 +262,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
 
         <div className={`mx-auto max-w-5xl px-6 transition-[filter] duration-700 ${unlocked ? '' : 'pointer-events-none select-none blur-[3px] brightness-50'}`}>
 
-          {/* STATISTIQUES AVANCÉES */}
+          {/* STATISTIQUES */}
           <div className="rounded-2xl border border-surface-line bg-night-soft p-6 mb-5">
             <SectionTitle sub="Moyennes saison régulière">Statistiques avancées du match.</SectionTitle>
             <ResponsiveContainer width="100%" height={260}>
@@ -300,13 +363,23 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
             <p className="text-sm leading-relaxed text-bone">{personalizeText(analysis.verdict, match)}</p>
           </div>
 
-          {/* GAGNANT PRÉDIT */}
-          <div className="rounded-2xl p-8 text-center mb-2 border border-orange-dim bg-orange-glow">
-            <p className="mb-2 font-display text-[10px] uppercase tracking-[0.3em] text-bone-dim">Gagnant prédit</p>
-            <p className="font-display font-black uppercase text-bone" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', lineHeight: 1.05 }}>
-              {analysis.winProbabilities.homeWinPct > analysis.winProbabilities.awayWinPct ? match.homeTeam.name : match.awayTeam.name}
-            </p>
-            <p className="mt-2 font-display text-xs text-bone-dim">Confiance · {match.confidence}%</p>
+          {/* GAGNANT PRÉDIT — logo flouté en fond */}
+          <div className="relative overflow-hidden rounded-2xl border border-orange-dim mb-2" style={{ minHeight: 180 }}>
+            {/* Logo flouté en fond */}
+            <BlurredLogo team={predictedWinner} opacity={0.15} />
+            {/* Dégradé pour lisibilité */}
+            <div className="absolute inset-0 bg-gradient-to-t from-night via-night/80 to-transparent" />
+            {/* Contenu */}
+            <div className="relative z-10 flex flex-col items-center justify-center gap-3 p-10 text-center">
+              <TeamLogo team={predictedWinner} size={64} shape="circle" />
+              <div>
+                <p className="mb-1 font-display text-[10px] uppercase tracking-[0.3em] text-bone-dim">Gagnant prédit</p>
+                <p className="font-display font-black uppercase text-bone" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', lineHeight: 1.05 }}>
+                  {predictedWinner.name}
+                </p>
+              </div>
+              <p className="font-display text-xs text-orange">Confiance · {match.confidence}%</p>
+            </div>
           </div>
 
         </div>
