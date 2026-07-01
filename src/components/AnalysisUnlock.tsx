@@ -165,7 +165,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-night" />
 
         {/* Quand débloqué : logo gagnant flouté en fond */}
-        {unlocked && <BlurredLogo team={predictedWinner} opacity={0.22} />}
+        {unlocked && <BlurredLogo team={predictedWinner} opacity={0.15} />}
 
         <div className="pointer-events-none absolute -left-32 top-0 h-64 w-64 rounded-full opacity-10 blur-3xl bg-orange" />
         <div className="pointer-events-none absolute -right-32 top-0 h-64 w-64 rounded-full opacity-10 blur-3xl bg-orange" />
