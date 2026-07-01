@@ -204,7 +204,8 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
               </div>
               <div className="flex flex-col items-center gap-2">
                 <span className="font-display font-black text-surface-line" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}>VS</span>
-                <span className="text-[9px] uppercase tracking-widest text-bone-dim">Prédiction</span>
+                <span className="font-display font-black text-orange" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)' }}>{match.confidence}%</span>
+                <span className="text-[9px] uppercase tracking-widest text-bone-dim">Confiance IA</span>
               </div>
               <div className="flex flex-1 flex-col items-center gap-3">
                 <TeamLogo team={match.awayTeam} size={72} shape="circle" />
