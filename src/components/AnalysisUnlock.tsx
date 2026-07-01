@@ -115,7 +115,7 @@ function BlurredLogo({ team, opacity = 0.18 }: { team: Team; opacity?: number })
         width={420}
         height={420}
         className="object-contain"
-        style={{ opacity, filter: 'blur(32px)', transform: 'scale(1.4)' }}
+        style={{ opacity, filter: 'blur(18px)', transform: 'scale(1.3)' }}
         aria-hidden
       />
     </div>
@@ -171,9 +171,25 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
         <div className="pointer-events-none absolute -right-32 top-0 h-64 w-64 rounded-full opacity-10 blur-3xl bg-orange" />
 
         <div className="relative z-10 mx-auto max-w-5xl px-6 pb-8 pt-6">
-          <p className="mb-6 text-center font-display text-[11px] uppercase tracking-[0.3em] text-bone-dim">
-            {match.league.toUpperCase()} · {match.status === 'finished' ? 'HISTORICAL — FINAL' : match.status === 'live' ? 'EN DIRECT' : 'À VENIR'}
-          </p>
+          {/* Bandeau équipes style maquette */}
+          <div className="mb-6 flex items-center justify-between gap-2">
+            <div className="flex flex-col items-start">
+              <span className="font-display text-xs font-bold uppercase tracking-widest text-bone">{match.homeTeam.name}</span>
+              <span className="text-[9px] uppercase tracking-widest text-bone-dim">Domicile</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="font-display text-[10px] uppercase tracking-[0.25em] text-bone-dim">
+                {match.league.toUpperCase()}
+              </span>
+              <span className="font-display text-[9px] uppercase tracking-[0.2em] text-orange">
+                {match.status === 'finished' ? 'HISTORICAL — FINAL' : match.status === 'live' ? 'EN DIRECT' : 'À VENIR'}
+              </span>
+            </div>
+            <div className="flex flex-col items-end">
+              <span className="font-display text-xs font-bold uppercase tracking-widest text-bone">{match.awayTeam.name}</span>
+              <span className="text-[9px] uppercase tracking-widest text-bone-dim">Extérieur</span>
+            </div>
+          </div>
 
           {/* Version VERROUILLÉE : deux équipes */}
           {!unlocked && (
