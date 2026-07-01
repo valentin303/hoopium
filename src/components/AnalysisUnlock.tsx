@@ -238,14 +238,11 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
         </div>
       </div>
 
-      {/* ── TAUX DE RÉUSSITE ── */}
+      {/* ── TAUX DE RÉUSSITE — visible uniquement après déblocage ── */}
+      {unlocked && (
       <div className="mx-auto max-w-5xl px-6 mt-5">
         <div className="overflow-hidden rounded-2xl border border-surface-line bg-night-soft">
           <div className="flex items-center gap-6 p-5">
-            {/* Logo agrandi */}
-            <div className="flex-shrink-0">
-              <TeamLogo team={match.homeTeam} size={72} shape="circle" />
-            </div>
             {/* Titre + véracité */}
             <div className="flex flex-1 flex-col gap-1">
               <p className="font-display font-black uppercase tracking-widest text-bone" style={{ fontSize: 'clamp(1rem, 2vw, 1.3rem)' }}>
@@ -260,6 +257,8 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
           </div>
         </div>
       </div>
+      )}
+
 
       {/* ── CONTENU VERROUILLÉ ── */}
       <div className="relative mt-6">
