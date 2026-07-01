@@ -16,35 +16,27 @@ export function ContextSection({ factors, match }: { factors: ContextFactor[]; m
   const [selected, setSelected] = useState<ContextFactor | null>(null);
 
   return (
-    <section>
-      <h3 className="mb-1 font-display text-xs uppercase tracking-wider text-orange">
-        — Contexte du match
-      </h3>
-      <p className="mb-4 text-xs text-bone-dim">
-        Facteurs externes au jeu pur (repos, voyage, enjeu, dynamique) — clique sur une carte pour
-        le détail.
-      </p>
-      <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-4">
+    <div>
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         {factors.map((f) => (
           <button
             key={f.id}
             onClick={() => setSelected(f)}
-            className="flex flex-col items-start gap-1.5 rounded-xl border border-surface-line bg-night-soft/80 p-4 text-left transition hover:border-orange-dim hover:bg-surface"
+            className="flex flex-col items-start gap-2 rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4 text-left transition hover:border-orange-500/40 hover:bg-zinc-800/60"
           >
-            <span className="text-xl">{ICONS[f.icon]}</span>
-            <span className="text-xs uppercase tracking-wide text-bone-dim">{f.label}</span>
-            <span className="text-sm font-semibold">{f.value}</span>
+            <span className="text-2xl">{ICONS[f.icon]}</span>
+            <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500">{f.label}</span>
+            <span className="text-sm font-black text-white">{f.value}</span>
+            <span className="text-[10px] text-orange-400">Détail →</span>
           </button>
         ))}
       </div>
 
       <AnalysisOverlay open={!!selected} onClose={() => setSelected(null)} title={selected?.label ?? ''}>
         {selected && (
-          <p className="text-sm leading-relaxed text-bone-dim">
-            {personalizeText(selected.explanation, match)}
-          </p>
+          <p className="text-sm leading-relaxed text-zinc-300">{personalizeText(selected.explanation, match)}</p>
         )}
       </AnalysisOverlay>
-    </section>
+    </div>
   );
 }
