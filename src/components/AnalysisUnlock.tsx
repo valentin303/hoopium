@@ -62,40 +62,42 @@ function ProbRow({ label, pct, color }: { label: string; pct: number; color: str
   );
 }
 
-/** Arc de cercle (demi-cercle) animé */
+/** Arc de cercle (demi-cercle) animé — sweep=0 pour que l'arc monte vers le haut */
 function ArcProgress({ pct }: { pct: number }) {
-  const r = 72;
+  const r = 80;
   const cx = 100;
-  const cy = 88;
-  const circumference = Math.PI * r;
+  const cy = 108;
+  // sweep-flag=0 : sens anti-horaire → l'arc passe par le HAUT du cercle
+  const d = `M ${cx - r} ${cy} A ${r} ${r} 0 0 0 ${cx + r} ${cy}`;
+  const circumference = Math.PI * r; // demi-périmètre
   const offset = circumference * (1 - pct / 100);
 
   return (
-    <svg viewBox="0 0 200 100" className="w-full max-w-[200px]">
+    <svg viewBox="0 0 200 120" className="w-full max-w-[220px]">
       {/* Piste grise */}
-      <path
-        d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`}
-        fill="none"
-        stroke="#232323"
-        strokeWidth="10"
-        strokeLinecap="round"
-      />
+      <path d={d} fill="none" stroke="#232323" strokeWidth="11" strokeLinecap="round" />
       {/* Arc orange animé */}
       <path
-        d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`}
+        d={d}
         fill="none"
         stroke="#FF6B1A"
-        strokeWidth="10"
+        strokeWidth="11"
         strokeLinecap="round"
         strokeDasharray={circumference}
         strokeDashoffset={offset}
-        style={{ transition: 'stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1)', filter: 'drop-shadow(0 0 6px #FF6B1A80)' }}
+        style={{
+          transition: 'stroke-dashoffset 1.4s cubic-bezier(.4,0,.2,1)',
+          filter: 'drop-shadow(0 0 8px #FF6B1A90)',
+        }}
       />
-      {/* Pourcentage centré */}
-      <text x={cx} y={cy - 18} textAnchor="middle" fill="#FF6B1A" fontFamily="Oswald, sans-serif" fontWeight="900" fontSize="28">
+      {/* Pourcentage */}
+      <text x={cx} y={cy - 28} textAnchor="middle" fill="#FF6B1A"
+        fontFamily="Oswald, sans-serif" fontWeight="900" fontSize="30">
         {pct}%
       </text>
-      <text x={cx} y={cy - 4} textAnchor="middle" fill="#6b6b68" fontFamily="Space Grotesk, sans-serif" fontSize="9" letterSpacing="2">
+      {/* Label */}
+      <text x={cx} y={cy - 10} textAnchor="middle" fill="#6b6b68"
+        fontFamily="Space Grotesk, sans-serif" fontSize="9" letterSpacing="3">
         CONFIANCE
       </text>
     </svg>
