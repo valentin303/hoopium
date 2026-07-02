@@ -38,7 +38,7 @@ export function MatchCard({ match }: { match: Match }) {
       {/* Marqueur latéral — référence au trait de touche du terrain */}
       <span className={`w-1 flex-shrink-0 ${isHigh ? 'bg-green' : 'bg-orange'}`} />
 
-      <div className="flex flex-1 items-center gap-6 px-6 py-4">
+      <div className="flex flex-1 items-center gap-3 px-3 py-3 sm:gap-6 sm:px-6 sm:py-4">
         <div className="flex w-14 flex-shrink-0 flex-col gap-1">
           <span className="font-display text-base font-bold leading-none">{formatTime(match.startTime)}</span>
           <span className="text-[9px] font-semibold uppercase tracking-wider text-bone-dim">
@@ -56,7 +56,7 @@ export function MatchCard({ match }: { match: Match }) {
 
         <div className="flex flex-shrink-0 flex-col items-end gap-0.5">
           <span
-            className={`font-display text-[34px] font-bold leading-none tracking-tight transition group-hover:translate-x-0.5 ${
+            className={`font-display text-[22px] font-bold leading-none tracking-tight transition group-hover:translate-x-0.5 sm:text-[34px] ${
               isHigh ? 'text-green' : 'text-orange'
             }`}
           >

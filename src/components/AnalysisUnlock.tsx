@@ -115,7 +115,7 @@ function BlurredLogo({ team, opacity = 0.18 }: { team: Team; opacity?: number })
         width={420}
         height={420}
         className="object-contain"
-        style={{ opacity, filter: 'blur(8px)', transform: 'scale(1.3)' }}
+        style={{ opacity, filter: 'blur(5px)', transform: 'scale(1.3)' }}
         aria-hidden
       />
     </div>
@@ -165,7 +165,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-night" />
 
         {/* Quand débloqué : logo gagnant flouté en fond */}
-        {unlocked && <BlurredLogo team={predictedWinner} opacity={0.15} />}
+        {unlocked && <BlurredLogo team={predictedWinner} opacity={0.25} />}
 
         <div className="pointer-events-none absolute -left-32 top-0 h-64 w-64 rounded-full opacity-10 blur-3xl bg-orange" />
         <div className="pointer-events-none absolute -right-32 top-0 h-64 w-64 rounded-full opacity-10 blur-3xl bg-orange" />
@@ -195,7 +195,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
           {!unlocked && (
             <div className="flex items-center justify-between gap-6 transition-opacity duration-500">
               <div className="flex flex-1 flex-col items-center gap-3">
-                <TeamLogo team={match.homeTeam} size={72} shape="circle" />
+                <TeamLogo team={match.homeTeam} size={52} shape="circle" />
                 <div className="text-center">
                   <p className="text-sm font-black uppercase tracking-wider text-bone">{match.homeTeam.name}</p>
                   <p className="text-[9px] uppercase tracking-widest text-bone-dim">Domicile</p>
@@ -208,7 +208,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
                 <span className="text-[9px] uppercase tracking-widest text-bone-dim">Confiance IA</span>
               </div>
               <div className="flex flex-1 flex-col items-center gap-3">
-                <TeamLogo team={match.awayTeam} size={72} shape="circle" />
+                <TeamLogo team={match.awayTeam} size={52} shape="circle" />
                 <div className="text-center">
                   <p className="text-sm font-black uppercase tracking-wider text-bone">{match.awayTeam.name}</p>
                   <p className="text-[9px] uppercase tracking-widest text-bone-dim">Extérieur</p>
