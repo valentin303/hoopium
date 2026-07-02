@@ -28,14 +28,14 @@ function PlayerRow({ player, onSelect, align = 'left' }: {
   const dot = player.injuryStatus ? STATUS_DOT[player.injuryStatus] ?? 'bg-green' : 'bg-green';
   return (
     <button onClick={() => onSelect(player)}
-      className={`flex items-center gap-2.5 rounded-xl border border-surface-line bg-surface px-3 py-2.5 transition hover:border-orange-dim hover:bg-night-soft w-full ${align === 'right' ? 'flex-row-reverse text-right' : ''}`}>
+      className={`flex items-center gap-1.5 rounded-xl border border-surface-line bg-surface px-2 py-2 transition hover:border-orange-dim hover:bg-night-soft w-full overflow-hidden ${align === 'right' ? 'flex-row-reverse text-right' : ''}`}>
       <span className={`h-2.5 w-2.5 flex-shrink-0 rounded-full ${dot}`} />
       <div className={`flex flex-col ${align === 'right' ? 'items-end' : 'items-start'}`}>
         <span className="text-sm font-bold text-bone">{player.name}</span>
         <span className="text-[10px] text-bone-dim">{player.position}</span>
       </div>
       {player.injuryStatus && (
-        <span className={`ml-auto text-[9px] font-bold uppercase tracking-wide flex-shrink-0 ${
+        <span className={`text-[8px] font-bold uppercase tracking-wide flex-shrink-0 ${
           player.injuryStatus === 'Absent' ? 'text-red' :
           player.injuryStatus === 'Incertain' ? 'text-orange' : 'text-green'
         }`}>{player.injuryStatus}</span>
@@ -63,7 +63,7 @@ export function KeyPlayersSection({ players, match }: { players: PlayerStat[]; m
       </div>
       <div className="flex flex-col gap-2">
         {Array.from({ length: maxRows }).map((_, i) => (
-          <div key={i} className="grid grid-cols-2 gap-3">
+          <div key={i} className="grid grid-cols-2 gap-2">
             <PlayerRow player={homeP[i]} onSelect={setSelected} />
             <PlayerRow player={awayP[i]} onSelect={setSelected} align="right" />
           </div>

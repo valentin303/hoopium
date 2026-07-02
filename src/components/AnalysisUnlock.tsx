@@ -108,14 +108,14 @@ function ArcProgress({ pct }: { pct: number }) {
 function BlurredLogo({ team, opacity = 0.18 }: { team: Team; opacity?: number }) {
   if (!team.logoUrl) return null;
   return (
-    <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
+    <div className="pointer-events-none fixed inset-0 z-0 flex items-center justify-center overflow-hidden">
       <Image
         src={team.logoUrl}
         alt=""
         width={420}
         height={420}
         className="object-contain"
-        style={{ opacity, filter: 'blur(18px)', transform: 'scale(1.3)' }}
+        style={{ opacity, filter: 'blur(8px)', transform: 'scale(1.3)' }}
         aria-hidden
       />
     </div>
@@ -382,24 +382,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
             <p className="text-sm leading-relaxed text-bone">{personalizeText(analysis.verdict, match)}</p>
           </div>
 
-          {/* GAGNANT PRÉDIT — logo flouté en fond */}
-          <div className="relative overflow-hidden rounded-2xl border border-orange-dim mb-2" style={{ minHeight: 180 }}>
-            {/* Logo flouté en fond */}
-            <BlurredLogo team={predictedWinner} opacity={0.15} />
-            {/* Dégradé pour lisibilité */}
-            <div className="absolute inset-0 bg-gradient-to-t from-night via-night/80 to-transparent" />
-            {/* Contenu */}
-            <div className="relative z-10 flex flex-col items-center justify-center gap-3 p-10 text-center">
-              <TeamLogo team={predictedWinner} size={64} shape="circle" />
-              <div>
-                <p className="mb-1 font-display text-[10px] uppercase tracking-[0.3em] text-bone-dim">Gagnant prédit</p>
-                <p className="font-display font-black uppercase text-bone" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', lineHeight: 1.05 }}>
-                  {predictedWinner.name}
-                </p>
-              </div>
-              <p className="font-display text-xs text-orange">Confiance · {match.confidence}%</p>
-            </div>
-          </div>
+
 
         </div>
       </div>

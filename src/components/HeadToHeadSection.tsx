@@ -23,14 +23,14 @@ export function HeadToHeadSection({ games, match }: { games: HeadToHeedGame[]; m
       </div>
       <div className="flex flex-col gap-2 mb-4">
         {games.slice(0, 5).map((g, i) => (
-          <div key={i} className="flex items-center justify-between rounded-xl border border-surface-line bg-surface px-4 py-3">
-            <span className="text-xs text-bone-dim w-28">{g.date}</span>
-            <span className="font-display font-black text-base tabular-nums">
+          <div key={i} className="flex items-center justify-between gap-2 rounded-xl border border-surface-line bg-surface px-3 py-3">
+            <span className="text-[10px] text-bone-dim flex-shrink-0">{g.date}</span>
+            <span className="font-display font-black text-sm tabular-nums flex-shrink-0 whitespace-nowrap">
               <span className={g.homeTeamWon ? 'text-bone' : 'text-bone-dim'}>{g.homeScore}</span>
-              <span className="mx-2 text-surface-line">—</span>
+              <span className="mx-1 text-surface-line">—</span>
               <span className={!g.homeTeamWon ? 'text-bone' : 'text-bone-dim'}>{g.awayScore}</span>
             </span>
-            <span className="text-[10px] text-bone-dim text-right w-28">{g.venue}</span>
+            <span className="text-[9px] text-bone-dim text-right truncate">{g.venue}</span>
           </div>
         ))}
       </div>
@@ -41,14 +41,14 @@ export function HeadToHeadSection({ games, match }: { games: HeadToHeedGame[]; m
       <AnalysisOverlay open={open} onClose={() => setOpen(false)} title="Historique complet">
         <div className="flex flex-col gap-2">
           {games.map((g, i) => (
-            <div key={i} className="flex items-center justify-between rounded-xl border border-surface-line bg-surface px-4 py-3">
-              <span className="text-xs text-bone-dim w-28">{g.date}</span>
-              <span className="font-display font-black text-base tabular-nums">
+            <div key={i} className="flex items-center justify-between gap-2 rounded-xl border border-surface-line bg-surface px-3 py-3">
+              <span className="text-[10px] text-bone-dim flex-shrink-0">{g.date}</span>
+              <span className="font-display font-black text-sm tabular-nums flex-shrink-0 whitespace-nowrap">
                 <span className={g.homeTeamWon ? 'text-bone' : 'text-bone-dim'}>{g.homeScore}</span>
-                <span className="mx-2 text-surface-line">—</span>
+                <span className="mx-1 text-surface-line">—</span>
                 <span className={!g.homeTeamWon ? 'text-bone' : 'text-bone-dim'}>{g.awayScore}</span>
               </span>
-              <span className="text-[10px] text-bone-dim text-right w-28">{g.venue}</span>
+              <span className="text-[9px] text-bone-dim text-right truncate">{g.venue}</span>
             </div>
           ))}
         </div>
