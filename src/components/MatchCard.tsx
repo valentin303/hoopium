@@ -83,7 +83,7 @@ function TeamBlock({
     <div className={`flex min-w-0 flex-1 items-center gap-3 ${align === 'right' ? 'flex-row-reverse' : ''}`}>
       <TeamLogo team={team} size={40} />
       <div className={`flex min-w-0 flex-col gap-1 ${align === 'right' ? 'items-end' : ''}`}>
-        <span className="truncate text-[15px] font-bold leading-none">{team.name}</span>
+        <span className="truncate text-xs font-bold leading-none sm:text-[15px]">{team.name}</span>
         <FormDots form={team.form} />
       </div>
     </div>
