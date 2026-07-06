@@ -244,18 +244,18 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
       {unlocked && (
       <div className="mx-auto max-w-5xl px-6 mt-5">
         <div className="overflow-hidden rounded-2xl border border-surface-line bg-night-soft">
-          <div className="flex items-center gap-4 p-5">
-            <TeamLogo team={predictedWinner} size={80} shape="circle" className="flex-shrink-0" />
-            <div className="flex flex-1 flex-col gap-1">
-              <p className="font-display font-black uppercase tracking-widest text-bone" style={{ fontSize: 'clamp(1rem, 2vw, 1.3rem)' }}>
-                Taux de réussite
-              </p>
-              <p className="text-[10px] uppercase tracking-wide text-bone-dim">Véracité vérifiée · {MOCK_SITE_STATS.successRate}%</p>
+            <div className="flex flex-col items-center gap-4 p-5 sm:flex-row">
+              <TeamLogo team={predictedWinner} size={56} shape="circle" className="flex-shrink-0" />
+              <div className="flex flex-1 flex-col gap-0.5 text-center sm:text-left">
+                <p className="font-display font-black uppercase tracking-widest text-bone text-sm sm:text-base">
+                  Taux de réussite
+                </p>
+                <p className="text-[10px] uppercase tracking-wide text-bone-dim">Véracité vérifiée · {MOCK_SITE_STATS.successRate}%</p>
+              </div>
+              <div className="w-40 sm:w-44 flex-shrink-0">
+                <ArcProgress pct={match.confidence} />
+              </div>
             </div>
-            <div className="flex-shrink-0 w-44">
-              <ArcProgress pct={match.confidence} />
-            </div>
-          </div>
         </div>
       </div>
       )}
