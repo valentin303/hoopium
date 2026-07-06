@@ -67,7 +67,7 @@ function ArcProgress({ pct }: { pct: number }) {
   // Demi-cercle : de (16,60) à (124,60) en passant par le haut (70,6)
   const arcPath = "M 16 60 A 54 54 0 0 0 124 60";
   const halfCirc = Math.PI * 54; // ~169.6
-  const offset = halfCirc * (1 - pct / 100);
+  const offset = halfCirc * pct / 100;
 
   return (
     <svg width="140" height="80" viewBox="0 0 140 80" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block', margin: '0 auto' }}>
