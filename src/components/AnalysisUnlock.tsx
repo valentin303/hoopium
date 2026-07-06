@@ -227,7 +227,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
       {/* ── TAUX DE RÉUSSITE — visible uniquement après déblocage ── */}
       {unlocked && (
       <div className="mx-auto max-w-5xl px-6 mt-5">
-        <div className="overflow-hidden rounded-2xl border border-surface-line bg-night-soft">
+        <div className="rounded-2xl border border-surface-line bg-night-soft">
             <div className="flex flex-col items-center gap-4 p-5 sm:flex-row">
               <TeamLogo team={predictedWinner} size={56} shape="circle" className="flex-shrink-0" />
               <div className="flex flex-1 flex-col gap-0.5 text-center sm:text-left">
