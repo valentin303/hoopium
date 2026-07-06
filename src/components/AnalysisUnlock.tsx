@@ -88,27 +88,6 @@ function ArcProgress({ pct }: { pct: number }) {
   );
 }
 
-  return (
-    <div style={{ width: 140, height: 90, margin: '0 auto' }}>
-      <svg viewBox="0 0 140 72" width="140" height="72" xmlns="http://www.w3.org/2000/svg">
-        <path d={d} fill="none" stroke="#232323" strokeWidth={strokeW} strokeLinecap="round" />
-        <path
-          d={d}
-          fill="none"
-          stroke="#FF6B1A"
-          strokeWidth={strokeW}
-          strokeLinecap="round"
-          strokeDasharray={half}
-          strokeDashoffset={offset}
-          style={{ transition: 'stroke-dashoffset 1.2s ease-out', filter: 'drop-shadow(0 0 6px #FF6B1A80)' }}
-        />
-        <text x={cx} y={cy - 20} textAnchor="middle" fill="#FF6B1A" fontFamily="Oswald, sans-serif" fontWeight="900" fontSize="22">{pct}%</text>
-        <text x={cx} y={cy - 6} textAnchor="middle" fill="#6b6b68" fontFamily="Space Grotesk, sans-serif" fontSize="8" letterSpacing="2">CONFIANCE</text>
-      </svg>
-    </div>
-  );
-}
-
 /** Logo flouté en fond */
 function BlurredLogo({ team, opacity = 0.18 }: { team: Team; opacity?: number }) {
   if (!team.logoUrl) return null;
