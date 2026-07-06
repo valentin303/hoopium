@@ -64,7 +64,7 @@ function ProbRow({ label, pct, color }: { label: string; pct: number; color: str
 
 /** Arc de cercle (demi-cercle) animé */
 function ArcProgress({ pct }: { pct: number }) {
-  const arcPath = "M 16 60 A 54 54 0 0 0 124 60";
+  const arcPath = "M 16 60 A 54 54 0 0 1 124 60";
   const totalLen = Math.PI * 54;
   const fillLen = totalLen * pct / 100;
 
