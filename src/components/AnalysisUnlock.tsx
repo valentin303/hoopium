@@ -236,7 +236,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
                 </p>
                 <p className="text-[10px] uppercase tracking-wide text-bone-dim">Véracité vérifiée · {MOCK_SITE_STATS.successRate}%</p>
               </div>
-              <div className="w-40 sm:w-44 flex-shrink-0">
+              <div className="flex-shrink-0" style={{ width: 150, minHeight: 85 }}>
                 <ArcProgress pct={match.confidence} />
               </div>
             </div>
