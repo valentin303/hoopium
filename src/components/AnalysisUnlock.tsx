@@ -64,13 +64,29 @@ function ProbRow({ label, pct, color }: { label: string; pct: number; color: str
 
 /** Arc de cercle (demi-cercle) animé */
 function ArcProgress({ pct }: { pct: number }) {
-  const r = 54;
-  const strokeW = 10;
-  const cx = 70;
-  const cy = 64;
-  const d = `M ${cx - r} ${cy} A ${r} ${r} 0 0 0 ${cx + r} ${cy}`;
-  const half = Math.PI * r;
-  const offset = half * (1 - pct / 100);
+  // Demi-cercle : de (16,60) à (124,60) en passant par le haut (70,6)
+  const arcPath = "M 16 60 A 54 54 0 0 0 124 60";
+  const halfCirc = Math.PI * 54; // ~169.6
+  const offset = halfCirc * (1 - pct / 100);
+
+  return (
+    <svg width="140" height="80" viewBox="0 0 140 80" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block', margin: '0 auto' }}>
+      <path d={arcPath} fill="none" stroke="#232323" strokeWidth="10" strokeLinecap="round" />
+      <path
+        d={arcPath}
+        fill="none"
+        stroke="#FF6B1A"
+        strokeWidth="10"
+        strokeLinecap="round"
+        strokeDasharray={halfCirc}
+        strokeDashoffset={offset}
+        style={{ transition: 'stroke-dashoffset 1.2s ease-out', filter: 'drop-shadow(0 0 6px #FF6B1A80)' }}
+      />
+      <text x="70" y="46" textAnchor="middle" fill="#FF6B1A" fontFamily="Oswald, sans-serif" fontWeight="900" fontSize="22">{pct}%</text>
+      <text x="70" y="60" textAnchor="middle" fill="#6b6b68" fontFamily="Space Grotesk, sans-serif" fontSize="8" letterSpacing="2">CONFIANCE</text>
+    </svg>
+  );
+}
 
   return (
     <div style={{ width: 140, height: 90, margin: '0 auto' }}>
