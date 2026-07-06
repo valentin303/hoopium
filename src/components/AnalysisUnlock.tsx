@@ -226,14 +226,18 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
       {unlocked && (
       <div className="mx-auto max-w-5xl px-6 mt-5">
         <div className="rounded-2xl border border-surface-line bg-night-soft p-6">
-          <div className="flex items-center gap-4 mb-4">
-            <TeamLogo team={predictedWinner} size={48} shape="circle" className="flex-shrink-0" />
-            <div>
-              <p className="font-display font-black uppercase tracking-widest text-bone text-sm">Taux de réussite</p>
-              <p className="text-[10px] uppercase tracking-wide text-bone-dim">Véracité vérifiée · {MOCK_SITE_STATS.successRate}%</p>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <TeamLogo team={predictedWinner} size={48} shape="circle" className="flex-shrink-0" />
+              <div>
+                <p className="font-display font-black uppercase tracking-widest text-bone text-sm">Taux de réussite</p>
+                <p className="text-[10px] uppercase tracking-wide text-bone-dim">Véracité vérifiée · {MOCK_SITE_STATS.successRate}%</p>
+              </div>
+            </div>
+            <div style={{ width: 140, height: 80, flexShrink: 0 }}>
+              <ArcProgress pct={match.confidence} />
             </div>
           </div>
-          <ArcProgress pct={match.confidence} />
         </div>
       </div>
       )}
