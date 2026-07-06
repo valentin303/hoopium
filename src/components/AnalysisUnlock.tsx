@@ -62,45 +62,34 @@ function ProbRow({ label, pct, color }: { label: string; pct: number; color: str
   );
 }
 
-/** Arc de cercle (demi-cercle) animé — sweep=0 pour que l'arc monte vers le haut */
+/** Arc de cercle (demi-cercle) animé */
 function ArcProgress({ pct }: { pct: number }) {
-  const r = 80;
-  const cx = 100;
-  const cy = 108;
-  // sweep-flag=0 : sens anti-horaire → l'arc passe par le HAUT du cercle
+  const r = 54;
+  const strokeW = 10;
+  const cx = 70;
+  const cy = 64;
   const d = `M ${cx - r} ${cy} A ${r} ${r} 0 0 0 ${cx + r} ${cy}`;
-  const circumference = Math.PI * r; // demi-périmètre
-  const offset = circumference * (1 - pct / 100);
+  const half = Math.PI * r;
+  const offset = half * (1 - pct / 100);
 
   return (
-    <svg viewBox="0 0 200 120" className="w-full max-w-[220px]">
-      {/* Piste grise */}
-      <path d={d} fill="none" stroke="#232323" strokeWidth="11" strokeLinecap="round" />
-      {/* Arc orange animé */}
-      <path
-        d={d}
-        fill="none"
-        stroke="#FF6B1A"
-        strokeWidth="11"
-        strokeLinecap="round"
-        strokeDasharray={circumference}
-        strokeDashoffset={offset}
-        style={{
-          transition: 'stroke-dashoffset 1.4s cubic-bezier(.4,0,.2,1)',
-          filter: 'drop-shadow(0 0 8px #FF6B1A90)',
-        }}
-      />
-      {/* Pourcentage */}
-      <text x={cx} y={cy - 28} textAnchor="middle" fill="#FF6B1A"
-        fontFamily="Oswald, sans-serif" fontWeight="900" fontSize="30">
-        {pct}%
-      </text>
-      {/* Label */}
-      <text x={cx} y={cy - 10} textAnchor="middle" fill="#6b6b68"
-        fontFamily="Space Grotesk, sans-serif" fontSize="9" letterSpacing="3">
-        CONFIANCE
-      </text>
-    </svg>
+    <div style={{ width: 140, height: 90, margin: '0 auto' }}>
+      <svg viewBox="0 0 140 72" width="140" height="72" xmlns="http://www.w3.org/2000/svg">
+        <path d={d} fill="none" stroke="#232323" strokeWidth={strokeW} strokeLinecap="round" />
+        <path
+          d={d}
+          fill="none"
+          stroke="#FF6B1A"
+          strokeWidth={strokeW}
+          strokeLinecap="round"
+          strokeDasharray={half}
+          strokeDashoffset={offset}
+          style={{ transition: 'stroke-dashoffset 1.2s ease-out', filter: 'drop-shadow(0 0 6px #FF6B1A80)' }}
+        />
+        <text x={cx} y={cy - 20} textAnchor="middle" fill="#FF6B1A" fontFamily="Oswald, sans-serif" fontWeight="900" fontSize="22">{pct}%</text>
+        <text x={cx} y={cy - 6} textAnchor="middle" fill="#6b6b68" fontFamily="Space Grotesk, sans-serif" fontSize="8" letterSpacing="2">CONFIANCE</text>
+      </svg>
+    </div>
   );
 }
 
