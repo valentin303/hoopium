@@ -222,25 +222,22 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
       </div>
 
 
-      {/* ── TAUX DE RÉUSSITE — visible uniquement après déblocage ── */}
+      {/* ── TAUX DE RÉUSSITE ── */}
       {unlocked && (
       <div className="mx-auto max-w-5xl px-6 mt-5">
-        <div className="rounded-2xl border border-surface-line bg-night-soft">
-            <div className="flex flex-col items-center gap-4 p-5 sm:flex-row">
-              <TeamLogo team={predictedWinner} size={56} shape="circle" className="flex-shrink-0" />
-              <div className="flex flex-1 flex-col gap-0.5 text-center sm:text-left">
-                <p className="font-display font-black uppercase tracking-widest text-bone text-sm sm:text-base">
-                  Taux de réussite
-                </p>
-                <p className="text-[10px] uppercase tracking-wide text-bone-dim">Véracité vérifiée · {MOCK_SITE_STATS.successRate}%</p>
-              </div>
-              <div className="flex-shrink-0" style={{ width: 150, minHeight: 85 }}>
-                <ArcProgress pct={match.confidence} />
-              </div>
+        <div className="rounded-2xl border border-surface-line bg-night-soft p-6">
+          <div className="flex items-center gap-4 mb-4">
+            <TeamLogo team={predictedWinner} size={48} shape="circle" className="flex-shrink-0" />
+            <div>
+              <p className="font-display font-black uppercase tracking-widest text-bone text-sm">Taux de réussite</p>
+              <p className="text-[10px] uppercase tracking-wide text-bone-dim">Véracité vérifiée · {MOCK_SITE_STATS.successRate}%</p>
             </div>
+          </div>
+          <ArcProgress pct={match.confidence} />
         </div>
       </div>
       )}
+
 
 
 
