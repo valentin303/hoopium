@@ -49,6 +49,12 @@ export default function HomePage() {
                 Voir les matchs du soir
               </a>
               <a
+                href="/analyse/lal-bos-2026-06-17"
+                className="rounded-full border border-orange-dim bg-orange-glow px-8 py-4 text-[15px] font-semibold text-orange transition hover:bg-orange hover:text-night"
+              >
+                Voir un exemple d'analyse
+              </a>
+              <a
                 href="/a-propos"
                 className="rounded-full border border-surface-line px-8 py-4 text-[15px] font-medium transition hover:border-bone-dim hover:bg-surface"
               >

@@ -174,6 +174,15 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
             </div>
           </div>
 
+          {/* Badge exemple si match de démonstration */}
+          {match.status === 'scheduled' && (
+            <div className="mb-5 flex justify-center">
+              <span className="rounded-full border border-orange-dim bg-orange-glow px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-orange">
+                Exemple d&apos;analyse — données de démonstration
+              </span>
+            </div>
+          )}
+
           {/* Version VERROUILLÉE : deux équipes */}
           {!unlocked && (
             <div className="flex items-center justify-between gap-6 transition-opacity duration-500">
