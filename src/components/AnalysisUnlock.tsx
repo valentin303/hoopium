@@ -15,6 +15,7 @@ import { KeyPlayersSection } from './KeyPlayersSection';
 import { BettingMarketsSection } from './BettingMarketsSection';
 import { HeadToHeadSection } from './HeadToHeadSection';
 import { ContextSection } from './ContextSection';
+import { AIEye } from './AIEye';
 
 const STRENGTH_STYLES = {
   strong: 'bg-green/10 text-green border border-green/20',
@@ -211,7 +212,7 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
                 <p className="text-[9px] uppercase tracking-widest text-bone-dim">Gagnant prédit</p>
               </div>
               <div className="flex flex-col items-center gap-1">
-                <span className="font-display font-black tabular-nums text-orange" style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', lineHeight: 1 }}>
+                <span className="font-display font-black tabular-nums text-orange" style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', lineHeight: 1, textShadow: '0 0 24px rgba(255,107,26,.35)' }}>
                   {predictedHome}<span className="mx-2 text-surface-line">-</span>{predictedAway}
                 </span>
                 <span className="text-[9px] uppercase tracking-widest text-bone-dim">Score prédit</span>
