@@ -5,7 +5,7 @@ import { MOCK_FINISHED_MATCHES, MOCK_SITE_STATS } from '@/lib/mock-data';
 const LEAGUES = [
   { abv: 'NBA', name: 'NBA', count: '5 matchs analysés', logo: '/images/leagues/nba.svg' },
   { abv: 'WNBA', name: 'WNBA', count: '3 matchs analysés', logo: '/images/leagues/wnba.svg' },
-  { abv: 'EL', name: 'EuroLeague', count: '2 matchs analysés', logo: '/images/leagues/euroleague.svg' },
+  { abv: 'EL', name: 'EuroLeague', count: '2 matchs analysés', logo: '/images/leagues/euroleague.png' },
   { abv: 'NCAA', name: 'NCAA', count: 'Couverture en cours', logo: '/images/leagues/ncaa.svg' },
 ];
 
