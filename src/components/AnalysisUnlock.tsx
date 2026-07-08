@@ -71,11 +71,17 @@ function ArcProgress({ pct }: { pct: number }) {
 
   return (
     <svg width="140" height="80" viewBox="0 0 140 80" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block', margin: '0 auto' }}>
+      <defs>
+        <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#FF6B1A" />
+          <stop offset="100%" stopColor="#3ddc84" />
+        </linearGradient>
+      </defs>
       <path d={arcPath} fill="none" stroke="#232323" strokeWidth="10" strokeLinecap="round" />
       <path
         d={arcPath}
         fill="none"
-        stroke="#FF6B1A"
+        stroke="url(#arcGrad)"
         strokeWidth="10"
         strokeLinecap="round"
         strokeDasharray={`${fillLen} ${totalLen}`}
@@ -275,6 +281,15 @@ export function AnalysisUnlock({ analysis }: { analysis: MatchAnalysis }) {
         <div className={`mx-auto max-w-5xl px-6 transition-[filter] duration-700 ${unlocked ? '' : 'pointer-events-none select-none blur-[3px] brightness-50'}`}>
 
           {/* STATISTIQUES */}
+          {/* L'œil de l'IA — verdict rédigé en direct */}
+          <div className="mb-5">
+            <AIEye
+              text={personalizeText(analysis.verdict, match)}
+              variablesUsed={analysis.variablesUsed}
+              active={unlocked}
+            />
+          </div>
+
           <div className="rounded-2xl border border-surface-line bg-night-soft p-6 mb-5">
             <SectionTitle sub="Moyennes saison régulière">Statistiques avancées du match.</SectionTitle>
             <ResponsiveContainer width="100%" height={260}>
