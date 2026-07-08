@@ -165,17 +165,15 @@ export interface MatchPrediction {
   confidence: number; // 0-100, toujours côté de l'équipe favorite
   favoredSide: 'home' | 'away';
   winProbabilities: { homeWinPct: number; closeGamePct: number; awayWinPct: number };
+  /**
+   * true si le score prédit a dû être départagé d'un point parce que le
+   * calcul produisait une égalité (impossible en NBA, prolongation
+   * obligatoire) — à signaler à l'utilisateur plutôt que de le masquer.
+   */
+  tieBreakApplied: boolean;
 }
 
 export function predictMatch(home: TeamSnapshot, away: TeamSnapshot): MatchPrediction {
-  // Score prédit : moyenne entre "ce que l'équipe marque habituellement"
-  // et "ce que l'adversaire concède habituellement", + avantage du terrain.
-  const rawHome = (home.pointsPerGame + away.opponentPointsPerGame) / 2;
-  const rawAway = (away.pointsPerGame + home.opponentPointsPerGame) / 2;
-
-  const predictedHomeScore = Math.round(rawHome + HOME_ADVANTAGE_POINTS / 2);
-  const predictedAwayScore = Math.round(rawAway - HOME_ADVANTAGE_POINTS / 2);
-
   const netDiff = home.netRating - away.netRating + HOME_ADVANTAGE_POINTS;
   const homeWinProbRaw = logistic(netDiff / WIN_PROB_SCALE);
 
@@ -189,6 +187,26 @@ export function predictMatch(home: TeamSnapshot, away: TeamSnapshot): MatchPredi
   const favoredSide: 'home' | 'away' = homeWinPct >= awayWinPct ? 'home' : 'away';
   const confidence = favoredSide === 'home' ? homeWinPct + Math.round(closeGamePct / 2) : awayWinPct + Math.round(closeGamePct / 2);
 
+  // Score prédit : moyenne entre "ce que l'équipe marque habituellement"
+  // et "ce que l'adversaire concède habituellement", + avantage du terrain.
+  const rawHome = (home.pointsPerGame + away.opponentPointsPerGame) / 2;
+  const rawAway = (away.pointsPerGame + home.opponentPointsPerGame) / 2;
+
+  let predictedHomeScore = Math.round(rawHome + HOME_ADVANTAGE_POINTS / 2);
+  let predictedAwayScore = Math.round(rawAway - HOME_ADVANTAGE_POINTS / 2);
+
+  // Un match NBA ne peut jamais se terminer sur une égalité (prolongation
+  // obligatoire jusqu'à départage) — si l'arrondi indépendant des deux
+  // scores produit malgré tout une égalité, on tranche d'un point en
+  // faveur du favori déjà déterminé par le modèle, jamais au hasard. On
+  // garde une trace de cet ajustement pour le signaler à l'utilisateur
+  // plutôt que de le masquer.
+  const tieBreakApplied = predictedHomeScore === predictedAwayScore;
+  if (tieBreakApplied) {
+    if (favoredSide === 'home') predictedHomeScore += 1;
+    else predictedAwayScore += 1;
+  }
+
   return {
     predictedHomeScore,
     predictedAwayScore,
@@ -197,6 +215,7 @@ export function predictMatch(home: TeamSnapshot, away: TeamSnapshot): MatchPredi
     confidence: Math.min(95, Math.max(50, confidence)), // borné : jamais sous 50% côté favori, jamais surconfiant à 100%
     favoredSide,
     winProbabilities: { homeWinPct, closeGamePct, awayWinPct },
+    tieBreakApplied,
   };
 }
 

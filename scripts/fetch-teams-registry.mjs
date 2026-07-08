@@ -58,10 +58,10 @@ async function loadApiKey() {
 // ===== Config des ligues — doit rester synchro avec src/lib/nba-provider.ts =====
 
 const LEAGUE_CONFIG = {
-  nba: { id: 12, season: '2025-2026' },
-  wnba: { id: 13, season: '2026' },
-  euroleague: { id: 120, season: '2025' },
-  ncaa: { id: 116, season: '2025-2026' },
+  nba: { id: 12, season: '2025-2026', teamsSeason: '2023-2024' },
+  wnba: { id: 13, season: '2026', teamsSeason: '2024' },
+  euroleague: { id: 120, season: '2025', teamsSeason: '2024' },
+  ncaa: { id: 116, season: '2025-2026', teamsSeason: '2023-2024' },
 };
 
 // ===== Équipes utilisées dans mock-data.ts (mapping legacy) =====
@@ -201,12 +201,12 @@ async function main() {
   const rosterByLeague = {}; // pour la résolution legacy plus bas
 
   for (const league of leagues) {
-    const { id, season } = LEAGUE_CONFIG[league];
-    console.log(`→ ${league} (league=${id}, season=${season})...`);
+    const { id, teamsSeason } = LEAGUE_CONFIG[league];
+    console.log(`→ ${league} (league=${id}, season=${teamsSeason})...`);
 
     let apiTeams;
     try {
-      apiTeams = await apiFetch(apiKey, '/teams', { league: id, season });
+      apiTeams = await apiFetch(apiKey, '/teams', { league: id, season: teamsSeason });
       console.log(`  ✓ ${apiTeams.length} équipes reçues.`);
     } catch (err) {
       console.error(`  ✗ Échec pour ${league} : ${err.message}`);
